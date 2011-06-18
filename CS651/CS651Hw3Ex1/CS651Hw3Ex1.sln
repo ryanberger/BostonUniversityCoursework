@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CS651Hw3Ex1", ".", "{2BDA935B-4E75-473B-A4D5-8D981ED0CC42}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFramework = "3.5"
+		Debug.AspNetCompiler.VirtualPath = "/CS651Hw3Ex1"
+		Debug.AspNetCompiler.PhysicalPath = "..\..\..\..\..\..\projects\CS651\CS651Hw3Ex1\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\CS651Hw3Ex1\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/CS651Hw3Ex1"
+		Release.AspNetCompiler.PhysicalPath = "..\..\..\..\..\..\projects\CS651\CS651Hw3Ex1\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\CS651Hw3Ex1\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "55464"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|.NET = Debug|.NET
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BDA935B-4E75-473B-A4D5-8D981ED0CC42}.Debug|.NET.ActiveCfg = Debug|.NET
+		{2BDA935B-4E75-473B-A4D5-8D981ED0CC42}.Debug|.NET.Build.0 = Debug|.NET
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

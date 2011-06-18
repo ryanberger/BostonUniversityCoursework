@@ -1,0 +1,10 @@
+   1. Write a CSS rule that gives all h3 and h5 elements a padding of .5em, a dashed border (any style) and a margin of .5em
+   2. Write a CSS rule that changes the color of all elements containing attribute class="high" to green and shifts them down 25 pixels and right 25 pixels.
+   3. Make a layout template that contains a header and two columns. Use divs for each layout component, and use float to line up the columns side by side. Give each component a border and/or a background color so you can see where your div are.
+   4. Change all anchor elements to not have a natural bottom line. Instead, using CSS, give them all a dotted line with the color darkgreen.
+   5. For any span on your page that is within a list item, set its background color to #333333 and the color of the font to white
+   6. For any div with a class of "spacer" add 25 pixels of margin to its bottom.
+   7. Create a rule that says for any paragraph with a class of "on_right" to have its contained text aligned to the right, with a font-size of 30 pixels.
+   8. Create a rule that says that any list item in a unordered list to have a margin of 1px on top, 4 px on its right, 10 px on its bottom and 20 px on its left. Make sure your rule uses the short-hand margin property, not all 4 properties individually spelled out.
+   9. For the entire body of your XHTML document, ensure the fonts to be used (in this order!) are: Howdy-doody, franky-hollywood, than lastly fantasy. What font is rendered? (Used on you page.)
+  10. Create a rule that says when a div followed by a cite followed by a span the text color is darkgreen, with a 19px font, italic.

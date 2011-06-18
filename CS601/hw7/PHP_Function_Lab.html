@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>MET CS601 : Web Application Development</title>
+<style type="text/css">
+* {
+	font: 12px normal 'Trebuchet MS', Verdana, Helvetica, sans-serif;
+}
+div#bu_logo {
+	text-align: center;
+	margin: auto
+}
+div#course_name {
+	font-size: 25px;
+	letter-spacing: -1px
+}
+div#course_number {
+	font-size: 40px
+}
+h1 {
+	font-size: 23px;
+	font-weight: normal;
+}
+</style>
+</head>
+<body>
+<div id="bu_logo" class="m50"> <img src="https://www.applyweb.com/apply/bumet/images/l2-logo.gif" alt="MET" height="68" width="137"/>
+  <div id="course_name">
+    <div id="course_number"> CS 601 </div>
+    <h1>Functions in PHP</h1>
+  </div>
+</div>
+<h1> Objectives </h1>
+<p>The objectives for this laboratory are solely intended to have you gain hands-on experience declaring and using functions in PHP.</p>
+<h1> Prerequisites </h1>
+<p> Students should have either Apache 2.2.x web server installed with the
+  PHP extensions enabled, or have IIS 5.0 or greater installed with PHP's DLLs
+  installed and configured.</p>
+<h1> Laboratory Details </h1>
+<p> Create solutions for each question: </p>
+<ol>
+	<li>Create 4 functions:
+    	<ul>
+        	<li><b>renderHeader()</b>: This function returns a div element with a BU logo on the left-hand side</li>
+            <li><b>renderMenu()</b>: This function returns a div with a ul list of anchor elements.  All links point to &quot;#&quot;</li>
+            <li><b>renderContent()</b>: This function will contain all your content for the page(s).</li>
+            <li><b>renderFoot()</b>: This shows the Copyright &copy; 2009 [you name here]</li>
+         </ul>
+	</li>
+    <li>Create a function and a HTML page that shows a textfield and a submit button.    Have the user indicate an age (any valid age...).   The PHP function
+    will calculate their age in dog years.</li>
+    <li>Building off the previous example, have your function use a default value of 1 - just in case the user doesn't put in an integer value.</li>
+    <li>Building off the previous example,  include client-side validation that will check for non-numeric values before letting the form submission through to the server.</li>
+    <li>Create a function called calculateTaxes(), that takes in a monetary figure.   That function will call addStateTax, using that value.   
+          The function addStateTax will return a value with the tax included.   Next, create and call another function called addFederalHealthCareExciseTax().   That does the same thing.
+          Next, call another function that will will add salesTax.    Have a textfield and submit button that interacts with the user.    Show the results of the taxes in a div under the textfield.</li>
+</ol>
+
+</body>
+</html>

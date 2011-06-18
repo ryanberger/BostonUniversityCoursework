@@ -1,0 +1,43 @@
+.align-center { 
+    text-align: center; 
+}
+    
+.align-left { 
+    text-align: left; 
+}
+    
+.align-right { 
+    text-align: right; 
+}
+    
+.bold { 
+    font-weight: bold; 
+}
+			
+.italic { 
+    font-style: italic; 
+}
+
+.white-bg { 
+    background-color: #FFFFFF; 
+}
+
+.light-red-bg { 
+    background-color: #DC143C; 
+}
+
+.light-blue-bg { 
+    background-color: #1E90FF; 
+}
+
+.light-green-bg { 
+    background-color: #90EE90; 
+}
+
+.dark-grey-bg {
+    background-color: #A9A9A9;
+}
+
+.peach-bg {
+    background-color: #FFF8DC;
+}

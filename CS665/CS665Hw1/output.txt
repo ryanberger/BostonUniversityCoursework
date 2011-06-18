@@ -1,0 +1,8 @@
+Utilities, rent, equipment: 2000.0 10000.0 3000.0
+Green Manager: 90000.0
+Black Hourly: 20.0
+Brown Hourly: 10.0
+Jones Exempt: 60000.0
+Smith Exempt: 48000.0
+Month of April Project Rose: 0.2 0.4 0.6 5620.0
+Month of April Project Jasmine: 0.8 0.6 0.4 12180.0
