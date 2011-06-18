@@ -1,0 +1,11 @@
+Wireframe web to set up prototype for project.
+
+AJAX: IE uses it via ActiveX, FireFox uses it via plugins.
+
+setTimeout(5000, function())
+if (unsuccessful)
+	ajaxObject.abort();
+
+Prototype: 
+var a = new Element("a", {id: "hi", name: "target", ... });
+$("hi").update("");

@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RottenTomatoesViewer", "RottenTomatoesViewer\RottenTomatoesViewer.csproj", "{22BDC4C7-56CB-4BCC-8881-828E987E7C70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RottenTomatoesViewer.Web", "RottenTomatoesViewer.Web\RottenTomatoesViewer.Web.csproj", "{39623D14-8F2C-42DB-AAFF-8592C9A8862B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CherryTomato", "CherryTomato\CherryTomato.csproj", "{25C9C93C-15A1-466A-B911-A948F3C43728}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22BDC4C7-56CB-4BCC-8881-828E987E7C70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22BDC4C7-56CB-4BCC-8881-828E987E7C70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22BDC4C7-56CB-4BCC-8881-828E987E7C70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22BDC4C7-56CB-4BCC-8881-828E987E7C70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39623D14-8F2C-42DB-AAFF-8592C9A8862B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39623D14-8F2C-42DB-AAFF-8592C9A8862B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39623D14-8F2C-42DB-AAFF-8592C9A8862B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39623D14-8F2C-42DB-AAFF-8592C9A8862B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25C9C93C-15A1-466A-B911-A948F3C43728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25C9C93C-15A1-466A-B911-A948F3C43728}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25C9C93C-15A1-466A-B911-A948F3C43728}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25C9C93C-15A1-466A-B911-A948F3C43728}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

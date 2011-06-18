@@ -1,0 +1,176 @@
+<html>
+<!-- Ryan Berger, BU ID: U41933866 -->
+    <head>
+    <title>Homework #6 by Ryan Berger</title>
+    <base href="http://www.ajaxdaddy.com/web20/prototype/windows/samples/"/>
+        <style type="text/css">   
+          body
+           {
+           color: white;
+           background: #52616F;
+           }  
+          a
+           {  
+           color: white; 
+           }      
+     </style>
+        <!--  Add this to have a specific theme-->
+        <link href="../themes/default.css" rel="stylesheet" type="text/css" />
+        <link href="../themes/alphacube.css" rel="stylesheet" type="text/css" />
+        <link href="../themes/mac_os_x.css" rel="stylesheet" type="text/css"/>    
+        <script type="text/javascript" src="../javascripts/prototype.js">
+     </script>
+        <script type="text/javascript" src="../javascripts/effects.js"> 
+      </script>
+        <script type="text/javascript" src="../javascripts/window.js">
+       </script>
+        <script type="text/javascript" src="../javascripts/window_effects.js">
+         </script>
+        <script type="text/javascript" src="../javascripts/debug.js"> 
+          </script>
+        <style type="text/css">
+              body
+               { 
+                   background: #363636;
+               }
+
+              #border 
+              { 
+                  position:absolute;  
+                  top:10px;  
+                  left:10px;  
+                  width:500px;  
+                  height:500px;  
+                  border: 1px solid #000;  
+                  overflow:hidden;
+              }  
+              
+              #container 
+              { 
+                   position:absolute; 
+                    top:0px; 
+                    left:0px;  
+                    width:500px;  
+                    height:500px;  
+                    overflow:hidden;  
+                    background:#DAEE9B;  
+                    z-index:0;
+                }  
+          
+          </style>
+    </head>
+    <body>
+            <script type="text/javascript"> 
+
+                var multipleSelection = {
+                    objectType: function(type, element)
+                    {
+                        switch (type)
+                        {
+                            case 'radio':
+                                for (g = 0; g < element.length; g++)
+                                {
+                                    if (element[g].checked)
+                                    {
+                                        multipleSelection.values.push(element[g].value);
+                                        alert("You picked: " + multipleSelection.values[g]);
+                                    }
+                                }
+                                break;
+                            case 'checkbox':
+                                for (h = 0; h < element.length; h++)
+                                {
+                                    if (element[h].checked)
+                                    {
+                                        multipleSelection.values.push(element[h].value);
+                                        alert("You picked: " + multipleSelection.values[h]);
+                                    }
+                                }
+                                break;
+                            case 'select':
+                                for (i = 0; i < element.options.length; i++)
+                                {
+                                    if (element.options[i].selected)
+                                    {
+                                        multipleSelection.values.push(element.options[i].text);
+                                        alert("You picked: " + multipleSelection.values[i]);
+                                    }
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    },
+                    values: new Array(),
+                    instructionText: function()
+                    {
+                        var elements = document.getElementsByTagName("h1");
+                        for (i = 0; i < elements.length; i++)
+                        {
+                            if (elements[i].innerHTML == null || elements[i].innerHTML == "undefined" || elements[i].innerHTML == "")
+                            {
+                                elements[i].innerHTML = "Choose from the following:";
+                            }
+                        }
+                    }
+                }
+                    
+                function firstPrompt()
+                {  
+                    var win = new Window({id: "win1", className: "alphacube", title: "First Prompt", width:300, height:150});   
+                    win.getContent().innerHTML = "<h1>Please select from the following choices:</h1>" + 
+                    "<div><select id=\"test1\"><option value=\"one\">one</option><option value=\"two\">two</option></select></div>" +
+                    "<div><input type=\"button\" value=\"Ok\" onclick=\"multipleSelection.objectType('select', document.getElementById('test1'));\" /><input type=\"button\" value=\"Clear\" /><input type=\"button\" value=\"Cancel\" /></div>";   
+                    win.setDestroyOnClose();   
+                    win.showCenter();  
+                    win.setConstraint(true, {left:0, right:0, top: 30, bottom:10});
+                    win.toFront();
+                }
+                
+                function secondPrompt()
+                {  
+                    var win = new Window({id: "win2", className: "alphacube", title: "Second Prompt", width:300, height:150});   
+                    win.getContent().innerHTML = "<h1>Please select from the following choices:</h1>" + 
+                    "<div><input type=\"checkbox\" name=\"check1\" value=\"one\" />one<input type=\"checkbox\" name=\"check1\" value=\"two\" />two</div>" +
+                    "<div><input type=\"button\" value=\"Ok\" onclick=\"multipleSelection.objectType('checkbox', document.getElementsByName('check1'));\" /><input type=\"button\" value=\"Clear\" /><input type=\"button\" value=\"Cancel\" /></div>";   
+                    win.setDestroyOnClose();   
+                    win.showCenter();  
+                    win.setConstraint(true, {left:0, right:0, top: 30, bottom:10});
+                    win.toFront();
+                }
+                
+                function thirdPrompt()
+                {  
+                    var win = new Window({id: "win3", className: "alphacube", title: "Third Prompt", width:300, height:150});   
+                    win.getContent().innerHTML = "<h1>Please select from the following choices:</h1>" + 
+                    "<div><input type=\"radio\" name=\"radio1\" value=\"one\" />one<input type=\"radio\" name=\"radio1\" value=\"two\" />two</div>" +
+                    "<div><input type=\"button\" value=\"Ok\" onclick=\"multipleSelection.objectType('radio', document.getElementsByName('radio1'));\" /><input type=\"button\" value=\"Clear\" /><input type=\"button\" value=\"Cancel\" /></div>";   
+                    win.setDestroyOnClose();   
+                    win.showCenter();  
+                    win.setConstraint(true, {left:0, right:0, top: 30, bottom:10});
+                    win.toFront();
+                }
+                
+                function lastPrompt()
+                {  
+                    var win = new Window({id: "winLast", className: "alphacube", title: "Last Prompt", width:300, height:150});   
+                    win.getContent().innerHTML = "<h1></h1>" + 
+                    "<div><select id=\"testLast\"><option value=\"one\">one</option><option value=\"two\">two</option></select></div>" +
+                    "<div><input type=\"button\" value=\"Ok\" onclick=\"multipleSelection.objectType('select', document.getElementById('testLast'));\" /><input type=\"button\" value=\"Clear\" /><input type=\"button\" value=\"Cancel\" /></div>";   
+                    win.setDestroyOnClose();   
+                    win.showCenter();  
+                    win.setConstraint(true, {left:20, right:20, top: 50, bottom:30});
+                    win.toFront();
+                }
+  
+</script>
+
+     <script type="text/javascript">   
+        lastPrompt();
+        thirdPrompt();
+        secondPrompt();
+        firstPrompt();
+        multipleSelection.instructionText();  
+      </script>
+    </body>
+</html>

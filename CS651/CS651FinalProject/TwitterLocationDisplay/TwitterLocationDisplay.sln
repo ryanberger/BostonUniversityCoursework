@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "TwitterLocationDisplay", "..\TwitterLocationDisplay", "{F96267DC-B0B1-45C6-87E3-714211A5EC6B}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFramework = "3.5"
+		Debug.AspNetCompiler.VirtualPath = "/TwitterLocationDisplay"
+		Debug.AspNetCompiler.PhysicalPath = "..\..\..\..\..\..\BU\CS651\CS651FinalProject\TwitterLocationDisplay\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\TwitterLocationDisplay\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/TwitterLocationDisplay"
+		Release.AspNetCompiler.PhysicalPath = "..\..\..\..\..\..\BU\CS651\CS651FinalProject\TwitterLocationDisplay\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\TwitterLocationDisplay\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "3179"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|.NET = Debug|.NET
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F96267DC-B0B1-45C6-87E3-714211A5EC6B}.Debug|.NET.ActiveCfg = Debug|.NET
+		{F96267DC-B0B1-45C6-87E3-714211A5EC6B}.Debug|.NET.Build.0 = Debug|.NET
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

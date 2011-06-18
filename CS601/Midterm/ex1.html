@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>RBerger Ex 1</title>
+<script type="text/javascript">
+	function checkAge() {
+		// Match date by using a Regular Expression, and yes, I do know how to use these :)
+		var rgxDate = /\d{2}\/\d{2}\/\d{4}/;
+		var today = new Date();
+		var validDate = false;
+		
+		do {
+			var input = prompt("Please enter your date of birth in MM/DD/YYYY format: ", "");
+			
+			// Ensure that user typed in a valid date, if they didn't, make them re-enter it
+			if (input.match(rgxDate)) {
+				var birthDate = Date.parse(input);
+				
+				if (birthDate > today) {
+					alert("You indicated a date that is greater than today's date.");
+				}
+				// For some reason, this if statement is not working
+				else if (birthDate.getMonth() == today.getMonth() && birthDate.getDate() == today.getDate() && birthDate.getFullYear() == today.getFullYear()) {
+					alert("You cannot use today's date for a birthdate.");	
+				}
+				else {
+					validDate = true;
+				}
+			}
+			else {
+				alert("You have indicated a value that is not a date. Please use this date format \"MM/DD/YYYY\"");
+			}
+			
+		} while (!(validDate));
+		
+		// This if statement is also not working
+		if (today.getFullYear() - birthDate.getFullYear() < 21) {
+			alert("You are not allowed to consume nor purchase alcoholic beverages.");	
+		}
+		else {
+			alert("Congratulations on being over 21!");
+		}
+		
+		
+	}
+</script>
+</head>
+
+<body onload="checkAge();">
+
+</body>
+</html>

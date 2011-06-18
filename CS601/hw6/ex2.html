@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- Ryan Berger, BU ID: U41933866 -->
+    <head>
+        <title>Homework #6 by Ryan Berger</title>
+        <script type="text/javascript">
+            var isValid = {
+                object: function(element) {
+                    if (element != null && element != "undefined")
+                    {
+                        if (isValid.showAlert == true)
+                        {
+                            alert(element + " is a valid object!");
+                        }
+                    }
+                    else
+                    {
+                        if (isValid.showAlert == true)
+                        {
+                            alert(element + " is NOT a valid object!");
+                        }
+                    }
+                },
+                showAlert: false
+            }
+            
+            var displayMessage = {
+                object: function(element) {
+                    if (element != null && element != "undefined")
+                    {
+                        element.value = displayMessage.text;
+                    }
+                },
+                text: ""
+            }
+            
+        </script>
+    </head>
+    <body onload="displayMessage.text='Hello World!';
+                  displayMessage.object(document.getElementById('test1'));
+                  displayMessage.object(document.getElementById('test2'));
+                  displayMessage.object(document.getElementById('test3'))">
+            <div><input type="button" value="TestValid" onclick="isValid.showAlert=true;isValid.object(this);" /></div>
+            <div><input type="text" value="" id="test1" /></div>
+            <div id="test2"></div>
+    </body>
+</html>

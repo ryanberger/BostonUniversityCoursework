@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- Ryan Berger, BU ID: U41933866 -->
+    <head>
+        <title>Date Compare by Ryan Berger</title>
+		<link rel="stylesheet" type="text/css" href="styles/date.css" />
+		<script type="text/javascript" src="scripts/date_compare.js"></script>
+    </head>
+    <body>
+        <h1>Please enter 2 dates.</h1>
+        <h3>Use each textfield for a date. We like dates to use the following format: 'MM/DD/YYYY'. For example, 3/22/2008 or 12/21/2008.</h3>
+        <table cellpadding="20px">
+            <tr>
+                <td><div>Your first date:</div><div><input type="text" id="date1" /></div></td>
+                <td><div>Your second date:</div><div><input type="text" id="date2" /></div></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" onclick="compareDates();" value="Submit" id="submit"/></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><div id="output" class="output"></div></td>
+            </tr>
+        </table>
+    </body>
+</html>

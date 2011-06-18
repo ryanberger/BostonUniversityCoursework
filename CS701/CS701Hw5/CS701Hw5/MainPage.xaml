@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="CS701Hw5.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:src="clr-namespace:CS701Hw5"
+    mc:Ignorable="d"
+    d:DesignHeight="536" 
+    d:DesignWidth="986" 
+    xmlns:dataInput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input" 
+    xmlns:data="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data">
+    <UserControl.Resources>
+        <src:CourseCollection x:Key="courseList" d:IsDataSource="True" />
+        <src:SelectedCourseCollection x:Key="selectedCourseList" d:IsDataSource="True" />
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="White" Height="536" Width="983">
+        <dataInput:Label Height="50" HorizontalAlignment="Left" Margin="135,12,0,0" Name="label1" VerticalAlignment="Top" Width="100" Content="Available Courses" />
+        <dataInput:Label Height="50" HorizontalAlignment="Left" Margin="565,12,0,0" Name="label2" VerticalAlignment="Top" Width="100" Content="Selected Courses" />
+        <data:DataGrid x:Name="CourseGrid" 
+				ItemsSource="{Binding Mode=OneWay, Source={StaticResource courseList}}"
+				AutoGenerateColumns="False" SelectionMode="Single"  Margin="12,40,570,296">
+            <data:DataGrid.Columns>
+                <data:DataGridTextColumn Header="Course ID"
+				            Binding="{Binding Id}" />
+                <data:DataGridTextColumn Header="Course Name"
+				            Binding="{Binding Name}" />
+                <data:DataGridTextColumn Header="Instructor"
+				            Binding="{Binding Instructor}" />
+            </data:DataGrid.Columns>
+        </data:DataGrid>
+        <data:DataGrid x:Name="SelectedCourseGrid"
+                       ItemsSource="{Binding Mode=OneWay, Source={StaticResource selectedCourseList}}"
+				AutoGenerateColumns="False" SelectionMode="Single"  Margin="446,40,152,296">
+            <data:DataGrid.Columns>
+                <data:DataGridTextColumn Header="Course ID"
+				            Binding="{Binding Id}" />
+                <data:DataGridTextColumn Header="Course Name"
+				            Binding="{Binding Name}" />
+                <data:DataGridTextColumn Header="Instructor"
+				            Binding="{Binding Instructor}" />
+                <data:DataGridTextColumn Header="Day"
+				            Binding="{Binding Day}" />
+            </data:DataGrid.Columns>
+        </data:DataGrid>
+        <Button Content="Select" Height="23" HorizontalAlignment="Left" Margin="12,246,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="SelectButton_Click" />
+        <Button Content="Remove" Height="23" HorizontalAlignment="Right" Margin="0,246,463,0" Name="button2" VerticalAlignment="Top" Width="75" Click="RemoveButton_Click" />
+        <Button Content="Show Summary" Height="23" HorizontalAlignment="Left" Margin="12,334,0,0" Name="button3" VerticalAlignment="Top" Width="100" Click="SummaryButton_Click" />
+        <TextBlock x:Name="summaryBlock" TextWrapping="Wrap" Margin="12,363,13,0" />
+    </Grid>
+</UserControl>

@@ -1,0 +1,4 @@
+http://onehackoranother.com/projects/jquery/boxy/
+
+http://www.w3schools.com/php/func_string_addslashes.asp
+
