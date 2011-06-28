@@ -6,9 +6,9 @@ using System.Text;
 using System.Xml.Linq;
 using System.IO;
 
-using System.Text.RegularExpressions;  
+using System.Text.RegularExpressions;
 
-namespace ConsoleApplication1
+namespace WikiSharder
 {
     class Program
     {
@@ -17,7 +17,7 @@ namespace ConsoleApplication1
             if (args.Length != 2)
             {
                 System.Console.WriteLine("Please enter an input file and an output file");
-                System.Console.WriteLine("Usage: ConsoleApplication1 <infile> <outfile>");
+                System.Console.WriteLine("Usage: WikiSharder <infile> <outfile>");
                 return;
             }
 
