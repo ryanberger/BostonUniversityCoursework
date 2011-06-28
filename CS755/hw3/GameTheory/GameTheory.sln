@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameTheory", "GameTheory\GameTheory.csproj", "{FF339A85-40FF-44AB-AB5E-A989A6BBFBB9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF339A85-40FF-44AB-AB5E-A989A6BBFBB9}.Debug|x86.ActiveCfg = Debug|x86
+		{FF339A85-40FF-44AB-AB5E-A989A6BBFBB9}.Debug|x86.Build.0 = Debug|x86
+		{FF339A85-40FF-44AB-AB5E-A989A6BBFBB9}.Release|x86.ActiveCfg = Release|x86
+		{FF339A85-40FF-44AB-AB5E-A989A6BBFBB9}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = GameTheory\GameTheory.csproj
+	EndGlobalSection
+EndGlobal
