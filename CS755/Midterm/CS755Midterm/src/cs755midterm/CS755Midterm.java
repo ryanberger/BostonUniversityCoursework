@@ -13,6 +13,11 @@ import java.util.Scanner;
  */
 public class CS755Midterm {
     
+    static Scanner _console = new Scanner(System.in);
+    static String _newoffspring1;
+    static String _newoffspring2;
+    static int[] _buffer;
+
     static Double CROSSOVER_RATE = 0.7;
     static Double MUTATION_RATE = 0.001;
     static int POP_SIZE = 100;			//must be an even number
@@ -20,7 +25,7 @@ public class CS755Midterm {
     static int GENE_LENGTH = 4;
     static int MAX_ALLOWABLE_GENERATIONS = 400;
 
-    static void Main(string[] args)
+    public static void main(String[] args)
     {
         // overall champ;
         chromo_typ ultimatechamp = new chromo_typ(); 
@@ -28,18 +33,21 @@ public class CS755Midterm {
         // just loop endlessly until user gets bored :0)
         while (true)
         {
+            Double Target;
             // storage for our population of chromosomes.
             //size: [POP_SIZE]
-            List<chromo_typ> Population = new List<chromo_typ>();
+            List<chromo_typ> Population = new ArrayList<chromo_typ>();
 
             // get a target number from the user
-            Double Target;
-            Console.WriteLine("Input a target number: ");
-            string sTarget= "15"; 
-            bool success = Double.TryParse(sTarget, out Target);
-            if (!success)
+            System.out.println("Input a target number: ");
+            String sTarget = _console.nextLine();
+            try
             {
-                Console.WriteLine("Oopsie!");
+                Target = Double.parseDouble(sTarget);
+            }
+            catch (NumberFormatException e)
+            {
+                System.out.println("Oopsie!");
                 return;
             }
 
@@ -47,22 +55,22 @@ public class CS755Midterm {
             for (int i=0; i<POP_SIZE; i++)
             {
                 chromo_typ ct = new chromo_typ(GetRandomBits(CHROMO_LENGTH, i), 0.0);
-                Population.Add(ct); 
+                Population.add(ct); 
             }
 
             int GenerationsRequiredToFindASolution = 0;
 
             //we will set this flag if a solution has been found
-            bool bFound = false;
+            Boolean bFound = false;
 
             //enter the main GA loop
             while(!bFound)
             {
-                    //this is used during roulette wheel sampling
-                    double TotalFitness = 0.0f;
+                //this is used during roulette wheel sampling
+                double TotalFitness = 0.0f;
 
                     // test and update the fitness of every chromosome in the population
-                foreach (chromo_typ ct in Population)
+                for (chromo_typ ct: Population)
                 {
                     ct.fitness = AssignFitness(ct.bits, Target);
                     TotalFitness += ct.fitness;
@@ -70,20 +78,20 @@ public class CS755Midterm {
 
                     // check to see if we have found any solutions (fitness will be 999)
                 chromo_typ thechamp = new chromo_typ(); 
-                    foreach (chromo_typ ct in Population)
+                    for (chromo_typ ct: Population)
                 {
                     if (ct.fitness == 999.0f)
                     {
                         ultimatechamp.fitness = ct.fitness;
                         ultimatechamp.bits = ct.bits;
 
-                        Console.WriteLine("=========================");
-                        Console.WriteLine("Solution found in " + GenerationsRequiredToFindASolution.ToString() + " generations! Its genes are:");
+                        System.out.println("=========================");
+                        System.out.println("Solution found in " + GenerationsRequiredToFindASolution + " generations! Its genes are:");
                         PrintChromo(ct.bits);
-                        Console.WriteLine("\nIt has phenotype {0}, and is the chromosome: {1}", Phenotype(ultimatechamp.bits), ultimatechamp.bits);
-                        Console.WriteLine("=========================");
+                        System.out.println("\nIt has phenotype " + Phenotype(ultimatechamp.bits) +", and is the chromosome: " + ultimatechamp.bits);
+                        System.out.println("=========================");
                         bFound = true;
-                        Console.ReadLine(); 
+                        _console.nextLine(); 
                         return;
                     }
                     else
@@ -99,18 +107,21 @@ public class CS755Midterm {
                             ultimatechamp.bits = ct.bits; 
                         }
                     }
-                    }
-                Console.WriteLine("\nBest chromosome detected in generation " + GenerationsRequiredToFindASolution.ToString() + " has fitness {0}, phenotype {1}, and genotype: {2}", thechamp.fitness, Phenotype(thechamp.bits), DisplayChromo(thechamp.bits));
+                }
+                System.out.println("\nBest chromosome detected in generation " + 
+                        GenerationsRequiredToFindASolution + " has fitness " + 
+                        thechamp.fitness + ", phenotype " + Phenotype(thechamp.bits) + 
+                        ", and genotype: " + DisplayChromo(thechamp.bits));
 
                 //
-                    // create a new population by selecting two parents at a time and creating offspring
+                // create a new population by selecting two parents at a time and creating offspring
                 // by applying crossover and mutation. Do this until the desired number of offspring
                 // have been created
                 //
 
                     //define some temporary storage for the new population we are about to create
                     //chromo_typ temp[POP_SIZE];
-                List<chromo_typ> temp = new List<chromo_typ>();
+                List<chromo_typ> temp = new ArrayList<chromo_typ>();
 
                     //loop until we have created POP_SIZE new chromosomes
                 int cPop = 0;
@@ -119,30 +130,30 @@ public class CS755Midterm {
                     // we are going to create the new population by grabbing members of the old 
                     // population two at a time via roulette wheel selection
                     Random r = new Random(GenerationsRequiredToFindASolution);
-                    string offspring1 = Roulette(TotalFitness, Population, r.Next(1000));
-                    string offspring2 = Roulette(TotalFitness, Population, r.Next(1000));
+                    String offspring1 = Roulette(TotalFitness, Population, r.nextInt(1000));
+                    String offspring2 = Roulette(TotalFitness, Population, r.nextInt(1000));
 
                     // add crossover dependent on the crossover rate
-                    string newoffspring1;
-                    string newoffspring2;
-                    Crossover(offspring1, offspring2, out newoffspring1, out newoffspring2, r.Next(1000));
+                    String newoffspring1 = "";
+                    String newoffspring2 = "";
+                    Crossover(offspring1, offspring2, r.nextInt(1000));
 
                     // mutate dependent on the mutation rate
-                    newoffspring1 = Mutate(newoffspring1, r.Next(1000));
-                    newoffspring2 = Mutate(newoffspring2, r.Next(1000));
+                    newoffspring1 = Mutate(_newoffspring1, r.nextInt(1000));
+                    newoffspring2 = Mutate(_newoffspring2, r.nextInt(1000));
 
                     //add these offspring to the new population. (assigning zero as their fitness scores)
                     chromo_typ ct1 = new chromo_typ(newoffspring1, 0.0f);
                     chromo_typ ct2 = new chromo_typ(newoffspring2, 0.0f);
-                    temp.Add(ct1); cPop++;
-                    temp.Add(ct2); cPop++;
+                    temp.add(ct1); cPop++;
+                    temp.add(ct2); cPop++;
                 }//end loop
 
                     //copy temp population into main population array
-                Population.Clear();
+                Population.clear();
                     for (int i=0; i<POP_SIZE; i++)
                 {
-                    Population.Add(temp[i]);
+                    Population.add(temp.get(i));
                 }
 
                     ++GenerationsRequiredToFindASolution;
@@ -151,47 +162,50 @@ public class CS755Midterm {
                     // of generations
                     if (GenerationsRequiredToFindASolution > MAX_ALLOWABLE_GENERATIONS)
                     {
-                    Console.WriteLine("=========================");
-                    Console.WriteLine("No exact solutions found!");
-                    Console.WriteLine("Best chromosome found has fitness {0}, phenotype {1}, genotype: {2}, and is the chromosome {3}", ultimatechamp.fitness, Phenotype(ultimatechamp.bits), DisplayChromo(ultimatechamp.bits), ultimatechamp.bits);
-                    Console.WriteLine("=========================");
+                    System.out.println("=========================");
+                    System.out.println("No exact solutions found!");
+                    System.out.println("Best chromosome found has fitness " + 
+                            ultimatechamp.fitness + ", phenotype " + Phenotype(ultimatechamp.bits) + 
+                            ", genotype: " + DisplayChromo(ultimatechamp.bits) + 
+                            ", and is the chromosome " + ultimatechamp.bits);
+                    System.out.println("=========================");
                             bFound = true;
                     }
             }
-            Console.WriteLine("");
-            Console.WriteLine("Next round:");
+            System.out.println("");
+            System.out.println("Next round:");
         }//end while
-        Console.ReadLine(); 
+        //_console.nextLine(); 
     }
 
-    //	This function returns a string of random 1s and 0s of the desired length.
-    static string GetRandomBits(int length, int seed)
+    //	This function returns a String of random 1s and 0s of the desired length.
+    static String GetRandomBits(int length, int seed)
     {
         StringBuilder bits = new StringBuilder();
         Random r = new Random(seed);
         for (int i = 0; i < length; i++)
         {
-            Double d = r.NextDouble();
+            Double d = r.nextDouble();
             if (d > 0.5)
             {
-                bits.Append("1");
+                bits.append("1");
             }
             else
             {
-                bits.Append("0");
+                bits.append("0");
             }
         }
-        return bits.ToString();
+        return bits.toString();
     }
 
-    static int BinToDec(string bits)
+    static int BinToDec(String bits)
     {
         int val = 0;
         int value_to_add = 1;
 
-        for (int i = bits.Length; i > 0; i--)
+        for (int i = bits.length(); i > 0; i--)
         {
-            if (bits[i - 1] == '1')
+            if (bits.charAt(i - 1) == '1')
             {
                 val += value_to_add;
             }
@@ -203,8 +217,8 @@ public class CS755Midterm {
     // Given a chromosome this function will step through the genes one at a time and insert 
     // the decimal values of each gene (which follow the operator -> number -> operator rule)
     // into a buffer. Returns the number of elements in the buffer, and the buffer as an out arg.
-    //int ParseBits(string bits, ref List<int> buffer)
-    static int ParseBits(string bits, ref int[] buffer)
+    //int ParseBits(String bits, ref List<int> buffer)
+    static int ParseBits(String bits)
     {
         // counter for buffer position
         int cBuff = 0;
@@ -215,7 +229,7 @@ public class CS755Midterm {
         // We ignore the unused genes 1111 and 1110
 
         // flag to determine if we are looking for an operator or a number
-        bool bOperator = true;
+        Boolean bOperator = true;
 
         // storage for decimal value of currently tested gene
         int this_gene = 0;
@@ -223,7 +237,7 @@ public class CS755Midterm {
         for (int i = 0; i < CHROMO_LENGTH; i += GENE_LENGTH)
         {
             //convert the current gene to decimal
-            this_gene = BinToDec(bits.Substring(i, GENE_LENGTH));
+            this_gene = BinToDec(bits.substring(i, i + GENE_LENGTH));
 
             //find a gene which represents an operator
             if (bOperator)
@@ -235,7 +249,7 @@ public class CS755Midterm {
                 else
                 {
                     bOperator = false;
-                    buffer[cBuff++] = this_gene;
+                    _buffer[cBuff++] = this_gene;
                     //buffer.Add(this_gene);
                     continue;
                 }
@@ -251,7 +265,7 @@ public class CS755Midterm {
                 else
                 {
                     bOperator = true;
-                    buffer[cBuff++] = this_gene;
+                    _buffer[cBuff++] = this_gene;
                     continue;
                 }
             }
@@ -264,49 +278,49 @@ public class CS755Midterm {
         //	evolution of the solution
         for (int i = 0; i < cBuff; i++)
         {
-            if ((buffer[i] == 13) && (buffer[i + 1] == 0))
+            if ((_buffer[i] == 13) && (_buffer[i + 1] == 0))
 
-                buffer[i] = 10;
+                _buffer[i] = 10;
         }
 
         // debugging
-        string chromosome = DisplayChromo(buffer);
+        String chromosome = DisplayChromo(_buffer);
 
         return cBuff;
     }
 
-    //	given a chromosome (string of bits) this function will calculate its  
+    //	given a chromosome (String of bits) this function will calculate its  
     //  phenotype (representation)
-    static Double Phenotype(string bits)
+    static Double Phenotype(String bits)
     {
         //holds decimal values of gene sequence
         int len = (int)(CHROMO_LENGTH / GENE_LENGTH);
-        int[] buffer = new int[len];
+        _buffer = new int[len];
         //List<int> buffer2 = new List<int>(); 
-        int num_elements = ParseBits(bits, ref buffer);
+        int num_elements = ParseBits(bits);
 
         // ok, we have a buffer filled with valid values of: 
         // operator - number - operator - number..
         // now we calculate what this represents.
-        Double result = 0.0f;
+        Double result = 0.0;
         for (int i = 0; i < num_elements - 1; i += 2)
         {
-            switch (buffer[i])
+            switch (_buffer[i])
             {
                 case 10:
-                    result += buffer[i + 1];
+                    result += _buffer[i + 1];
                     break;
 
                 case 11:
-                    result -= buffer[i + 1];
+                    result -= _buffer[i + 1];
                     break;
 
                 case 12:
-                    result *= buffer[i + 1];
+                    result *= _buffer[i + 1];
                     break;
 
                 case 13:
-                    result /= buffer[i + 1];
+                    result /= _buffer[i + 1];
                     break;
 
             }//end switch
@@ -316,7 +330,7 @@ public class CS755Midterm {
 
     // given a phenotype (chromosome representation) and a target value, this function
     // will return a fitness score
-    static Double AssignFitness(string bits, double target_value)
+    static Double AssignFitness(String bits, double target_value)
     {
         Double result = Phenotype(bits);
 
@@ -325,66 +339,66 @@ public class CS755Midterm {
 
         if (result == target_value)
         {
-            return 999.0f;
+            return 999.0;
         }
         else
         {
-            return 1 / (double)Math.Abs((double)(target_value - result));
+            return 1 / (double)Math.abs((double)(target_value - result));
         }
     }
 
     // decodes and prints a chromo to screen
-    static void PrintChromo(string bits)
+    static void PrintChromo(String bits)
     {	
             //holds decimal values of gene sequence
             //int buffer[(int)(CHROMO_LENGTH / GENE_LENGTH)];
         int len = (int)(CHROMO_LENGTH / GENE_LENGTH);
-        int[] buffer = new int[len];
+        _buffer = new int[len];
         //List<int> buffer2 = new List<int>(); 
 
-            //parse the bit string
-            int num_elements = ParseBits(bits, ref buffer);
+            //parse the bit String
+            int num_elements = ParseBits(bits);
 
             for (int i=0; i<num_elements; i++)
         {
-                    PrintGeneSymbol(buffer[i]);
+                    PrintGeneSymbol(_buffer[i]);
         }
             return;
     }
-    static string DisplayChromo(string bits)
+    static String DisplayChromo(String bits)
     {
         //holds decimal values of gene sequence
         //int buffer[(int)(CHROMO_LENGTH / GENE_LENGTH)];
         int len = (int)(CHROMO_LENGTH / GENE_LENGTH);
-        int[] buffer = new int[len];
+        _buffer = new int[len];
         //List<int> buffer2 = new List<int>(); 
 
-        //parse the bit string
-        int num_elements = ParseBits(bits, ref buffer);
+        //parse the bit String
+        int num_elements = ParseBits(bits);
 
         StringBuilder s = new StringBuilder(); 
         for (int i = 0; i < num_elements; i++)
         {
-            s.Append(DisplayGeneSymbol(buffer[i]));
+            s.append(DisplayGeneSymbol(_buffer[i]));
         }
-        return s.ToString();
+        return s.toString();
     }
     static void PrintChromo(int[] bits)
     {
-        for (int i = 0; i < bits.Length; i++)
+        for (int i = 0; i < bits.length; i++)
         {
             PrintGeneSymbol(bits[i]);
         }
         return;
     }
-    static string DisplayChromo(int[] bits)
+    static String DisplayChromo(int[] bits)
     {
         StringBuilder s = new StringBuilder(); 
-        for (int i = 0; i < bits.Length; i++)
+        for (int i = 0; i < bits.length; i++)
         {
-            s.Append(DisplayGeneSymbol(bits[i]));
+            s.append(DisplayGeneSymbol(bits[i]));
         }
-        return s.ToString();
+        return s.toString();
     }
 
     //	given an integer this function outputs its symbol to the screen 
@@ -394,7 +408,7 @@ public class CS755Midterm {
         if (val < 10)
         {
             //cout << val << " ";
-            Console.Write(val.ToString() + " ");  
+            System.out.print(val + " ");  
         }
         else
         {
@@ -402,37 +416,37 @@ public class CS755Midterm {
             {
                 case 10:
                     //cout << "+";
-                    Console.Write("+");  
+                    System.out.print("+");  
                     break;
 
                 case 11:
                     //cout << "-";
-                    Console.Write("-");  
+                    System.out.print("-");  
                     break;
 
                 case 12:
                     //cout << "*";
-                    Console.Write("*");  
+                    System.out.print("*");  
                     break;
 
                 case 13:
                     //cout << "/";
-                    Console.Write("/");  
+                    System.out.print("/");  
                     break;
             }//end switch
 
             //cout << " ";
-            Console.Write(" ");  
+            System.out.print(" ");  
         }
         return;
     }
-    static string DisplayGeneSymbol(int val)
+    static String DisplayGeneSymbol(int val)
     {
         StringBuilder s = new StringBuilder(); 
         if (val < 10)
         {
             //cout << val << " ";
-            s.Append(val.ToString() + " "); 
+            s.append(val + " "); 
         }
         else
         {
@@ -440,69 +454,68 @@ public class CS755Midterm {
             {
                 case 10:
                     //cout << "+";
-                    s.Append("+");
+                    s.append("+");
                     break;
 
                 case 11:
                     //cout << "-";
-                    s.Append("-");
+                    s.append("-");
                     break;
 
                 case 12:
                     //cout << "*";
-                    s.Append("*");
+                    s.append("*");
                     break;
 
                 case 13:
                     //cout << "/";
-                    s.Append("/");
+                    s.append("/");
                     break;
             }//end switch
 
             //cout << " ";
-            s.Append(" ");
+            s.append(" ");
         }
-        return s.ToString();
+        return s.toString();
     }
 
     //	Mutates a chromosome's bits dependent on the MUTATION_RATE
-    static string Mutate(string bits, int seed)
+    static String Mutate(String bits, int seed)
     {
         StringBuilder s = new StringBuilder();
         Random r = new Random(seed); 
-            for (int i = 0; i < bits.Length; i++)
+            for (int i = 0; i < bits.length(); i++)
             {
-            Double d = r.NextDouble();
+            Double d = r.nextDouble();
             if (d < MUTATION_RATE)
             {
-                if (bits[i] == '1')
+                if (bits.charAt(i) == '1')
                 {
-                    s.Append("0");
+                    s.append("0");
                     //bits[i] = '0';
                 }
                 else
                 {
-                    s.Append("1");
+                    s.append("1");
                     //bits[i] = '1';
                 }
             }
             else
             {
-                s.Append(bits[i]);
+                s.append(bits.charAt(i));
             }
             }
-            return s.ToString();
+            return s.toString();
     }
 
     //  Dependent on the CROSSOVER_RATE this function selects a random point along the 
     //  length of the chromosomes and swaps all the bits after that point.
-    static void Crossover(string offspring1, string offspring2, 
-        out string newoffspring1, out string newoffspring2, int seed)
+    static void Crossover(String offspring1, String offspring2, int seed)
     {
-        newoffspring1 = String.Empty;
-        newoffspring2 = String.Empty;	
+        _newoffspring1 = "";
+        _newoffspring2 = "";	
         Random r = new Random(seed); 
-        Double d = r.NextDouble(); 
+        Double d = r.nextDouble(); 
 
         //dependent on the crossover rate
         if (d < CROSSOVER_RATE)
@@ -510,25 +523,25 @@ public class CS755Midterm {
             //create a random crossover point
             int crossover = (int)(d * CHROMO_LENGTH);
 
-            string t1 = offspring1.Substring(0, crossover) + offspring2.Substring(crossover, CHROMO_LENGTH - crossover);
-            string t2 = offspring2.Substring(0, crossover) + offspring1.Substring(crossover, CHROMO_LENGTH - crossover);
+            String t1 = offspring1.substring(0, crossover) + offspring2.substring(crossover, crossover + (CHROMO_LENGTH - crossover));
+            String t2 = offspring2.substring(0, crossover) + offspring1.substring(crossover, crossover + (CHROMO_LENGTH - crossover));
 
-            newoffspring1 = t1;
-            newoffspring2 = t2;
+            _newoffspring1 = t1;
+            _newoffspring2 = t2;
         }
         else
         {
-            newoffspring1 = offspring1;
-            newoffspring2 = offspring2;
+            _newoffspring1 = offspring1;
+            _newoffspring2 = offspring2;
         }
     }
 
     // selects a chromosome from the population via roulette wheel selection
-    static string Roulette(double total_fitness, List<chromo_typ> Population, int seed)
+    static String Roulette(double total_fitness, List<chromo_typ> Population, int seed)
     {
         //generate a random number between 0 & total fitness count
         Random r = new Random(seed); 
-        Double d = r.NextDouble(); 
+        Double d = r.nextDouble(); 
         double Slice = (double)(d * total_fitness);
 
         //go through the chromosones adding up the fitness so far
@@ -536,30 +549,30 @@ public class CS755Midterm {
 
         for (int i=0; i<POP_SIZE; i++)
         {
-                FitnessSoFar += Population[i].fitness;
+                FitnessSoFar += Population.get(i).fitness;
 
                 //if the fitness so far > random number return the chromo at this point
                 if (FitnessSoFar >= Slice)
             {
-                        return Population[i].bits;
+                        return Population.get(i).bits;
             }
         }
         return "";
     }
 
-    public class chromo_typ
+    public static class chromo_typ
     {
-        public string bits;  
+        public String bits;  
         public double fitness;
             public chromo_typ()
         {
-            bits = String.Empty;
+            bits = "";
             fitness = 0.0;
         }
-        public chromo_typ(string bts, double ftns)
+        public chromo_typ(String bts, double ftns)
         {
             bits = bts;
             fitness = ftns;
         }
-    };
+    }
 }
