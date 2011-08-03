@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- Ryan Berger, BU ID: U41933866 -->
+    <head>
+        <title>Project Proposal by Ryan Berger</title>
+    </head>
+    <body>
+        <h2>Project Proposal</h2>
+        <h3>Ryan Berger</h3>
+        <h3>BU ID: U41933866</h3>
+        <p>I intend to create a site which could be used internally by the company I currently work for, EBSCO Publishing. This site would provide an interface for a MySQL database which would store the network locations, vendor info, and FTP credentials for all of the incoming data which EBSCO receives from its third-party vendors. Users (who are employees of EBSCO) could use this site to find out where to find raw data for a particular product rather than having to email the Data Librarian every time (which is bothersome to him).</p>
+        <p>The idea itself was thought up by Robert Murray (who is in our class). Since he decided to do something else for his project, he suggested the idea to me and I decided that I wanted to pursue it since it could possibly be beneficial to our company. I spoke with my manager at work and he liked the idea of using a school project to provide a useful web site for other employees to make use of. Here is a database schema diagram which describes how the tables will be laid out...</p>
+        <div><img src="MySQLSchemaDiagram.jpg" /></div>
+        <p>The vision of the site would be for a user to first see a page with a menu bar, a search bar, and a "dashboard-style" display showing a list of all the vendors. The bars would be set up using CSS and the dashboard would be generated using PHP and MySQL. The user could then click on a vendor's name from the list, which would take them to a new page which would list the vendor's details (and FTP credentials, if applicable) along with any feeds that are related to the vendor. The feeds would be linkable and would take the user to another page which would list the network location that the data is stored on, all associated products, followed by a listing of the file names to use (which would not be auto-generated from the directory listing, but rather entered in to the MySQL database by the administrator since not all files located in a particular network location are appropriate to use). </p>
+        <p>Also on the main page, the user would also have the option of searching by prodcode or vendor name, which would return a listing of matching product IDs or vendor names on a new page. Finally, the main page would contain a link (labeled "admin") on the menu bar which would take the user to a login screen. If the correct credentials are entered (validated against username and password in MySQL database), then the user is brought back to the main page with a few important differences.</p>
+        <p>First, all of the fields in all result lists will become editable meaning that the result tables themselves will still be static on the page, but an edit, and a delete button will be added to the right of every row. If the user clicks "edit", they will be brought to a new screen where they can edit every value in the selected row (primary key is not an issue here, since a separate number is used behind-the-scenes to keep track of everything) and then submit their changes. Also, on the menu bar of the main page, three new links will be added: "add vendor", "add feed", and "add prodcode". This will allow for the user to add an entirely new vendor with full info, including associated prodcode (and vice-versa for prodcode). Finally, the admin user would get an additional link which would allow for them to add/delete any other admin users. Below is a flow diagram depicting my vision... </p>
+        <div><img src="ProjectFlow.jpg" /></div>
+        <p>I plan on using JavaScript mostly for field validation and for accessing DOM elements, when appropriate. I will use the Prototype framework to help simplify my code. I think that this project will require around 15-20 hours of work to complete.</p>
+    </body>
+</html>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- Ryan Berger, BU ID: U41933866 -->
+    <head>
+        <title>Homework #6 by Ryan Berger</title>
+        <script type="text/javascript">
+            var isMin = {
+                object: new Object(),
+                min: 1,
+                showAlert: false
+            }
+            var isMax = {
+                object: new Object(),
+                max: 15,
+                showAlert: false
+            }
+            
+            function showAlertForMin(element)
+            {
+                if (element.checked == 1)
+                {
+                    isMin.showAlert = true;
+                }
+                else
+                {
+                    isMin.showAlert = false;
+                }
+            }
+            
+            function showAlertForMax(element)
+            {
+                if (element.checked == 1)
+                {
+                    isMax.showAlert = true;
+                }
+                else
+                {
+                    isMax.showAlert = false;
+                }
+            }
+            
+            function checkMinAndMax(element)
+            {
+                if (element.attributes.getNamedItem("value") != "" && element.value != "")
+                {
+                    isMin.object = isMax.object = element;
+                   
+                    if (isMin.showAlert == true)
+                    {
+                        if (isMin.object.value >= isMin.min)
+                        {
+                            alert(isMin.object.value + " is greater than or equal to the minimum accepted value (" + isMin.min + ")");
+                        }
+                        else
+                        {
+                            alert(isMin.object.value + " is less than the minimum accepted value (" + isMin.min + ")");
+                        }
+                    }
+                    
+                    if (isMax.showAlert == true)
+                    {
+                        if (isMax.object.value > isMax.max)
+                        {
+                            alert(isMax.object.value + " is greater than the maximum accepted value (" + isMax.max + ")");
+                        }
+                        else
+                        {
+                            alert(isMax.object.value + " is less than or equal to the maximum accepted value (" + isMax.max + ")");
+                        }
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body>
+            <div><input type="text" value="" onblur="checkMinAndMax(this);" /></div>
+            <div><input type="checkbox" onchange="showAlertForMin(this);" />Show Alert For Min</div>
+            <div><input type="checkbox" onchange="showAlertForMax(this);" />Show Alert For Max</div>
+    </body>
+</html>

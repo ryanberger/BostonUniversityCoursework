@@ -1,0 +1,91 @@
+/* Hw3 - Ryan Berger - U41933866*/
+
+/* Ex 1 */
+h1, h3 {
+    padding: .5em;
+    border: dashed;
+    margin: .5em;
+}
+
+/* Ex 2 */
+.high {
+    color: green;
+    margin-top: 25px;
+    margin-left: 25px;
+}
+
+/* Ex 3 */
+div.header {
+    width: 100%;
+    float: top;
+    height: 65px;
+    border: solid;
+    border-width: 0 0 2px 0;
+    background-color: #eeeeee;
+}
+
+div.left-col {
+    width: 150px;
+    height: 1000px;
+    float: left;
+    border: solid;
+    border-width: 0 2px 0 0;
+    background-color: #777777;
+    padding: 20px;
+    margin: 0;
+}
+
+div.right-col {
+    height: 1000px;
+    border: solid;
+    background-color: #c0c0c0;
+    padding: 20px;
+    margin: 0;
+    border: 0;
+}
+
+.indented {
+    margin-left: 300px;
+}
+
+/* Ex 4 */
+a {
+    text-decoration: none;
+    border: dotted;
+    border-width: 0 0 2px 0;
+    border-color: #0B610B;
+}
+
+/* Ex 5 */
+li > span {
+    background-color: #333333;
+    color: white;
+}
+
+/* Ex 6 */
+div.spacer {
+    margin-bottom: 25px;
+}
+
+/* Ex 7 */
+p.on_right {
+    text-align: right;
+    font-size: 30px;
+}
+
+/* Ex 8 */
+ul > li {
+    margin: 1px 4px 10px 20px;
+}
+
+/* Ex 9 */
+body {
+    font-family: howdy-doody, franky-hollywood, fantasy;
+}
+
+/* Ex 10 */
+div > cite span {
+    color: #0B610B;
+    font-size: 19px;
+    font-style: italic;
+}

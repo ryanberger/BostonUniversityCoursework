@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- Ryan Berger, BU ID: U41933866 -->
+    <head>
+        <title>Dynamic Blog by Ryan Berger</title>
+		<link rel="stylesheet" type="text/css" href="styles/blog.css" />
+        <script type="text/javascript" src="scripts/blog.js"></script>
+    </head>
+    <body>
+        <div><em>Please make your blog entry in the fields below. Today's date will be automatically inserted for your entry.</em></div>
+        <div>
+            <textarea id="blogSpace" rows="9" cols="60"></textarea>
+        </div>
+        <div>
+            <input type="reset" id="clear" value="Clear" onclick="clearForm();" />
+            <input type="submit" id="save" value="Save" onclick="postBlogEntry();" />
+        </div>
+        <div id="postedBlogs" />
+    </body>
+</html>

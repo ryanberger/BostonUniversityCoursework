@@ -1,0 +1,13 @@
+body
+{
+	background-color: Gray;
+}
+		    
+.centered
+{
+	background-color: White;
+	padding: 15px 15px 15px 15px;
+	height: 283px;
+	width: 350px;
+	float: left;
+}

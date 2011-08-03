@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- Ryan Berger, BU ID: U41933866 -->
+    <head>
+        <title>Date Lab by Ryan Berger</title>
+        <script type="text/javascript">
+        function checkDate() {
+            var inputDate = document.getElementById("date_input").value;
+            var realDate = new Date();
+            var testDate = new Date();
+            
+            //testDate = testDate.setFullYear(inputDate.substring
+            
+            if (inputDate == realDate) {
+                document.writeln("The date you entered is today's date.");
+            }
+            else if (inputDate < realDate) {
+                document.writeln("The date you entered is in the past.");
+            }
+            else {
+                document.writeln("The date you entered is in the future.");
+            }
+        }
+        </script>
+    </head>
+    <body>
+        <div>Please indicate a date...</div>
+        <form action="date_lab.html">
+            <div>
+                <input type="text" id="date_input" />
+            </div>
+            <div>
+                <input type="button" value="Validate" onclick="checkDate();" />
+            </div>
+        </form>
+    </body>
+</html>

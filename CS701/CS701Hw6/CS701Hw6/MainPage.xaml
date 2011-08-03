@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="CS701Hw6.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+	xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+    d:DesignHeight="300" d:DesignWidth="400">
+
+    <StackPanel Margin="10">
+        <chartingToolkit:Chart x:Name="chart1" Title="Course Enrollment"
+			Width="400" Height="300">
+            <chartingToolkit:ColumnSeries Title="Enrollment"
+				ItemsSource="{Binding}"
+				IndependentValueBinding="{Binding Id}"
+				DependentValueBinding="{Binding Enrollment}" 
+			/>
+            <!--<chartingToolkit:ColumnSeries Title="Expenses"
+				ItemsSource="{Binding}"
+				IndependentValueBinding="{Binding Month}"
+				DependentValueBinding="{Binding Expenses}" 
+			/>-->
+        </chartingToolkit:Chart>
+        <Button x:Name="startButton" Content="Start" Width="100" Margin="5"
+			Click="OnClick_Start" IsEnabled="True"/>
+        <Button x:Name="stopButton" Content="Stop"  Width="100" Margin="5"
+			Click="OnClick_Stop" IsEnabled="False"/>
+    </StackPanel>
+</UserControl>

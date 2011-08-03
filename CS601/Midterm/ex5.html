@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>RBerger ex5</title>
+<style type="text/css">
+	.smallText{
+		font-size: small;
+	}
+	.medText{
+		font-size: medium;
+	}
+	.largeText{
+		font-size: large;
+	}
+</style>
+<script type="text/javascript">
+	function smallText() {
+		var textBlob = document.getElementById("textBlob");
+		textBlob.setAttribute("class", "smallText");
+	}
+	function medText() {
+		var textBlob = document.getElementById("textBlob");
+		textBlob.setAttribute("class", "medText");
+	}
+	function largeText() {
+		var textBlob = document.getElementById("textBlob");
+		textBlob.setAttribute("class", "largeText");
+	}
+</script>
+</head>
+
+<body>
+	<div class="medText" id="textBlob"><p>It looks as if the e-paper revolution is really about to start.</p><p>Hearst, one of the largest media conglomerates in the world, announced on Friday that it has developed an electronic reader for newspapers and
+magazines, the way Amazon.com's new Kindle does for books. The publisher
+is also planning to put at least some of its online content behind a pay
+wall, according to a report in The Wall Street Journal.</p></div>
+	<div>
+    	<input type="button" value="small" onclick="smallText();" />
+    	<input type="button" value="medium" onclick="medText();" />
+    	<input type="button" value="extra-large" onclick="largeText();" />
+    </div>
+</body>
+</html>
