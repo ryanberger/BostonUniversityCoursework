@@ -1,0 +1,14 @@
+﻿The Azure Research Engagement project aims to change the paradigm for scholarly and scientific research by extending the power of the computer into the cloud. We build the 
+components of cloud technology and work with researchers in the field on projects that push the frontier of client and cloud computing.We are pleased to announce the public 
+release of NCBI BLAST on Windows Azure under a Microsoft Research License Agreement. Built on Windows Azure, this cloud-based implementation of NCBI’s Basic Local Alignment 
+Search Tool (BLAST) searches all available sequence databases for similarities between a protein or DNA query and known sequences. BLAST on Windows Azure enables researchers
+ to take advantage of the scalability of the Windows Azure platform to execute BLAST jobs on demand in the cloud. In addition to the release of this software, our team will 
+ support its use and provide free access to the NCBI reference databases in Windows Azure.Microsoft has initiated a large project, called Venus-C, as part of the European 
+ Commission FP7 funding program. Venus-C will demonstrate how Windows Azure can interoperate with other cloud platforms and the existing European science grid. In early 2011, 
+ the Venus-C project will request up to 20 submissions of cloud platforms to use in this interoperability study. In addition, seven initial cloud platforms are currently being 
+ ported to Windows Azure. This work will provide useful data to help facilitate interoperability among cloud platforms.The U.K. Engineering and Physical Sciences Research Council 
+ (EPSRC) is funding “digital hubs” to examine how new technologies can be used to enhance the quality of life for everyone. The emphasis is on developing innovative, inclusive 
+ products and services. Microsoft is involved through an agreement with the Horizon project, which is the "digital economy hub" based at the University of Nottingham.INRIA is 
+ France’s premier information technology research laboratory. The Microsoft Research-INRIA Joint Centre was founded by INRIA, Microsoft Corporation, and the Microsoft Research 
+ Laboratory Cambridge to pursue fundamental, long-term research in formal methods, software security, and application of computer science research to the sciences. This agreement 
+ creates a new INRIA-Microsoft collaboration area on the topic of cloud computing. 
