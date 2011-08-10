@@ -3,6 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS755FinalProject", "CS755FinalProject.csproj", "{4EEB1874-C382-411C-B011-ABAFB4FA89BD}"
 EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Research.MapReduce.CloudHost", "CloudHostSource\Research.MapReduce.CloudHost\Research.MapReduce.CloudHost.ccproj", "{74CD6917-A063-4E70-AA3F-E2C9D8F20699}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Research.MapReduce.CloudHost.Master", "CloudHostSource\Research.MapReduce.CloudHost.Master\Research.MapReduce.CloudHost.Master.csproj", "{26A929EA-0E62-4C79-984E-254221D505F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Research.MapReduce.CloudHost.Slave", "CloudHostSource\Research.MapReduce.CloudHost.Slave\Research.MapReduce.CloudHost.Slave.csproj", "{66E8FE45-3CF0-4929-BC3C-9B758B9D45A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +25,24 @@ Global
 		{4EEB1874-C382-411C-B011-ABAFB4FA89BD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4EEB1874-C382-411C-B011-ABAFB4FA89BD}.Release|x86.ActiveCfg = Release|x86
 		{4EEB1874-C382-411C-B011-ABAFB4FA89BD}.Release|x86.Build.0 = Release|x86
+		{74CD6917-A063-4E70-AA3F-E2C9D8F20699}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74CD6917-A063-4E70-AA3F-E2C9D8F20699}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74CD6917-A063-4E70-AA3F-E2C9D8F20699}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{74CD6917-A063-4E70-AA3F-E2C9D8F20699}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74CD6917-A063-4E70-AA3F-E2C9D8F20699}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74CD6917-A063-4E70-AA3F-E2C9D8F20699}.Release|x86.ActiveCfg = Release|Any CPU
+		{26A929EA-0E62-4C79-984E-254221D505F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26A929EA-0E62-4C79-984E-254221D505F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26A929EA-0E62-4C79-984E-254221D505F2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{26A929EA-0E62-4C79-984E-254221D505F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26A929EA-0E62-4C79-984E-254221D505F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26A929EA-0E62-4C79-984E-254221D505F2}.Release|x86.ActiveCfg = Release|Any CPU
+		{66E8FE45-3CF0-4929-BC3C-9B758B9D45A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66E8FE45-3CF0-4929-BC3C-9B758B9D45A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66E8FE45-3CF0-4929-BC3C-9B758B9D45A4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{66E8FE45-3CF0-4929-BC3C-9B758B9D45A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66E8FE45-3CF0-4929-BC3C-9B758B9D45A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66E8FE45-3CF0-4929-BC3C-9B758B9D45A4}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
