@@ -19,7 +19,7 @@ namespace CS755.MapReduce.FileTransform
     {
         #region Fields
 
-        private const string PackageName = "WordCountSample";
+        private const string PackageName = "FileTransform";
         private static string masterConnectionString;
         private static CloudStorageAccount storageAccount;
         private static Dictionary<string, string> controllerArgs;

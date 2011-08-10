@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="Research.MapReduce.CloudHost" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+  <!-- Master worker role and its vmsize. -->
+  <WorkerRole name="Research.MapReduce.CloudHost.Master" vmsize="Small">
+    <Endpoints>
+      <!-- Local endpoint to listen on for incoming connections (e.g. from slaves sending heartbeat). -->
+      <InternalEndpoint name="Endpoint" protocol="tcp" />
+    </Endpoints>
+    <LocalResources>
+      <!-- Worker local storage size. -->
+      <LocalStorage name="LocalStorage" cleanOnRoleRecycle="true" sizeInMB="200000" />
+    </LocalResources>
+    <ConfigurationSettings>
+      <!-- Connection string to the Windows Azure storage account used for logging by the worker role instance. -->
+      <Setting name="DiagnosticsConnectionString" />
+      <!-- Connection string to the Windows Azure storage account used for storing MapReduce data and housekeeping information. -->
+      <Setting name="StorageConnectionString" />
+    </ConfigurationSettings>
+  </WorkerRole>
+  <!-- Slave worker role and its vmsize. -->
+  <WorkerRole name="Research.MapReduce.CloudHost.Slave" vmsize="Small">
+    <Endpoints>
+      <!-- Local endpoint to listen on for incoming connections (e.g. from slaves requesting Map data). -->
+      <InternalEndpoint name="Endpoint" protocol="tcp" />
+    </Endpoints>
+    <LocalResources>
+      <!-- Worker local storage size. -->
+      <LocalStorage name="LocalStorage" cleanOnRoleRecycle="true" sizeInMB="200000" />
+    </LocalResources>
+    <ConfigurationSettings>
+      <!-- Connection string to the Windows Azure storage account used for logging by the worker role instance. -->
+      <Setting name="DiagnosticsConnectionString" />
+      <!-- Connection string to the Windows Azure storage account used for storing MapReduce data and housekeeping information. -->
+      <Setting name="StorageConnectionString" />
+      <!-- The maximum number of map tasks that can be executed parallelly on each slave. -->
+      <Setting name="MapTaskSlotSize" />
+      <!-- The maximum number of reduce tasks that can be executed parallelly on each slave. -->
+      <Setting name="ReduceTaskSlotSize" />
+    </ConfigurationSettings>
+  </WorkerRole>
+</ServiceDefinition>
