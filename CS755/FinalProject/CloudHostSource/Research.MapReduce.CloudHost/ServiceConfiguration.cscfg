@@ -12,7 +12,7 @@
   </Role>
   <Role name="Research.MapReduce.CloudHost.Slave">
     <!-- Number of slave instances. -->
-    <Instances count="1" />
+    <Instances count="2" />
     <ConfigurationSettings>
       <!-- Connection string to the Windows Azure storage account used for logging by the worker role instances. -->
       <Setting name="DiagnosticsConnectionString" value="DefaultEndpointsProtocol=https;AccountName=rbergercs755;AccountKey=t3zKarUnzxPTNXX7BBXYfRKdcewv99y3rgpWWEb6mW773TOtCbmQDqZRRylQkxHvVE+p1xOALCIjYqXiEd2X4g==" />

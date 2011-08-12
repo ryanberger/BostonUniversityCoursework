@@ -1,7 +1,7 @@
 ﻿/*
- * FILE:        WordCountController.cs
+ * FILE:        FileTransformController.cs
  *                                                                      
- * DESCRIPTION: The file contains implementation for providing the 'controller' functionality for WordCount sample.
+ * DESCRIPTION: The file contains implementation for providing the 'controller' functionality for transform.
  *
  */
 
@@ -13,25 +13,27 @@ using Research.MapReduce.Library;
 namespace CS755.MapReduce.FileTransform
 {
     /// <summary>
-    /// Provides the 'controller' functionality for WordCount sample.
+    /// Provides the 'controller' functionality for FileTransform.
     /// </summary>
-    [Controller(Name = "WordCountController", Description = "Counts the number of times each unique word is found in the input data.")]
+	[Controller(Name = "FileTransformController", Description = "Transforms input data to output data.")]
     public sealed class FileTransformController : Controller
     {
         #region Input JobParameters
 
         /// <summary>
-        /// Duration (in minutes) within which the wordcount job must complete.
+        /// Duration (in minutes) within which the FileTransform job must complete.
         /// </summary>
         [ControllerParameter(Name = ParameterNames.JobTimeoutInMinutes, Description = "Duration within which a single k-means job must complete.", DefaultValue = "5", IsRequired = true)]
         public int JobTimeoutInMinutes { get; set; }
+
+    	public static int RecordCount { get; set; }
 
         #endregion
 
         #region Methods
 
         /// <summary>
-        /// Entry point for the execution of <see cref="Research.MapReduce.Samples.WordCount.FileTransformController"/>.
+        /// Entry point for the execution of <see cref="FileTransformController"/>.
         /// </summary>
         public override void Run()
         {
@@ -40,10 +42,10 @@ namespace CS755.MapReduce.FileTransform
             JobConfiguration jobConf = new JobConfiguration
             {
                 MapperType = typeof(FileTransformMapper),
-                CombinerType = typeof(WordCountReducer),
-                ReducerType = typeof(WordCountReducer),
+                CombinerType = typeof(FileTransformReducer),
+                ReducerType = typeof(FileTransformReducer),
                 MapOutputStorage = MapOutputStoreType.Local,
-                KeyPartitioner = typeof(HashModuloKeyPartitioner<string, int>),
+                KeyPartitioner = typeof(HashModuloKeyPartitioner<int, string>),
                 ExceptionPolicy = new TerminateOnFirstException(),
                 JobTimeout = TimeSpan.FromMinutes(JobTimeoutInMinutes)
             };
@@ -58,7 +60,7 @@ namespace CS755.MapReduce.FileTransform
         }
 
         /// <summary>
-        /// Validates the input parameters provided for running WordCount.
+		/// Validates the input parameters provided for running FileTransform.
         /// </summary>
         private void ValidateInputParameters()
         {

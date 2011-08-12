@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Research.MapReduce.Samples.WordCount")]
+[assembly: AssemblyTitle("CS755.MapReduce.FileTransform")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Research.MapReduce.Samples.WordCount")]
+[assembly: AssemblyProduct("CS755.MapReduce.FileTransform")]
 [assembly: AssemblyCopyright("Copyright © 2011 Microsoft Corporation. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

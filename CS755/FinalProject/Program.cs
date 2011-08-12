@@ -1,7 +1,7 @@
 ﻿/*
  * FILE:        Program.cs
  *                                                                      
- * DESCRIPTION: The file contains the implementation for a client application for running WordCount sample.
+ * DESCRIPTION: The file contains the implementation for a client application for running FileTransform.
  *
  */
 
@@ -11,7 +11,6 @@ using System.Configuration;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.StorageClient;
 using Research.MapReduce.Core;
-using CS755.MapReduce.FileTransform.Properties;
 
 namespace CS755.MapReduce.FileTransform
 {
@@ -23,6 +22,7 @@ namespace CS755.MapReduce.FileTransform
         private static string masterConnectionString;
         private static CloudStorageAccount storageAccount;
         private static Dictionary<string, string> controllerArgs;
+    	private static DateTime startTime;
 
         #endregion
 
@@ -30,6 +30,8 @@ namespace CS755.MapReduce.FileTransform
 
         static void Main(string[] args)
         {
+        	startTime = DateTime.Now;
+
             // Read values of 'masterConnectionString' and 'storageAccount' from app.config.
             ValidateAndGetConfiguration();
 
@@ -53,7 +55,7 @@ namespace CS755.MapReduce.FileTransform
             }
 
             // Submit application for execution and wait till it completes.
-            // Note:- Using a timeout that is slightly greater than the wordcount job. Use a larger
+            // Note:- Using a timeout that is slightly greater than the FileTransform job. Use a larger
             // timeout if other applications have already been submitted before this one.
             int timeoutInMinutes = int.Parse(controllerArgs[ParameterNames.JobTimeoutInMinutes]) + 2;
             SubmitAndWaitForApplication(timeoutInMinutes);
@@ -97,15 +99,15 @@ namespace CS755.MapReduce.FileTransform
         /// <returns>String array containing the arguments for running the sample.</returns>
         private static string[] GetDefaultInputArgs()
         {
-            string inputContainerName = "wordcount-input-" + Environment.UserName;
-            string outputContainerName = "wordcount-output-" + Environment.UserName;
+            string inputContainerName = "filetransform-input-" + Environment.UserName;
+            string outputContainerName = "filetransform-output-" + Environment.UserName;
 
             string[] args = new string[5];
 
             // Arg0 - InputDataLocation
             CloudBlobContainer container = GetInitializedContainer(inputContainerName);
-            CloudBlob blob = container.GetBlobReference("sampleinput.txt");
-            blob.UploadText(Resources.sampleinput);
+			CloudBlob blob = container.GetBlobReference("enwikibooks-20110808-pages-articles.xml");
+			blob.UploadText(@"..\Resources\enwikibooks-20110808-pages-articles.xml");
             args[0] = string.Format("-{0}::{1}", ParameterNames.InputDataLocation, blob.Uri);
 
             // Arg1 - OutputDataLocation          
@@ -143,7 +145,7 @@ namespace CS755.MapReduce.FileTransform
         }
 
         /// <summary>
-        /// Submits the WordCount application for execution and waits till it completes.
+        /// Submits the FileTransform application for execution and waits till it completes.
         /// </summary>
         /// <param name="timeoutInMinutes">Timeout (in minutes) value for the application.</param>
         private static void SubmitAndWaitForApplication(int timeoutInMinutes)
@@ -164,6 +166,10 @@ namespace CS755.MapReduce.FileTransform
                 {
                     Console.WriteLine("Application completed successfully. Output is available in blob container: {0}",
                         controllerArgs[ParameterNames.OutputDataLocation]);
+					Console.WriteLine("Time elapsed (seconds): {0}", (DateTime.Now - startTime).TotalSeconds);
+					Console.WriteLine("Records processed: {0}", FileTransformController.RecordCount);
+					Console.WriteLine("Records per second: {0}", 
+						FileTransformController.RecordCount / (DateTime.Now - startTime).TotalSeconds);
                 }
                 else
                 {

@@ -1,35 +1,53 @@
 ﻿/*
- * FILE:        WordCountReducer.cs
+ * FILE:        FileTransformReducer.cs
  *                                                                      
- * DESCRIPTION: The file contains implementation for providing combine and reduce functionality for WordCount sample by calculating the sum of occurances of the input key(word).
+ * DESCRIPTION: The file contains implementation for providing combine and reduce functionality for transforming the data.
  *
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Xml;
 using Research.MapReduce.Core;
 
 namespace CS755.MapReduce.FileTransform
 {
     /// <summary>
-    /// Provides the combine and reduce functionality for WordCount sample by calculating the sum
-    /// of occurances of a word.
+    /// Provides the combine and reduce functionality for the transform
     /// </summary>
-    public sealed class WordCountReducer : IReducer<string, int, string, int>
+    public sealed class FileTransformReducer : IReducer<int, string, int, string>
     {
+		struct Record
+		{
+			public string Title;
+			public string DateAdded;
+			public string Body;
+		}
+
         #region Methods
 
-        /// <summary>
-        /// Calculates the sum of occurances of the input key(word).
+    	/// <summary>
+        /// Transforms the record.
         /// </summary>
-        /// <param name="key">Word whose occurances are to be added.</param>
-        /// <param name="values">Occurances of the word provided as key.</param>
+        /// <param name="key">Record Number.</param>
+        /// <param name="values">The record (should only be one in the list).</param>
         /// <param name="context">An instance of <see cref="Research.MapReduce.Core.
         /// ReduceContext{K, V}"/>.</param>
-        /// <returns>Enumerable of (word, count) key value pairs.</returns>
-        public IEnumerable<KeyValuePair<string, int>> Reduce(string key, IEnumerable<int> values, ReduceContext<string, int> context)
-        {
-            yield return new KeyValuePair<string, int>(key, values.Sum());
+        /// <returns>The transformed record identified by the record number.</returns>
+        public IEnumerable<KeyValuePair<int, string>> Reduce(int key, IEnumerable<string> values, ReduceContext<int, string> context)
+    	{
+			XmlDocument xmlDoc = new XmlDocument();
+			xmlDoc.LoadXml(values.First());
+
+    		var record = ParseXml(xmlDoc);
+			RunRules(ref record);
+
+			string value = string.Format("<record><title>{0}</title><date>{1}</date><text>{2}</text></record>",
+				record.Title, record.DateAdded, record.Body);
+
+			yield return new KeyValuePair<int, string>(key, value);
         }
 
         /// <summary>
@@ -37,8 +55,25 @@ namespace CS755.MapReduce.FileTransform
         /// </summary>
         /// <param name="context">An instance of <see cref="Research.MapReduce.Core.
         /// ReduceContext{K, V}"/>.</param>
-        public void Configure(ReduceContext<string, int> context) { }
+        public void Configure(ReduceContext<int, string> context) { }
 
-        #endregion
+		private static Record ParseXml(XmlDocument test)
+		{
+			var record = new Record();
+			record.Title = test.SelectSingleNode(@"//title").InnerText;
+			record.DateAdded = test.SelectSingleNode(@"//timestamp").InnerText;
+			record.Body = test.SelectSingleNode(@"//text").InnerText;
+
+			return record;
+		}
+
+		private static void RunRules(ref Record record)
+		{
+			record.Title = record.Title.TrimEnd('.');
+			record.DateAdded = DateTime.Parse(record.DateAdded).ToShortDateString();
+			record.Body = Regex.Replace(record.Body, @"<[^>]*>", String.Empty); // Strip HTML tags
+		}
+
+    	#endregion
     }
 }
