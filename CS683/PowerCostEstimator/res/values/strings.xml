@@ -7,11 +7,11 @@
     <string name="cancel">Cancel</string>
     <string name="label_name">Name: </string>
     <string name="label_price_per_kwh">Price per kWh: </string>
-    <string name="label_device">Device Name: </string>
-    <string name="label_power_full">Power Usage (Watts): </string>
-    <string name="label_time_full">Time (hours per day): </string>
-    <string name="label_power_standby">Standby Power Usage (Watts): </string>
-    <string name="label_time_standby">Standby Time (hours per day): </string>
+    <string name="label_device">Device Name</string>
+    <string name="label_power_full">Power Usage (watts)</string>
+    <string name="label_time_full">Time (hours per day)</string>
+    <string name="label_power_standby">Standby Power Usage (watts)</string>
+    <string name="label_time_standby">Standby Time (hours per day)</string>
     
     <string-array name="devices_array">
         <item>Air Conditioner</item>
