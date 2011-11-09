@@ -1,89 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:scrollbarAlwaysDrawVerticalTrack="true" >
- 
-  <!-- Screen Design for Calculate -->
-  <TableLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/tableLayoutProfiles">
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_height="fill_parent">
 
-	      <LinearLayout android:id="@+id/linearLayout1" android:layout_width="wrap_content" android:layout_height="wrap_content" >
-	          <TextView
-	              android:id="@+id/textView_device"
-	              android:layout_width="wrap_content"
-	              android:layout_height="wrap_content"
-	              android:text="@string/label_device"
-	              android:textAppearance="?android:attr/textAppearanceMedium" />
-	          <AutoCompleteTextView
-	              android:id="@+id/autoCompleteTextViewDevice"
-	              android:layout_width="wrap_content"
-	              android:layout_height="wrap_content"
-	              android:layout_weight="1"
-	              android:inputType="textAutoComplete"/>
-	      </LinearLayout>
-	      <LinearLayout android:layout_width="wrap_content" android:id="@+id/linearLayout2" android:layout_height="wrap_content">
-	        <TextView
-		        android:id="@+id/textView_power_full"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/label_power_full"
-		        android:textAppearance="?android:attr/textAppearanceMedium" />
-	        <EditText
+        	<AutoCompleteTextView
+        	    android:id="@+id/autoCompleteTextView_device"
+        	    android:layout_width="fill_parent"
+        	    android:layout_height="wrap_content"
+        	    android:hint="@string/label_device"
+        	    android:inputType="textAutoComplete" />
+        	<EditText
 	            android:id="@+id/editText_power_full"
-	            android:layout_width="wrap_content"
+	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
+	            android:hint="@string/label_power_full"
 	            android:inputType="numberDecimal" />
-	      </LinearLayout>
-	      <LinearLayout android:layout_width="wrap_content" android:id="@+id/linearLayout3" android:layout_height="wrap_content">
-	        <TextView
-		        android:id="@+id/textView_time_full"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/label_time_full"
-		        android:textAppearance="?android:attr/textAppearanceMedium" />
-	        <EditText
+        	<EditText
 	            android:id="@+id/editText_time_full"
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
+	            android:hint="@string/label_time_full"
 	            android:inputType="numberDecimal" />
-	      </LinearLayout>
-	      <LinearLayout android:layout_width="wrap_content" android:id="@+id/linearLayout4" android:layout_height="wrap_content">
-	        <TextView
-		        android:id="@+id/textView_power_standby"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/label_power_standby"
-		        android:textAppearance="?android:attr/textAppearanceMedium" />
-	        <EditText
+        	<EditText
 	            android:id="@+id/editText_power_standby"
-	            android:layout_width="wrap_content"
+	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
+	            android:hint="@string/label_power_standby"
 	            android:inputType="numberDecimal" />
-	      </LinearLayout>
-	      <LinearLayout android:layout_width="wrap_content" android:id="@+id/linearLayout5" android:layout_height="wrap_content">
-	        <TextView
-		        android:id="@+id/textView_time_standby"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/label_time_standby"
-		        android:textAppearance="?android:attr/textAppearanceMedium" />
-	        <EditText
+        	<EditText
 	            android:id="@+id/editText_time_standby"
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
+	            android:hint="@string/label_time_standby"
 	            android:inputType="numberDecimal" />
-	      </LinearLayout>
-	      <LinearLayout android:layout_width="wrap_content" android:id="@+id/linearLayout6" android:layout_height="wrap_content">
-	          <Button
+        	<Button
 	              android:id="@+id/button_submit"
 	              android:layout_width="fill_parent"
 	              android:layout_height="wrap_content"
 	              android:text="@string/submit" />
-	      </LinearLayout>
-	 </TableLayout>
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
