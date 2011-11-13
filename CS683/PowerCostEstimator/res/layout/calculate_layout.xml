@@ -40,6 +40,26 @@
 	            android:layout_height="wrap_content"
 	            android:hint="@string/label_time_standby"
 	            android:inputType="numberDecimal" />
+
+        	<RelativeLayout android:layout_width="fill_parent"
+		        android:orientation="vertical"
+		        android:layout_height="fill_parent">
+	        	<CheckBox
+	        	    android:id="@+id/checkBox_add_to_profile"
+	        	    android:layout_width="wrap_content"
+	        	    android:layout_height="wrap_content"
+	        	    android:text="@string/label_add_to_profile" />
+
+	        	<Spinner
+	        	    android:id="@+id/spinner_profile"
+	        	    android:layout_width="fill_parent"
+	        	    android:layout_height="wrap_content"
+	        	    android:layout_toRightOf="@+id/checkBox_add_to_profile"
+	        	    android:entries="@array/devices_array" >
+
+	        	    </Spinner>
+        	</RelativeLayout>
+        	
         	<Button
 	              android:id="@+id/button_submit"
 	              android:layout_width="fill_parent"
