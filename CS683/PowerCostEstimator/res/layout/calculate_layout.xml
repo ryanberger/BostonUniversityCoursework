@@ -50,14 +50,14 @@
 	        	    android:layout_height="wrap_content"
 	        	    android:text="@string/label_add_to_profile" />
 
-	        	<Spinner
+	        	<!-- <Spinner
 	        	    android:id="@+id/spinner_profile"
 	        	    android:layout_width="fill_parent"
 	        	    android:layout_height="wrap_content"
 	        	    android:layout_toRightOf="@+id/checkBox_add_to_profile"
 	        	    android:entries="@array/devices_array" >
 
-	        	    </Spinner>
+	        	    </Spinner> -->
         	</RelativeLayout>
         	
         	<Button
