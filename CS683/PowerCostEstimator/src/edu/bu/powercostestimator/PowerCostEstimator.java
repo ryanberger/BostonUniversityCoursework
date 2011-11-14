@@ -2,7 +2,6 @@ package edu.bu.powercostestimator;
 
 import android.app.TabActivity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.TabHost;
 
@@ -13,7 +12,7 @@ public class PowerCostEstimator extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        Resources res = getResources(); // Resource object to get Drawables
+        //getResources(); // Resource object to get Drawables
         TabHost tabHost = getTabHost();  // The activity TabHost
         TabHost.TabSpec spec;  // Resusable TabSpec for each tab
         Intent intent;  // Reusable Intent for each tab
