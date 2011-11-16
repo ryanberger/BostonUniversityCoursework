@@ -3,6 +3,7 @@ package edu.bu.powercostestimator.test;
 import android.database.Cursor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.TextView;
+import edu.bu.powercostestimator.CalculateHelper;
 import edu.bu.powercostestimator.DatabaseAdapter;
 import edu.bu.powercostestimator.PowerCostEstimator;
 
@@ -10,9 +11,8 @@ public class PowerCostEstimatorTest extends
 		ActivityInstrumentationTestCase2<PowerCostEstimator> {
 	
 	private PowerCostEstimator mActivity;
-    private TextView mView;
-    private String resourceString;
-    private DatabaseAdapter myDbAdapter;
+    private DatabaseAdapter mDbAdapter;
+    private CalculateHelper mCalcHelper;
 
 	public PowerCostEstimatorTest() {
 	      super("edu.bu.powercostestimator", PowerCostEstimator.class);
@@ -22,31 +22,31 @@ public class PowerCostEstimatorTest extends
     protected void setUp() throws Exception {
         super.setUp();
         mActivity = this.getActivity();
-        myDbAdapter = new DatabaseAdapter(mActivity);
-        myDbAdapter.open();
-        mView = (TextView) mActivity.findViewById(edu.bu.powercostestimator.R.id.autoCompleteTextView_device);
-        resourceString = mActivity.getString(edu.bu.powercostestimator.R.string.label_device);
+        mDbAdapter = new DatabaseAdapter(mActivity);
+        mDbAdapter.open("PowerCostEstimatorDbTest", 1);
+        mDbAdapter.createDatabase();
+        mCalcHelper = new CalculateHelper(0.05, 150, 24);
     }
 	
-	public void testPreconditions() {
-	      //assertNotNull(mView);
-	}
-	
-	public void testText() {
-	      //assertEquals(resourceString,(String)mView.getText());
-	}
-	
-	public void testCreateDatabase() {
-		myDbAdapter.clearDatabase();
-        myDbAdapter.createDatabase();
-	}
-	
 	public void testSetProfile(){
-		myDbAdapter.setProfile("Home_TEST", 0.10);
-		Cursor c = myDbAdapter.getProfile("Home_TEST");
+		mDbAdapter.setProfile("Home_TEST", 0.10);
+		Cursor c = mDbAdapter.getProfile("Home_TEST");
 		int profileNameColumn = c.getColumnIndex("profile_name");
 		c.moveToFirst();
-        assertEquals(c.getString(profileNameColumn), "Home_TEST");
-        myDbAdapter.deleteProfile("Home_TEST");
+		assertEquals(c.getString(profileNameColumn), "Home_TEST");
+	}
+	
+	public void testCalculateCostPerHour() {
+		assertEquals(mCalcHelper.costPerHour(), 0.18);
+	}
+	
+	public void testCalculateCostPerDay() {
+		assertEquals(mCalcHelper.costPerDay(), 4.32);
+	}
+	
+	@Override
+	public void tearDown() {
+		mDbAdapter.clearDatabase();
+		mDbAdapter.close();
 	}
 }
