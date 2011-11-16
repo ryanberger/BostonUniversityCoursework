@@ -6,13 +6,19 @@ import android.os.Bundle;
 import android.widget.TabHost;
 
 public class PowerCostEstimator extends TabActivity {
-    /** Called when the activity is first created. */
+    
+	private PowerCostEstimator mActivity;
+	
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        //getResources(); // Resource object to get Drawables
+        //Initialize Database TODO: only do this on first run
+        DatabaseAdapter myDbAdapter = new DatabaseAdapter(mActivity);
+        //myDbAdapter.createDatabase();
+        
         TabHost tabHost = getTabHost();  // The activity TabHost
         TabHost.TabSpec spec;  // Resusable TabSpec for each tab
         Intent intent;  // Reusable Intent for each tab
