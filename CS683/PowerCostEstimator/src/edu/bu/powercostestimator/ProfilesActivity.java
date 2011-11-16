@@ -3,6 +3,7 @@ package edu.bu.powercostestimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,13 +16,15 @@ import android.widget.ListView;
 public class ProfilesActivity extends Activity {
 	
 	private ListView _lv1;
-	private String _lv_arr[]={"Home", "Office", "+ Add New"};
+	private String _lv_arr[] = {"Home", "Office", "+ Add New"};
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	
 		setContentView(R.layout.profiles_layout);
-	        
+	    
+		final Resources res = getResources();
+		
 		_lv1 = (ListView)findViewById(R.id.ListView01);
 		// By using setAdpater method in listview we an add string array in list.
 		_lv1.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, _lv_arr));
@@ -29,7 +32,9 @@ public class ProfilesActivity extends Activity {
 		_lv1.setOnItemClickListener(new OnItemClickListener() {
 		    public void onItemClick(AdapterView<?> parent, View view,
 		            int position, long id) {
-		    		showAlert();
+		    			String test = (String)_lv1.getItemAtPosition(position);
+		    			if (test.equals(res.getString(R.string.listview_add_new_profile)))
+		    				showAlert();
 		        }
 		      });
 	}
