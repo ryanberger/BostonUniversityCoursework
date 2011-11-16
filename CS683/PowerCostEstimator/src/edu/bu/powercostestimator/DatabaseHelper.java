@@ -21,6 +21,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public DatabaseHelper(Context context) {
     	super(context, DB_NAME, null, DATABASE_VERSION);
     }
+    
+    /**
+     * Constructor
+     * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
+     * Allows for custom database name and version. Useful for unit testing.
+     * @param context
+     * @param databaseName
+     * @param databaseVersion
+     */
+    public DatabaseHelper(Context context, String databaseName, int databaseVersion) {
+    	super(context, databaseName, null, databaseVersion);
+    }
  
 	@Override
 	public void onCreate(SQLiteDatabase db) { }

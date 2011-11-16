@@ -34,6 +34,19 @@ public class DatabaseAdapter {
 		myDatabase = myDbHelper.getWritableDatabase();
 		return this;
 	}
+	
+	 /**
+     * Open
+     * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
+     * Accepts name and version for database. Useful for unit testing.
+     * @param databaseName
+     * @param databaseVersion
+     */
+	public DatabaseAdapter open(String databaseName, int databaseVersion) throws SQLException {
+		myDbHelper = new DatabaseHelper(context, databaseName, databaseVersion);
+		myDatabase = myDbHelper.getWritableDatabase();
+		return this;
+	}
 
 	public void close() {
 		myDbHelper.close();
