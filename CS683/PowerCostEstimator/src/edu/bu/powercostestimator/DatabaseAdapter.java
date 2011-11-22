@@ -1,5 +1,7 @@
 package edu.bu.powercostestimator;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -60,7 +62,7 @@ public class DatabaseAdapter {
 		myDatabase.execSQL("DROP TABLE profile; DROP TABLE device; DROP TABLE profile_device;");
 	}
 	
-	public void setProfile(String profileName, double costPerKwh) {
+	public void addProfile(String profileName, double costPerKwh) {
 		myDatabase.execSQL("INSERT INTO profile (profile_name, profile_price_per_kwh) VALUES('" + profileName + "'," + costPerKwh + ");");
 	}
 	
@@ -69,10 +71,24 @@ public class DatabaseAdapter {
 	}
  
 	public Cursor getProfiles() {
-		return myDatabase.rawQuery("SELECT * FROM profile", null);
+		return myDatabase.rawQuery("SELECT * FROM profile;", null);
+	}
+	
+	public ArrayList<String> getProfileNames() {
+		return asStringArrayList(myDatabase.rawQuery("SELECT profile_name FROM profile;", null));
 	}
 	
 	public Cursor getProfile(String name) {
 		return myDatabase.rawQuery("SELECT * FROM profile WHERE profile_name = '" + name + "';", null);
+	}
+	
+	private ArrayList<String> asStringArrayList(Cursor dbCursor) {
+		ArrayList<String> outArrayList = new ArrayList<String>();
+		
+		while (dbCursor.moveToNext()) {
+			outArrayList.add(dbCursor.getString(dbCursor.getColumnIndex(dbCursor.getColumnName(0))));
+		}
+		
+		return outArrayList;
 	}
 }
