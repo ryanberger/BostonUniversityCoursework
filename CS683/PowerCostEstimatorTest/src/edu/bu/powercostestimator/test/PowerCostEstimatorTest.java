@@ -29,7 +29,7 @@ public class PowerCostEstimatorTest extends
     }
 	
 	public void testSetProfile(){
-		mDbAdapter.setProfile("Home_TEST", 0.10);
+		mDbAdapter.addProfile("Home_TEST", 0.10);
 		Cursor c = mDbAdapter.getProfile("Home_TEST");
 		int profileNameColumn = c.getColumnIndex("profile_name");
 		c.moveToFirst();
