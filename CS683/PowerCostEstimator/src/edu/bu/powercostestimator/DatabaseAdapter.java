@@ -66,8 +66,8 @@ public class DatabaseAdapter {
 		myDatabase.execSQL("INSERT INTO profile (profile_name, profile_price_per_kwh) VALUES('" + profileName + "'," + costPerKwh + ");");
 	}
 	
-	public void deleteProfile(String name) {
-		myDatabase.rawQuery("DELETE FROM profile WHERE profile_name = '" + name + "';", null);
+	public void deleteProfile(String profileName) {
+		myDatabase.rawQuery("DELETE FROM profile WHERE profile_name = '" + profileName + "';", null);
 	}
  
 	public Cursor getProfiles() {
@@ -80,6 +80,26 @@ public class DatabaseAdapter {
 	
 	public Cursor getProfile(String name) {
 		return myDatabase.rawQuery("SELECT * FROM profile WHERE profile_name = '" + name + "';", null);
+	}
+	
+	public void addDeviceToProfile(String deviceName, double devicePowerFull, double deviceCostFull, String profileName) {
+		myDatabase.rawQuery("INSERT INTO device (device_name, device_power_full, device_cost_full) VALUES ('"
+				+ deviceName + "', " + devicePowerFull + ", " + deviceCostFull + ");", null);
+		myDatabase.rawQuery("INSERT INTO profile_device (profile_id, device_id) VALUES ("+getProfileId(profileName)
+				+","+getDeviceId(deviceName, devicePowerFull, deviceCostFull)+");", null);
+	}
+	
+	public int getDeviceId(String deviceName, double devicePowerFull, double deviceCostFull) {
+		return getId(myDatabase.rawQuery("SELECT _id FROM device WHERE device_name='"+deviceName+"';", null));
+	}
+	
+	public int getProfileId(String profileName) {
+		return getId(myDatabase.rawQuery("SELECT _id FROM profile WHERE profile_name='"+profileName+"';", null));
+	}
+	
+	private int getId(Cursor cursor) {
+		cursor.moveToFirst();
+		return cursor.getInt(0);
 	}
 	
 	private ArrayList<String> asStringArrayList(Cursor dbCursor) {
