@@ -5,6 +5,7 @@
     <string name="app_name">Power Cost Estimator</string>
     <string name="listview_add_new_profile">+ Add New</string>
     <string name="label_new_profile">New Profile</string>
+    <string name="label_profile_summary">Profile Summary</string>
     <string name="label_profile_name">Profile Name</string>
     <string name="label_price_per_kwh">Price per kWh</string>
     <string name="submit">Submit</string>
@@ -15,6 +16,7 @@
     <string name="label_power_standby">Standby Power Usage (watts)</string>
     <string name="label_time_standby">Standby Time (hours per day)</string>
     <string name="label_add_to_profile">Add to profile</string>
+    <string name="label_choose_profile">Choose Profile</string>
     
     <string-array name="devices_array">
         <item>Air Conditioner</item>

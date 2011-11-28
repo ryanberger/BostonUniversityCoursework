@@ -6,9 +6,9 @@
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:orientation="vertical">
 
-		<AutoCompleteTextView android:id="@+id/autoCompleteTextView_device"
+		<!-- <AutoCompleteTextView android:id="@+id/autoCompleteTextView_device"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:hint="@string/label_device" android:inputType="textAutoComplete" />
+			android:hint="@string/label_device" android:inputType="textAutoComplete" /> -->
 
 		<EditText android:id="@+id/editText_power_full"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
@@ -19,9 +19,9 @@
 			android:hint="@string/label_time_full" android:inputType="numberDecimal"
 			android:maxLength="2" />
 
-		<EditText android:id="@+id/editText_power_standby"
+		<!-- <EditText android:id="@+id/editText_power_standby"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:hint="@string/label_power_standby" android:inputType="numberDecimal" />
+			android:hint="@string/label_power_standby" android:inputType="numberDecimal" /> -->
 
 		<CheckBox android:id="@+id/checkBox_add_to_profile"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"

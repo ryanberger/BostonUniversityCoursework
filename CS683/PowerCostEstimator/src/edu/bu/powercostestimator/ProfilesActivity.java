@@ -46,13 +46,17 @@ public class ProfilesActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				String test = (String)_lv1.getItemAtPosition(position);
-				if (test.equals(_res.getString(R.string.listview_add_new_profile)))
-					showAlert();
+				if (test.equals(_res.getString(R.string.listview_add_new_profile))) {
+					showAddNewProfileAlert();
+				}
+				else {
+					showViewExistingProfileAlert();
+				}
 			}
 		});
 	}
 
-	private void showAlert() {
+	private void showAddNewProfileAlert() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle(R.string.label_new_profile);
@@ -84,6 +88,21 @@ public class ProfilesActivity extends Activity {
 			}
 		});
 
+		alert.show();
+	}
+	
+	private void showViewExistingProfileAlert() {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		
+		alert.setTitle(R.string.label_profile_summary);
+		
+		alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int whichButton) {
+				//Done
+			}
+		});
+		
 		alert.show();
 	}
 
