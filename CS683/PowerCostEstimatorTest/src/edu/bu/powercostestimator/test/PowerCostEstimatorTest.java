@@ -22,7 +22,7 @@ public class PowerCostEstimatorTest extends
     protected void setUp() throws Exception {
         super.setUp();
         mActivity = this.getActivity();
-        mDbAdapter = new DatabaseAdapter(mActivity);
+        mDbAdapter = DatabaseAdapter.getInstance();
         mDbAdapter.open("PowerCostEstimatorDbTest", 1);
         mDbAdapter.createDatabase();
         mCalcHelper = new CalculateHelper(0.05, 150, 24);
