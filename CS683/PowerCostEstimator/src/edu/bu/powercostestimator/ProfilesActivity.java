@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ProfilesActivity extends Activity {
@@ -30,8 +32,8 @@ public class ProfilesActivity extends Activity {
 
 		setContentView(R.layout.profiles_layout);
 
-		mDbAdapter = new DatabaseAdapter(this);
-		mDbAdapter.open();
+		mDbAdapter = DatabaseAdapter.getInstance();
+		//mDbAdapter.open(this);
 		_res = getResources();
 
 		_lv1 = (ListView)findViewById(R.id.ListView01);
@@ -95,6 +97,18 @@ public class ProfilesActivity extends Activity {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		
 		alert.setTitle(R.string.label_profile_summary);
+		
+		LinearLayout layout = new LinearLayout(this);
+		// Set to vertical layout
+		layout.setOrientation(1);
+		
+		Cursor c = mDbAdapter.getProfileDevices("Home"); // TODO: don't hardcode!
+		while (c.moveToNext()) {
+			TextView tv = new TextView(this);
+			tv.setText(c.getString(1));
+			layout.addView(tv);
+		}
+		alert.setView(layout);
 		
 		alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
 			@Override

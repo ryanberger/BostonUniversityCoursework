@@ -2,6 +2,11 @@ package edu.bu.powercostestimator;
 
 public class CalculateHelper {
 	
+	private final int HOURS_PER_DAY = 24;
+	// Calculation based on average number of days per month in a given year.
+	private final double DAYS_PER_MONTH = 29.53;
+	private final double DAYS_PER_YEAR = 365.25;
+	
 	private double costPerKwh;
 	private double powerFull;
 	private double timeFull;
@@ -22,15 +27,14 @@ public class CalculateHelper {
 	}
 	
 	public double costPerDay() {
-		return costPerHour() * 24;
+		return costPerHour() * HOURS_PER_DAY;
 	}
 	
 	public double costPerMonth() {
-		// Calculation based on average number of days per month in a given year.
-		return costPerDay() * 29.53;
+		return costPerDay() * DAYS_PER_MONTH;
 	}
 	
 	public double costPerYear() {
-		return costPerDay() * 365;
+		return costPerDay() * DAYS_PER_YEAR;
 	}
 }

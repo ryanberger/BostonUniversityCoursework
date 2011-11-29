@@ -27,8 +27,8 @@ public class CalculateActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		myDbAdapter = new DatabaseAdapter(this);
-		myDbAdapter.open();
+		myDbAdapter = DatabaseAdapter.getInstance();
+		//myDbAdapter.open(this);
 
 		setContentView(R.layout.calculate_layout);
 		//_deviceField = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView_device);
