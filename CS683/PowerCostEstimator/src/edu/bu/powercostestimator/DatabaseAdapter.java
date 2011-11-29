@@ -12,6 +12,8 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class DatabaseAdapter {
 
+	private static final DatabaseAdapter instance = new DatabaseAdapter();
+	
 	// Database tables
 	private static final String PROFILE_CREATE = "CREATE TABLE IF NOT EXISTS profile (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
 		+ "profile_name TEXT NOT NULL, profile_price_per_kwh NUMERIC NOT NULL);";
@@ -21,17 +23,20 @@ public class DatabaseAdapter {
 		+ "device_power_standby NUMERIC, device_cost_standby NUMERIC, device_price_per_kwh NUMERIC);";
     
     private static final String PROFILE_DEVICE_CREATE = "CREATE TABLE IF NOT EXISTS profile_device (profile_id INTEGER NOT NULL, "
-		+ "device_id INTEGER NOT NULL, FOREIGN KEY(profile_id) REFERENCES profile(_id), FOREIGN KEY(device_id) REFERENCES device(_id));";
+		+ "device_id INTEGER NOT NULL, FOREIGN KEY(profile_id) REFERENCES profile(_id), FOREIGN KEY(device_id) REFERENCES device(_id)) "
+    	+ "PRIMARY KEY(profile_id, device_id);";
     
 	private Context context;
 	private SQLiteDatabase myDatabase;
 	private DatabaseHelper myDbHelper;
 
-	public DatabaseAdapter(Context context) {
-		this.context = context;
+	private DatabaseAdapter() {}
+	
+	public static DatabaseAdapter getInstance() {
+		return instance;
 	}
 
-	public DatabaseAdapter open() throws SQLException {
+	public DatabaseAdapter open(Context context) throws SQLException {
 		myDbHelper = new DatabaseHelper(context);
 		myDatabase = myDbHelper.getWritableDatabase();
 		return this;
@@ -95,6 +100,11 @@ public class DatabaseAdapter {
 	
 	public int getProfileId(String profileName) {
 		return getId(myDatabase.rawQuery("SELECT _id FROM profile WHERE profile_name='"+profileName+"';", null));
+	}
+	
+	public Cursor getProfileDevices(String profileName) {
+		return myDatabase.rawQuery("SELECT d.* FROM device d, profile p, profile_device pd WHERE p.profile_name = '"
+				+ profileName + "' AND d._id = pd.device_id AND p._id = pd.profile_id;'" , null);
 	}
 	
 	private int getId(Cursor cursor) {

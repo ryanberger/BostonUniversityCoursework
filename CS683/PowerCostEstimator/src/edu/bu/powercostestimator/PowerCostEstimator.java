@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.widget.TabHost;
 
 public class PowerCostEstimator extends TabActivity {
-    
-	private PowerCostEstimator mActivity;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -16,8 +14,8 @@ public class PowerCostEstimator extends TabActivity {
         setContentView(R.layout.main);
 
         //Initialize Database TODO: only do this on first run
-        DatabaseAdapter myDbAdapter = new DatabaseAdapter(this);
-        myDbAdapter.open();
+        DatabaseAdapter myDbAdapter = DatabaseAdapter.getInstance();
+        myDbAdapter.open(this);
         myDbAdapter.createDatabase();
         
         TabHost tabHost = getTabHost();  // The activity TabHost
