@@ -36,12 +36,8 @@ public class PowerCostEstimatorTest extends
 		assertEquals(c.getString(profileNameColumn), "Home_TEST");
 	}
 	
-	public void testCalculateCostPerHour() {
-		assertEquals(mCalcHelper.costPerHour(), 0.18);
-	}
-	
 	public void testCalculateCostPerDay() {
-		assertEquals(mCalcHelper.costPerDay(), 4.32);
+		assertEquals(mCalcHelper.costPerDay(), 0.18);
 	}
 	
 	@Override
