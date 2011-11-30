@@ -23,8 +23,8 @@ public class DatabaseAdapter {
 		+ "device_power_standby NUMERIC, device_cost_standby NUMERIC, device_price_per_kwh NUMERIC);";
     
     private static final String PROFILE_DEVICE_CREATE = "CREATE TABLE IF NOT EXISTS profile_device (profile_id INTEGER NOT NULL, "
-		+ "device_id INTEGER NOT NULL, FOREIGN KEY(profile_id) REFERENCES profile(_id), FOREIGN KEY(device_id) REFERENCES device(_id)) "
-    	+ "PRIMARY KEY(profile_id, device_id);";
+		+ "device_id INTEGER NOT NULL, FOREIGN KEY(profile_id) REFERENCES profile(_id), FOREIGN KEY(device_id) REFERENCES device(_id), "
+    	+ "PRIMARY KEY(profile_id, device_id));";
     
 	private Context context;
 	private SQLiteDatabase myDatabase;
@@ -60,11 +60,15 @@ public class DatabaseAdapter {
 	}
 	
 	public void createDatabase() {
-		myDatabase.execSQL(PROFILE_CREATE + DEVICE_CREATE + PROFILE_DEVICE_CREATE);
+		myDatabase.execSQL(PROFILE_CREATE);
+		myDatabase.execSQL(DEVICE_CREATE);
+		myDatabase.execSQL(PROFILE_DEVICE_CREATE);
 	}
 	
 	public void clearDatabase() {
-		myDatabase.execSQL("DROP TABLE profile; DROP TABLE device; DROP TABLE profile_device;");
+		myDatabase.execSQL("DROP TABLE profile;");
+		myDatabase.execSQL("DROP TABLE device;");
+		myDatabase.execSQL("DROP TABLE profile_device;");
 	}
 	
 	public void addProfile(String profileName, double costPerKwh) {
@@ -88,10 +92,10 @@ public class DatabaseAdapter {
 	}
 	
 	public void addDeviceToProfile(String deviceName, double devicePowerFull, double deviceCostFull, String profileName) {
-		myDatabase.rawQuery("INSERT INTO device (device_name, device_power_full, device_cost_full) VALUES ('"
-				+ deviceName + "', " + devicePowerFull + ", " + deviceCostFull + ");", null);
-		myDatabase.rawQuery("INSERT INTO profile_device (profile_id, device_id) VALUES ("+getProfileId(profileName)
-				+","+getDeviceId(deviceName, devicePowerFull, deviceCostFull)+");", null);
+		myDatabase.execSQL("INSERT INTO device (device_name, device_power_full, device_cost_full) VALUES ('"
+				+ deviceName + "', " + devicePowerFull + ", " + deviceCostFull + ");");
+		myDatabase.execSQL("INSERT INTO profile_device (profile_id, device_id) VALUES ("+getProfileId(profileName)
+				+","+getDeviceId(deviceName, devicePowerFull, deviceCostFull)+");");
 	}
 	
 	public int getDeviceId(String deviceName, double devicePowerFull, double deviceCostFull) {

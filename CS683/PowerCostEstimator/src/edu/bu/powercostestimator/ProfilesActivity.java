@@ -22,7 +22,7 @@ import android.widget.Toast;
 public class ProfilesActivity extends Activity {
 
 	private DatabaseAdapter mDbAdapter;
-	private ListView _lv1;
+	private ListView _lv;
 	private ArrayList<String> _lv_arr = new ArrayList<String>();
 	private Resources _res;
 
@@ -36,23 +36,23 @@ public class ProfilesActivity extends Activity {
 		//mDbAdapter.open(this);
 		_res = getResources();
 
-		_lv1 = (ListView)findViewById(R.id.ListView01);
+		_lv = (ListView)findViewById(R.id.ListView01);
 		
 		updateProfileList();
 		
 		// By using setAdpater method in listview we an add string array in list.
-		_lv1.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, _lv_arr));
+		_lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, _lv_arr));
 
-		_lv1.setOnItemClickListener(new OnItemClickListener() {
+		_lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				String test = (String)_lv1.getItemAtPosition(position);
+				String test = (String)_lv.getItemAtPosition(position);
 				if (test.equals(_res.getString(R.string.listview_add_new_profile))) {
 					showAddNewProfileAlert();
 				}
 				else {
-					showViewExistingProfileAlert();
+					showViewExistingProfileAlert(_lv.getItemAtPosition(position).toString());
 				}
 			}
 		});
@@ -93,7 +93,7 @@ public class ProfilesActivity extends Activity {
 		alert.show();
 	}
 	
-	private void showViewExistingProfileAlert() {
+	private void showViewExistingProfileAlert(String profileName) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		
 		alert.setTitle(R.string.label_profile_summary);
@@ -102,7 +102,7 @@ public class ProfilesActivity extends Activity {
 		// Set to vertical layout
 		layout.setOrientation(1);
 		
-		Cursor c = mDbAdapter.getProfileDevices("Home"); // TODO: don't hardcode!
+		Cursor c = mDbAdapter.getProfileDevices(profileName);
 		while (c.moveToNext()) {
 			TextView tv = new TextView(this);
 			tv.setText(c.getString(1));
@@ -149,7 +149,7 @@ public class ProfilesActivity extends Activity {
 		_lv_arr.addAll(mDbAdapter.getProfileNames());
 		_lv_arr.add(_res.getString(R.string.listview_add_new_profile));
 		
-		_lv1.refreshDrawableState();
+		_lv.refreshDrawableState();
 	}
 
 }

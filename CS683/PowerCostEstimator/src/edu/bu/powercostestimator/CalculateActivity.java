@@ -71,7 +71,7 @@ public class CalculateActivity extends Activity {
 		CheckBox addToProfile = (CheckBox) findViewById(R.id.checkBox_add_to_profile);
 		
 		if (addToProfile.isChecked()) {
-			showChooseProfile();
+			showChooseProfile(powerFull, timeFull);
 		}
 		else {
 			// $0.05 per kWh is hard-coded until we can pull the value from profile database
@@ -82,7 +82,7 @@ public class CalculateActivity extends Activity {
 		}
 	}
 	
-	public void showChooseProfile() {
+	public void showChooseProfile(final double devicePowerFull, final double deviceTimeFull) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle(R.string.label_choose_profile);
@@ -110,7 +110,7 @@ public class CalculateActivity extends Activity {
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
-				// OK
+				myDbAdapter.addDeviceToProfile(deviceName.getText().toString(), devicePowerFull, deviceTimeFull, chooseProfile.getSelectedItem().toString());
 			}
 		});
 
