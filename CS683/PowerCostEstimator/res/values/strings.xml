@@ -15,8 +15,9 @@
     <string name="label_time_full">Time (hours per day)</string>
     <string name="label_power_standby">Standby Power Usage (watts)</string>
     <string name="label_time_standby">Standby Time (hours per day)</string>
-    <string name="label_add_to_profile">Add to profile</string>
+    <string name="label_add_to_profile">Save to profile</string>
     <string name="label_choose_profile">Choose Profile</string>
+    <string name="label_name_device">Name Device</string>
     
     <string-array name="devices_array">
         <item>Air Conditioner</item>

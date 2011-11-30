@@ -2,7 +2,7 @@ package edu.bu.powercostestimator;
 
 public class CalculateHelper {
 	
-	private final int HOURS_PER_DAY = 24;
+	private final int DAYS_PER_WEEK = 7;
 	// Calculation based on average number of days per month in a given year.
 	private final double DAYS_PER_MONTH = 29.53;
 	private final double DAYS_PER_YEAR = 365.25;
@@ -21,13 +21,13 @@ public class CalculateHelper {
 		this.timeFull = timeFull;
 	}
 	
-	public double costPerHour() {
+	public double costPerDay() {
 		// Convert powerFull from Watts to kiloWatts by dividing by 1000.
 		return (powerFull / 1000) * timeFull * costPerKwh;
 	}
 	
-	public double costPerDay() {
-		return costPerHour() * HOURS_PER_DAY;
+	public double costPerWeek() {
+		return costPerDay() * DAYS_PER_WEEK;
 	}
 	
 	public double costPerMonth() {

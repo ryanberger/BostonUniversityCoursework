@@ -1,46 +1,43 @@
 package edu.bu.powercostestimator;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.InputType;
-import android.view.KeyEvent;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class CalculateActivity extends Activity {
 
 	private DatabaseAdapter myDbAdapter;
-	private AutoCompleteTextView _deviceField;
-	private EditText _powerFullField;
+	private TextView _labelDaily;
+	private TextView _labelWeekly;
+	private TextView _labelMonthly;
+	private TextView _labelYearly;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		myDbAdapter = DatabaseAdapter.getInstance();
-		//myDbAdapter.open(this);
 
 		setContentView(R.layout.calculate_layout);
-		//_deviceField = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView_device);
-		_powerFullField = (EditText) findViewById(R.id.editText_power_full);
 	}
 
 	public void onSubmitClick(View submitButton) {
 		double powerFull, timeFull;
-		
-		// This will be moved to post-submit since this only applies to calculations saved to a profile
-		//final EditText deviceField = (EditText) findViewById(R.id.autoCompleteTextView_device);
-		//String device = deviceField.getText().toString();
 		
 		EditText powerFullField = (EditText) findViewById(R.id.editText_power_full);
 		String powerFullString = powerFullField.getText().toString().trim();
@@ -48,7 +45,7 @@ public class CalculateActivity extends Activity {
 			powerFull = Double.parseDouble(powerFullString);
 		}
 		else {
-			Toast.makeText(getApplicationContext(), "Error: required field Power Usage not filled out!", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "ERROR: required field Power Usage not filled out!", Toast.LENGTH_LONG).show();
 			return;
 		}
 		
@@ -58,7 +55,7 @@ public class CalculateActivity extends Activity {
 			timeFull = Double.parseDouble(timeFullString);
 		}
 		else {
-			Toast.makeText(getApplicationContext(), "Error: required field Time not filled out!", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "ERROR: required field Time not filled out!", Toast.LENGTH_LONG).show();
 			return;
 		}
 		
@@ -68,49 +65,107 @@ public class CalculateActivity extends Activity {
 //		final EditText timeStandbyField = (EditText) findViewById(R.id.editText_time_standby);
 //		double timeStandby = timeStandbyField.getText().toString().length() > 0 ? Double.parseDouble(timeStandbyField.getText().toString()) : null;
 		
-		CheckBox addToProfile = (CheckBox) findViewById(R.id.checkBox_add_to_profile);
-		
-		if (addToProfile.isChecked()) {
-			showChooseProfile(powerFull, timeFull);
-		}
-		else {
-			// $0.05 per kWh is hard-coded until we can pull the value from profile database
-			CalculateHelper calcHelper = new CalculateHelper(0.05, powerFull, timeFull);
-			
-			//Temporarily send Toast for debugging
-			Toast.makeText(getApplicationContext(), "Total cost (per hour): $"+calcHelper.costPerHour(), Toast.LENGTH_LONG).show();
-		}
+		showChooseProfile(powerFull, timeFull);
 	}
 	
-	public void showChooseProfile(final double devicePowerFull, final double deviceTimeFull) {
+	private void setResults(double devicePowerFull, double deviceTimeFull, String profileName, LinearLayout layout) {
+		CalculateHelper calcHelper = new CalculateHelper(myDbAdapter.getProfileCost(profileName), devicePowerFull, deviceTimeFull);
+		NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+		_labelDaily.setText("Daily: " + currencyFormatter.format(calcHelper.costPerDay()));
+		_labelWeekly.setText("Weekly: " + currencyFormatter.format(calcHelper.costPerWeek()));
+		_labelMonthly.setText("Monthly: " + currencyFormatter.format(calcHelper.costPerMonth()));
+		_labelYearly.setText("Yearly: " + currencyFormatter.format(calcHelper.costPerYear()));
+		layout.refreshDrawableState();
+	}
+	
+	private void showChooseProfile(final double devicePowerFull, final double deviceTimeFull) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle(R.string.label_choose_profile);
 
-		String[] devices = getResources().getStringArray(R.array.devices_array);
 		ArrayList<String> profiles = myDbAdapter.getProfileNames();
 		
-		// Set an EditText view to get user input
-		LinearLayout layout = new LinearLayout(this);
+		if (profiles.size() < 1) {
+			Toast.makeText(getApplicationContext(), "ERROR: cannot calculate until at least one profile has been added!", Toast.LENGTH_LONG).show();
+			return;
+		}
+		
+		final LinearLayout layout = new LinearLayout(this);
 		// Set to vertical layout
 		layout.setOrientation(1);
+		
 		final Spinner chooseProfile = new Spinner(this);
-		final AutoCompleteTextView deviceName = new AutoCompleteTextView(this);
+		final CheckBox addToProfile = new CheckBox(this);
 		
 		ArrayAdapter<String> profileAdapter = new ArrayAdapter<String>(this, R.layout.list_item, profiles);
 		chooseProfile.setAdapter(profileAdapter);
-		ArrayAdapter<String> deviceAdapter = new ArrayAdapter<String>(this, R.layout.list_item, devices);
-		deviceName.setAdapter(deviceAdapter);
-		deviceName.setHint(R.string.label_device);
+		
+		_labelDaily = new TextView(this);
+		_labelWeekly = new TextView(this);
+		_labelMonthly = new TextView(this);
+		_labelYearly = new TextView(this);
+		layout.addView(_labelDaily);
+		layout.addView(_labelWeekly);
+		layout.addView(_labelMonthly);
+		layout.addView(_labelYearly);
+		setResults(devicePowerFull, deviceTimeFull, chooseProfile.getSelectedItem().toString(), layout);
+		
+		addToProfile.setText(R.string.label_add_to_profile);
 		
 		layout.addView(chooseProfile);
+		layout.addView(addToProfile);
+		alert.setView(layout);
+		
+		chooseProfile.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
+					int position, long id) {
+				setResults(devicePowerFull, deviceTimeFull, chooseProfile.getItemAtPosition(position).toString(), layout);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parentView) {}
+		});
+		
+		alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int whichButton) {
+				if (addToProfile.isChecked()) {
+					showChooseDevice(devicePowerFull, deviceTimeFull, chooseProfile.getSelectedItem().toString());
+				}
+			}
+		});
+
+		alert.show();
+	}
+	
+	private void showChooseDevice(final double devicePowerFull, final double deviceTimeFull, final String profileName){
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+		alert.setTitle(R.string.label_name_device);
+		
+		String[] devices = getResources().getStringArray(R.array.devices_array);
+		
+		final AutoCompleteTextView deviceName = new AutoCompleteTextView(this);
+		ArrayAdapter<String> deviceAdapter = new ArrayAdapter<String>(this, R.layout.list_item, devices);
+		
+		LinearLayout layout = new LinearLayout(this);
+		layout.setOrientation(1);
+		deviceName.setAdapter(deviceAdapter);
+		deviceName.setHint(R.string.label_device);
 		layout.addView(deviceName);
 		alert.setView(layout);
-
+		
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
-				myDbAdapter.addDeviceToProfile(deviceName.getText().toString(), devicePowerFull, deviceTimeFull, chooseProfile.getSelectedItem().toString());
+				String deviceNameValue = deviceName.getText().toString();
+				if (deviceNameValue.trim().length() > 0) {
+					myDbAdapter.addDeviceToProfile(deviceNameValue, devicePowerFull, deviceTimeFull, profileName);
+					Toast.makeText(getApplicationContext(), "Successfully added item to profile", Toast.LENGTH_LONG).show();
+				} else {
+					Toast.makeText(getApplicationContext(), "ERROR: device name cannot be blank!", Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 
@@ -120,27 +175,7 @@ public class CalculateActivity extends Activity {
 				// Canceled.
 			}
 		});
-
+		
 		alert.show();
-	}
-	
-	/*
-	 * Override default onKeyUp behavior to account for auto-complete field.
-	 * @see android.app.Activity#onKeyUp(int, android.view.KeyEvent)
-	 */
-	@Override
-	public boolean onKeyUp(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_ENTER) {
-			if (_deviceField.hasFocus()) {
-				// sends focus to another field (user pressed "Next")
-				_powerFullField.requestFocus();
-				return true;
-			}
-			else {
-				// use default behavior
-				return super.onKeyUp(keyCode, event);
-			}
-		}
-		return false;
 	}
 }
