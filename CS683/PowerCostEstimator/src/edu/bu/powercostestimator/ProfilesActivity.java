@@ -10,12 +10,15 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,10 +41,10 @@ public class ProfilesActivity extends Activity {
 
 		_lv = (ListView)findViewById(R.id.ListView01);
 		
-		updateProfileList();
-		
 		// By using setAdpater method in listview we an add string array in list.
 		_lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, _lv_arr));
+		
+		updateProfileList();
 
 		_lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -98,17 +101,23 @@ public class ProfilesActivity extends Activity {
 		
 		alert.setTitle(R.string.label_profile_summary);
 		
-		LinearLayout layout = new LinearLayout(this);
-		// Set to vertical layout
-		layout.setOrientation(1);
-		
 		Cursor c = mDbAdapter.getProfileDevices(profileName);
+		TableLayout tl = new TableLayout(this);
+		tl.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT));
 		while (c.moveToNext()) {
+			TableRow tr = new TableRow(this);
+			tr.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+					LayoutParams.WRAP_CONTENT));
 			TextView tv = new TextView(this);
 			tv.setText(c.getString(1));
-			layout.addView(tv);
+			tr.addView(tv);
+			tl.addView(tr);
+//			tv.setText(c.getString(2));
+//			tr.addView(tv);
+			registerForContextMenu(tr);
 		}
-		alert.setView(layout);
+		alert.setView(tl);
 		
 		alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
 			@Override
@@ -126,7 +135,7 @@ public class ProfilesActivity extends Activity {
 		double profileCost;
 
 		if (profileName.trim().length() < 1) {
-			Toast.makeText(getApplicationContext(), "Error: required field Name not filled out!", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "ERROR: required field Name not filled out!", Toast.LENGTH_LONG).show();
 			return;
 		}
 		
@@ -134,7 +143,7 @@ public class ProfilesActivity extends Activity {
 			profileCost = Double.parseDouble(profileCostString);
 		}
 		else {
-			Toast.makeText(getApplicationContext(), "Error: required field Cost not filled out!", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "ERROR: required field Cost not filled out!", Toast.LENGTH_LONG).show();
 			return;
 		}
 		

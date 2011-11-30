@@ -87,8 +87,14 @@ public class DatabaseAdapter {
 		return asStringArrayList(myDatabase.rawQuery("SELECT profile_name FROM profile;", null));
 	}
 	
-	public Cursor getProfile(String name) {
-		return myDatabase.rawQuery("SELECT * FROM profile WHERE profile_name = '" + name + "';", null);
+	public Cursor getProfile(String profileName) {
+		return myDatabase.rawQuery("SELECT * FROM profile WHERE profile_name = '"+profileName+"';", null);
+	}
+	
+	public double getProfileCost(String profileName) {
+		Cursor c = myDatabase.rawQuery("SELECT profile_price_per_kwh FROM profile WHERE profile_name = '"+profileName+"';", null);
+		c.moveToFirst();
+		return c.getDouble(0);
 	}
 	
 	public void addDeviceToProfile(String deviceName, double devicePowerFull, double deviceCostFull, String profileName) {
