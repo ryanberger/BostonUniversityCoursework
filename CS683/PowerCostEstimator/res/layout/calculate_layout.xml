@@ -6,22 +6,30 @@
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:orientation="vertical">
 
+		<TextView
+		    android:id="@+id/textView1"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/label_power_full" />
+
 		<EditText android:id="@+id/editText_power_full"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:hint="@string/label_power_full" android:inputType="numberDecimal" />
+			android:hint="@string/hint_power_full" android:inputType="numberDecimal" />
+
+		<TextView
+		    android:id="@+id/textView2"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/label_time_full" />
 
 		<EditText android:id="@+id/editText_time_full"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:hint="@string/label_time_full" android:inputType="numberDecimal"
+			android:hint="@string/hint_time_full" android:inputType="numberDecimal"
 			android:maxLength="2" />
 
 		<!-- <EditText android:id="@+id/editText_power_standby"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:hint="@string/label_power_standby" android:inputType="numberDecimal" /> -->
-
-		<!-- <CheckBox android:id="@+id/checkBox_add_to_profile"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:text="@string/label_add_to_profile" /> -->
 
 		<Button android:id="@+id/button_submit" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:onClick="onSubmitClick"

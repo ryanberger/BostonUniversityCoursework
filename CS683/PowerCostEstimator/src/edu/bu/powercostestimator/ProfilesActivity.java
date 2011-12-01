@@ -7,9 +7,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -107,15 +110,31 @@ public class ProfilesActivity extends Activity {
 				LayoutParams.WRAP_CONTENT));
 		while (c.moveToNext()) {
 			TableRow tr = new TableRow(this);
-			tr.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
-					LayoutParams.WRAP_CONTENT));
+			tr.setClickable(true);
+			tr.setFocusable(true);
+			tr.setFocusableInTouchMode(false);
 			TextView tv = new TextView(this);
 			tv.setText(c.getString(1));
 			tr.addView(tv);
 			tl.addView(tr);
-//			tv.setText(c.getString(2));
-//			tr.addView(tv);
-			registerForContextMenu(tr);
+			TextView tv2 = new TextView(this);
+			tv2.setText(c.getString(2) + "kWh/" + c.getString(3) + "hours");
+			tr.addView(tv2);
+//			TextView tv3 = new TextView(this);
+//			tv3.setText(c.getString(3) + "hours");
+//			tr.addView(tv3);
+			tr.setOnTouchListener(new OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					if (event.getAction() == MotionEvent.ACTION_DOWN) {
+						v.setBackgroundColor(Color.YELLOW);
+					} else {
+						v.setBackgroundColor(Color.DKGRAY);
+					}
+					// TODO Auto-generated method stub
+					return false;
+				}
+			});
 		}
 		alert.setView(tl);
 		
