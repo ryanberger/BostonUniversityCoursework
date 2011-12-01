@@ -3,45 +3,61 @@ package edu.bu.powercostestimator;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TabHost;
 
 public class PowerCostEstimator extends TabActivity {
-	
+
 	/** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
 
-        //Initialize Database TODO: only do this on first run
-        DatabaseAdapter myDbAdapter = DatabaseAdapter.getInstance();
-        myDbAdapter.open(this);
-        myDbAdapter.createDatabase();
-        
-        TabHost tabHost = getTabHost();  // The activity TabHost
-        TabHost.TabSpec spec;  // Resusable TabSpec for each tab
-        Intent intent;  // Reusable Intent for each tab
+		//Initialize Database TODO: only do this on first run
+		DatabaseAdapter myDbAdapter = DatabaseAdapter.getInstance();
+		myDbAdapter.open(this);
+		myDbAdapter.createDatabase();
 
-        // Create an Intent to launch an Activity for the tab (to be reused)
-        intent = new Intent().setClass(this, CalculateActivity.class);
+		TabHost tabHost = getTabHost();  // The activity TabHost
+		TabHost.TabSpec spec;  // Resusable TabSpec for each tab
+		Intent intent;  // Reusable Intent for each tab
 
-        // Initialize a TabSpec for each tab and add it to the TabHost
-        spec = tabHost.newTabSpec("calculate").setIndicator("Calculate")
-                      .setContent(intent);
-        tabHost.addTab(spec);
+		// Create an Intent to launch an Activity for the tab (to be reused)
+		intent = new Intent().setClass(this, CalculateActivity.class);
 
-        // Do the same for the other tabs
-        intent = new Intent().setClass(this, ProfilesActivity.class);
-        spec = tabHost.newTabSpec("profiles").setIndicator("Profiles")
-                      .setContent(intent);
-        tabHost.addTab(spec);
+		// Initialize a TabSpec for each tab and add it to the TabHost
+		spec = tabHost.newTabSpec("calculate").setIndicator("Calculate")
+		.setContent(intent);
+		tabHost.addTab(spec);
 
-//        intent = new Intent().setClass(this, SongsActivity.class);
-//        spec = tabHost.newTabSpec("songs").setIndicator("Songs",
-//                          res.getDrawable(R.drawable.ic_tab_songs))
-//                      .setContent(intent);
-//        tabHost.addTab(spec);
+		// Do the same for the other tabs
+		intent = new Intent().setClass(this, ProfilesActivity.class);
+		spec = tabHost.newTabSpec("profiles").setIndicator("Profiles")
+		.setContent(intent);
+		tabHost.addTab(spec);
 
-        tabHost.setCurrentTab(2);
-    }
+		tabHost.setCurrentTab(2);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.settings_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+			case R.menu.settings_menu:
+				//newGame();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
 }
