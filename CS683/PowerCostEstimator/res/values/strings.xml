@@ -1,50 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, PowerCostEstimatorActivity!</string>
-    <string name="app_name">Power Cost Estimator</string>
-    <string name="settings">Settings</string>
-    <string name="listview_add_new_profile">+ Add New</string>
-    <string name="label_new_profile">New Profile</string>
-    <string name="label_profile_summary">Profile Summary</string>
-    <string name="label_profile_name">Profile Name</string>
-    <string name="label_price_per_kwh">Price per kWh</string>
-    <string name="submit">Submit</string>
-    <string name="cancel">Cancel</string>
-    <string name="label_device">Device Name</string>
-    <string name="label_power_full">Power Usage:</string>
-    <string name="hint_power_full">Power Usage (watts)</string>
-    <string name="label_time_full">Usage Time:</string>
-    <string name="hint_time_full">Time (hours per day)</string>
-    <string name="label_power_standby">Standby Power Usage (optional):</string>
-    <string name="hint_power_standby">Standby Power Usage (watts)</string>
-    <string name="label_time_standby">Standby Time (optional):</string>
-    <string name="hint_time_standby">Standby Time (hours per day)</string>
-    <string name="label_add_to_profile">Save to profile</string>
-    <string name="label_choose_profile">Choose Profile</string>
-    <string name="label_name_device">Name Device</string>
-    
-    <string-array name="devices_array">
-        <item>Air Conditioner</item>
-        <item>Cell Phone</item>
-        <item>Clock</item>
-        <item>Computer Monitor</item>
-        <item>Desktop Computer</item>
-        <item>Dishwasher</item>
-        <item>DVD Player</item>
-        <item>DVR</item>
-        <item>Game Console</item>
-        <item>Humidifier</item>
-        <item>Lamp</item>
-        <item>Laptop</item>
-        <item>Microwave</item>
-        <item>Printer</item>
-        <item>Refridgerator</item>
-        <item>Space Heater</item>
-        <item>Television</item>
-        <item>Toaster</item>
-    </string-array>
-        
-    <string name="format_device_summary">%1$s - %2$s\nNormal: %3$s W/%4$s hours\t\tDaily: %5$s\nStandby: %6$s W/%7$s hours\t\tMonthly: %8$s\n\t\t\t\t\t\t\t\t\t\t\t\t\tYearly: %9$s</string>
+	<string name="hello">Hello World, PowerCostEstimatorActivity!</string>
+	<string name="app_name">Power Cost Estimator</string>
+	<string name="settings">Settings</string>
+	<string name="listview_add_new_profile">+ Add New</string>
+	<string name="label_new_profile">New Profile</string>
+	<string name="label_profile_summary">Profile Summary</string>
+	<string name="label_profile_name">Profile Name</string>
+	<string name="label_price_per_kwh">Price per kWh</string>
+	<string name="submit">Submit</string>
+	<string name="cancel">Cancel</string>
+	<string name="label_device">Device Name</string>
+	<string name="label_power_full">Power Usage:</string>
+	<string name="hint_power_full">Power Usage (watts)</string>
+	<string name="label_time_full">Usage Time:</string>
+	<string name="hint_time_full">Time (hours per day)</string>
+	<string name="label_power_standby">Standby Power Usage (optional):</string>
+	<string name="hint_power_standby">Standby Power Usage (watts)</string>
+	<string name="label_time_standby">Standby Time (optional):</string>
+	<string name="hint_time_standby">Standby Time (hours per day)</string>
+	<string name="label_add_to_profile">Save to profile</string>
+	<string name="label_choose_profile">Choose Profile</string>
+	<string name="label_name_device">Name Device</string>
+
+	<string-array name="devices_array">
+		<item>Air Conditioner</item>
+		<item>Cell Phone</item>
+		<item>Clock</item>
+		<item>Computer Monitor</item>
+		<item>Desktop Computer</item>
+		<item>Dishwasher</item>
+		<item>DVD Player</item>
+		<item>DVR</item>
+		<item>Game Console</item>
+		<item>Humidifier</item>
+		<item>Lamp</item>
+		<item>Laptop</item>
+		<item>Microwave</item>
+		<item>Printer</item>
+		<item>Refridgerator</item>
+		<item>Space Heater</item>
+		<item>Television</item>
+		<item>Toaster</item>
+	</string-array>
+
+	<string name="success_add_to_profile">Successfully added %1$s to %2$s.</string>
+	<string name="error_empty_profile_name_field">ERROR: required field Name not filled out!</string>
+	<string name="error_empty_cost_field">ERROR: required field Cost not filled out!</string>
+	<string name="error_no_profiles">ERROR: cannot calculate until at least one profile has been added!</string>
+	<string name="error_empty_power_field">ERROR: required field Power Usage not filled out!</string>
+	<string name="error_empty_time_field">ERROR: required field Time not filled out!</string>
+	<string name="error_over_24_hours">ERROR: Time cannot exceed 24 hours!</string>
+	<string name="error_empty_device_name_field">ERROR: device name cannot be blank!</string>
+	<string name="format_device_summary">%1$s - %2$s\nNormal: %3$s W/%4$s hours\t\tDaily:
+		%5$s\nStandby: %6$s W/%7$s hours\t\tMonthly:
+		%8$s\n\t\t\t\t\t\t\t\t\t\t\t\t\tYearly: %9$s</string>
 
 </resources>

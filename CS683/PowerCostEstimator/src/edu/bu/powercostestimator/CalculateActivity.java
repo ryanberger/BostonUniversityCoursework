@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,11 +23,13 @@ public class CalculateActivity extends Activity {
 	private DatabaseAdapter _dbAdapter;
 	private TextView _labelDaily, _labelMonthly, _labelYearly;
 	private double _powerFull, _timeFull, _powerStandby, _timeStandby;
+	private Resources _res;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		_dbAdapter = DatabaseAdapter.getInstance();
+		_res = getResources();
 
 		setContentView(R.layout.calculate_layout);
 	}
@@ -38,7 +41,7 @@ public class CalculateActivity extends Activity {
 			_powerFull = Double.parseDouble(powerFullString);
 		}
 		else {
-			Toast.makeText(getApplicationContext(), "ERROR: required field Power Usage not filled out!", Toast.LENGTH_LONG).show();
+			toast(_res.getString(R.string.error_empty_power_field));
 			return;
 		}
 		
@@ -47,12 +50,12 @@ public class CalculateActivity extends Activity {
 		if (timeFullString.length() > 0) {
 			_timeFull = Double.parseDouble(timeFullString);
 			if (_timeFull > 24) {
-				Toast.makeText(getApplicationContext(), "ERROR: Time cannot exceed 24 hours!", Toast.LENGTH_LONG).show();
+				toast(_res.getString(R.string.error_over_24_hours));
 				return;
 			}
 		}
 		else {
-			Toast.makeText(getApplicationContext(), "ERROR: required field Time not filled out!", Toast.LENGTH_LONG).show();
+			toast(_res.getString(R.string.error_empty_time_field));
 			return;
 		}
 		
@@ -67,7 +70,7 @@ public class CalculateActivity extends Activity {
 		if (timeStandbyText.length() > 0) {
 			_timeStandby = Double.parseDouble(timeStandbyText);
 			if (_timeStandby > 24) {
-				Toast.makeText(getApplicationContext(), "ERROR: Time cannot exceed 24 hours!", Toast.LENGTH_LONG).show();
+				toast(_res.getString(R.string.error_over_24_hours));
 				return;
 			}
 		}
@@ -91,7 +94,7 @@ public class CalculateActivity extends Activity {
 		ArrayList<String> profiles = _dbAdapter.getProfileNames();
 		
 		if (profiles.size() < 1) {
-			Toast.makeText(getApplicationContext(), "ERROR: cannot calculate until at least one profile has been added!", Toast.LENGTH_LONG).show();
+			toast(_res.getString(R.string.error_no_profiles));
 			return;
 		}
 		
@@ -165,9 +168,9 @@ public class CalculateActivity extends Activity {
 				String deviceNameValue = deviceName.getText().toString();
 				if (deviceNameValue.trim().length() > 0) {
 					_dbAdapter.addDeviceToProfile(deviceNameValue, _powerFull, _timeFull, _powerStandby, _timeStandby, profileName);
-					Toast.makeText(getApplicationContext(), "Successfully added item to profile", Toast.LENGTH_LONG).show();
+					toast(String.format(_res.getString(R.string.success_add_to_profile), deviceNameValue, profileName));
 				} else {
-					Toast.makeText(getApplicationContext(), "ERROR: device name cannot be blank!", Toast.LENGTH_LONG).show();
+					toast(_res.getString(R.string.error_empty_device_name_field));
 				}
 			}
 		});
@@ -180,5 +183,9 @@ public class CalculateActivity extends Activity {
 		});
 		
 		alert.show();
+	}
+	
+	private void toast(String message) {
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 	}
 }
