@@ -12,18 +12,21 @@ public class CalculateHelper {
 	private double costPerKwh;
 	private double powerFull;
 	private double timeFull;
+	private double powerStandby = 0.0;
+	private double timeStandby = 0.0;
 	
 	private NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
 	
-	public CalculateHelper(double costPerKwh, double powerFull, double timeFull) {
+	public CalculateHelper(double costPerKwh, double powerFull, double timeFull, double powerStandby, double timeStandby) {
 		this.costPerKwh = costPerKwh;
 		this.powerFull = powerFull;
 		this.timeFull = timeFull;
+		this.powerStandby = powerStandby;
+		this.timeStandby = timeStandby;
 	}
 	
 	public double costPerDay() {
-		// Convert powerFull from Watts to kiloWatts by dividing by 1000.
-		return (powerFull / 1000) * timeFull * costPerKwh;
+		return costPerDayFull() + costPerDayStandby();
 	}
 	
 	public double costPerWeek() {
@@ -40,5 +43,18 @@ public class CalculateHelper {
 	
 	public String toString(double value) {
 		return currencyFormatter.format(value);
+	}
+	
+	private double costPerDayFull() {
+		return wattsToKilowatts(powerFull) * timeFull * costPerKwh;
+	}
+	
+	// Standby cost is optional and will not affect final calculation if omitted
+	private double costPerDayStandby() {
+		return wattsToKilowatts(powerStandby) * timeStandby * costPerKwh;
+	}
+	
+	private double wattsToKilowatts(double input) {
+		return input / 1000;
 	}
 }
