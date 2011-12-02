@@ -1,33 +1,30 @@
 package edu.bu.powercostestimator;
 
 import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.MotionEvent;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup.LayoutParams;
+import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class ProfilesActivity extends Activity {
 
-	private DatabaseAdapter mDbAdapter;
+	private DatabaseAdapter _dbAdapter;
 	private ListView _lv;
 	private ArrayList<String> _lv_arr = new ArrayList<String>();
 	private Resources _res;
@@ -38,7 +35,7 @@ public class ProfilesActivity extends Activity {
 
 		setContentView(R.layout.profiles_layout);
 
-		mDbAdapter = DatabaseAdapter.getInstance();
+		_dbAdapter = DatabaseAdapter.getInstance();
 		//mDbAdapter.open(this);
 		_res = getResources();
 
@@ -104,36 +101,56 @@ public class ProfilesActivity extends Activity {
 		
 		alert.setTitle(R.string.label_profile_summary);
 		
-		Cursor c = mDbAdapter.getProfileDevices(profileName);
-		ListView lv = new ListView(this);
+		Cursor c = _dbAdapter.getProfileDevices(profileName);
+		final ListView lv = new ListView(this);
 		ArrayList<String> deviceSummary = new ArrayList<String>();
 		
-		double profileCost = mDbAdapter.getProfileCost(profileName);
-		double normalUsage = 0.0, normalTime = 0.0, totalNormalUsage = 0.0, totalNormalTime = 0.0;
+		double profileCost = _dbAdapter.getProfileCost(profileName);
+		double normalUsage, normalTime, standbyUsage, standbyTime,
+			totalNormalUsage = 0.0, totalNormalTime = 0.0, totalStandbyUsage = 0.0, totalStandbyTime = 0.0;
 		CalculateHelper calcHelper;
 		
 		while (c.moveToNext()) {
 			normalUsage = c.getDouble(2);
 			normalTime = c.getDouble(3);
-			calcHelper = new CalculateHelper(profileCost, normalUsage, normalTime);
+			standbyUsage = c.getDouble(4);
+			standbyTime = c.getDouble(5);
+			calcHelper = new CalculateHelper(profileCost, normalUsage, normalTime, standbyUsage, standbyTime);
 			totalNormalUsage += normalUsage;
 			totalNormalTime += normalTime;
+			totalStandbyUsage += standbyUsage;
+			totalStandbyTime += standbyTime;
 			
 			deviceSummary.add(String.format(_res.getString(R.string.format_device_summary), 
 					c.getString(1), "test", normalUsage, normalTime, 
-					calcHelper.toString(calcHelper.costPerDay()), "test", "test", 
+					calcHelper.toString(calcHelper.costPerDay()), standbyUsage, standbyTime, 
 					calcHelper.toString(calcHelper.costPerMonth()), 
 					calcHelper.toString(calcHelper.costPerYear())));
 		}
 		// Now show total usage
-		calcHelper = new CalculateHelper(profileCost, totalNormalUsage, totalNormalTime);
+		calcHelper = new CalculateHelper(profileCost, totalNormalUsage, totalNormalTime, totalStandbyUsage, totalStandbyTime);
 		deviceSummary.add(String.format(_res.getString(R.string.format_device_summary), 
 				"Total", "100", totalNormalUsage, totalNormalTime, 
-				calcHelper.toString(calcHelper.costPerDay()), "test", "test", 
+				calcHelper.toString(calcHelper.costPerDay()), totalStandbyUsage, totalStandbyTime, 
 				calcHelper.toString(calcHelper.costPerMonth()), 
 				calcHelper.toString(calcHelper.costPerYear())));
 		
-		lv.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item, deviceSummary));
+		lv.setAdapter(new ArrayAdapter<String>(this, R.layout.device_summary_list_item, deviceSummary));
+		
+		lv.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
+			@Override public void onCreateContextMenu(ContextMenu menu, final View v, ContextMenuInfo menuInfo) {
+				menu.add("Edit Device");
+				menu.add("Delete Device")
+				.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override public boolean onMenuItemClick(MenuItem item) {
+						lv.getItemAtPosition(0); // TODO: determine which device was clicked
+						return true;
+					}
+				});
+			} 
+		});
+
+		
 		alert.setView(lv);
 		
 		alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
@@ -164,15 +181,19 @@ public class ProfilesActivity extends Activity {
 			return;
 		}
 		
-		mDbAdapter.addProfile(profileName, profileCost);
+		_dbAdapter.addProfile(profileName, profileCost);
 
 		updateProfileList();
+	}
+	
+	private void removeDeviceFromProfile() {
+		
 	}
 	
 	private void updateProfileList() {
 		_lv_arr.clear();
 		
-		_lv_arr.addAll(mDbAdapter.getProfileNames());
+		_lv_arr.addAll(_dbAdapter.getProfileNames());
 		_lv_arr.add(_res.getString(R.string.listview_add_new_profile));
 		
 		_lv.refreshDrawableState();

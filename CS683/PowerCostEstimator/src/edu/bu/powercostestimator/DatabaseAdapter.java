@@ -19,8 +19,8 @@ public class DatabaseAdapter {
 		+ "profile_name TEXT NOT NULL, profile_price_per_kwh NUMERIC NOT NULL);";
 	
     private static final String DEVICE_CREATE = "CREATE TABLE IF NOT EXISTS device (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-		+ "device_name TEXT NOT NULL, device_power_full NUMERIC NOT NULL, device_cost_full NUMERIC NOT NULL, " 
-		+ "device_power_standby NUMERIC, device_cost_standby NUMERIC, device_price_per_kwh NUMERIC);";
+		+ "device_name TEXT NOT NULL, device_power_full NUMERIC NOT NULL, device_time_full NUMERIC NOT NULL, " 
+		+ "device_power_standby NUMERIC, device_time_standby NUMERIC);";
     
     private static final String PROFILE_DEVICE_CREATE = "CREATE TABLE IF NOT EXISTS profile_device (profile_id INTEGER NOT NULL, "
 		+ "device_id INTEGER NOT NULL, FOREIGN KEY(profile_id) REFERENCES profile(_id), FOREIGN KEY(device_id) REFERENCES device(_id), "
@@ -97,14 +97,17 @@ public class DatabaseAdapter {
 		return c.getDouble(0);
 	}
 	
-	public void addDeviceToProfile(String deviceName, double devicePowerFull, double deviceCostFull, String profileName) {
-		myDatabase.execSQL("INSERT INTO device (device_name, device_power_full, device_cost_full) VALUES ('"
-				+ deviceName + "', " + devicePowerFull + ", " + deviceCostFull + ");");
+	public void addDeviceToProfile(String deviceName, double powerFull, double timeFull,
+			double powerStandby, double timeStandby, String profileName) {
+		// Add device
+		myDatabase.execSQL("INSERT INTO device (device_name, device_power_full, device_time_full, device_power_standby, device_time_standby) VALUES ('"
+				+ deviceName + "', " + powerFull + ", " + timeFull + ", " + powerStandby + ", " + timeStandby + ");");
+		// Now, add device to profile
 		myDatabase.execSQL("INSERT INTO profile_device (profile_id, device_id) VALUES ("+getProfileId(profileName)
-				+","+getDeviceId(deviceName, devicePowerFull, deviceCostFull)+");");
+				+","+getDeviceId(deviceName, powerFull, timeFull)+");");
 	}
 	
-	public int getDeviceId(String deviceName, double devicePowerFull, double deviceCostFull) {
+	public int getDeviceId(String deviceName, double powerFull, double timeFull) {
 		return getId(myDatabase.rawQuery("SELECT _id FROM device WHERE device_name='"+deviceName+"';", null));
 	}
 	

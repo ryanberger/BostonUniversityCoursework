@@ -1,8 +1,6 @@
 package edu.bu.powercostestimator;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -21,27 +19,23 @@ import android.widget.Toast;
 
 public class CalculateActivity extends Activity {
 
-	private DatabaseAdapter myDbAdapter;
-	private TextView _labelDaily;
-	private TextView _labelWeekly;
-	private TextView _labelMonthly;
-	private TextView _labelYearly;
+	private DatabaseAdapter _dbAdapter;
+	private TextView _labelDaily, _labelMonthly, _labelYearly;
+	private double _powerFull, _timeFull, _powerStandby, _timeStandby;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		myDbAdapter = DatabaseAdapter.getInstance();
+		_dbAdapter = DatabaseAdapter.getInstance();
 
 		setContentView(R.layout.calculate_layout);
 	}
 
 	public void onSubmitClick(View submitButton) {
-		double powerFull, timeFull;
-		
 		EditText powerFullField = (EditText) findViewById(R.id.editText_power_full);
 		String powerFullString = powerFullField.getText().toString().trim();
 		if (powerFullString.length() > 0) {
-			powerFull = Double.parseDouble(powerFullString);
+			_powerFull = Double.parseDouble(powerFullString);
 		}
 		else {
 			Toast.makeText(getApplicationContext(), "ERROR: required field Power Usage not filled out!", Toast.LENGTH_LONG).show();
@@ -51,36 +45,50 @@ public class CalculateActivity extends Activity {
 		EditText timeFullField = (EditText) findViewById(R.id.editText_time_full);
 		String timeFullString = timeFullField.getText().toString().trim();
 		if (timeFullString.length() > 0) {
-			timeFull = Double.parseDouble(timeFullString);
+			_timeFull = Double.parseDouble(timeFullString);
+			if (_timeFull > 24) {
+				Toast.makeText(getApplicationContext(), "ERROR: Time cannot exceed 24 hours!", Toast.LENGTH_LONG).show();
+				return;
+			}
 		}
 		else {
 			Toast.makeText(getApplicationContext(), "ERROR: required field Time not filled out!", Toast.LENGTH_LONG).show();
 			return;
 		}
 		
-		// Optional values - TODO: handle
-//		final EditText powerStandbyField = (EditText) findViewById(R.id.editText_power_standby);
-//		double powerStandby = powerStandbyField.getText().toString().length() > 0 ? Double.parseDouble(powerStandbyField.getText().toString()) : null;
-//		final EditText timeStandbyField = (EditText) findViewById(R.id.editText_time_standby);
-//		double timeStandby = timeStandbyField.getText().toString().length() > 0 ? Double.parseDouble(timeStandbyField.getText().toString()) : null;
+		// Optional values
+		EditText powerStandbyField = (EditText) findViewById(R.id.editText_power_standby);
+		String powerStandbyText = powerStandbyField.getText().toString().trim();
+		if (powerStandbyText.length() > 0) {
+			_powerStandby = Double.parseDouble(powerStandbyText);
+		}
+		EditText timeStandbyField = (EditText) findViewById(R.id.editText_time_standby);
+		String timeStandbyText = timeStandbyField.getText().toString().trim();
+		if (timeStandbyText.length() > 0) {
+			_timeStandby = Double.parseDouble(timeStandbyText);
+			if (_timeStandby > 24) {
+				Toast.makeText(getApplicationContext(), "ERROR: Time cannot exceed 24 hours!", Toast.LENGTH_LONG).show();
+				return;
+			}
+		}
 		
-		showChooseProfile(powerFull, timeFull);
+		showChooseProfile();
 	}
 	
-	private void setResults(double devicePowerFull, double deviceTimeFull, String profileName, LinearLayout layout) {
-		CalculateHelper calcHelper = new CalculateHelper(myDbAdapter.getProfileCost(profileName), devicePowerFull, deviceTimeFull);
+	private void setResults(String profileName, LinearLayout layout) {
+		CalculateHelper calcHelper = new CalculateHelper(_dbAdapter.getProfileCost(profileName), _powerFull, _timeFull, _powerStandby, _timeStandby);
 		_labelDaily.setText("Daily: " + calcHelper.toString(calcHelper.costPerDay()));
 		_labelMonthly.setText("Monthly: " + calcHelper.toString(calcHelper.costPerMonth()));
 		_labelYearly.setText("Yearly: " + calcHelper.toString(calcHelper.costPerYear()));
 		layout.refreshDrawableState();
 	}
 	
-	private void showChooseProfile(final double devicePowerFull, final double deviceTimeFull) {
+	private void showChooseProfile() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle(R.string.label_choose_profile);
 
-		ArrayList<String> profiles = myDbAdapter.getProfileNames();
+		ArrayList<String> profiles = _dbAdapter.getProfileNames();
 		
 		if (profiles.size() < 1) {
 			Toast.makeText(getApplicationContext(), "ERROR: cannot calculate until at least one profile has been added!", Toast.LENGTH_LONG).show();
@@ -103,7 +111,7 @@ public class CalculateActivity extends Activity {
 		layout.addView(_labelDaily);
 		layout.addView(_labelMonthly);
 		layout.addView(_labelYearly);
-		setResults(devicePowerFull, deviceTimeFull, chooseProfile.getSelectedItem().toString(), layout);
+		setResults(chooseProfile.getSelectedItem().toString(), layout);
 		
 		addToProfile.setText(R.string.label_add_to_profile);
 		
@@ -115,7 +123,7 @@ public class CalculateActivity extends Activity {
 			@Override
 			public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
 					int position, long id) {
-				setResults(devicePowerFull, deviceTimeFull, chooseProfile.getItemAtPosition(position).toString(), layout);
+				setResults(chooseProfile.getItemAtPosition(position).toString(), layout);
 			}
 
 			@Override
@@ -126,7 +134,7 @@ public class CalculateActivity extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				if (addToProfile.isChecked()) {
-					showChooseDevice(devicePowerFull, deviceTimeFull, chooseProfile.getSelectedItem().toString());
+					showChooseDevice(chooseProfile.getSelectedItem().toString());
 				}
 			}
 		});
@@ -134,7 +142,7 @@ public class CalculateActivity extends Activity {
 		alert.show();
 	}
 	
-	private void showChooseDevice(final double devicePowerFull, final double deviceTimeFull, final String profileName){
+	private void showChooseDevice(final String profileName){
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle(R.string.label_name_device);
@@ -156,7 +164,7 @@ public class CalculateActivity extends Activity {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String deviceNameValue = deviceName.getText().toString();
 				if (deviceNameValue.trim().length() > 0) {
-					myDbAdapter.addDeviceToProfile(deviceNameValue, devicePowerFull, deviceTimeFull, profileName);
+					_dbAdapter.addDeviceToProfile(deviceNameValue, _powerFull, _timeFull, _powerStandby, _timeStandby, profileName);
 					Toast.makeText(getApplicationContext(), "Successfully added item to profile", Toast.LENGTH_LONG).show();
 				} else {
 					Toast.makeText(getApplicationContext(), "ERROR: device name cannot be blank!", Toast.LENGTH_LONG).show();
