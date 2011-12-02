@@ -69,11 +69,9 @@ public class CalculateActivity extends Activity {
 	
 	private void setResults(double devicePowerFull, double deviceTimeFull, String profileName, LinearLayout layout) {
 		CalculateHelper calcHelper = new CalculateHelper(myDbAdapter.getProfileCost(profileName), devicePowerFull, deviceTimeFull);
-		NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
-		_labelDaily.setText("Daily: " + currencyFormatter.format(calcHelper.costPerDay()));
-		_labelWeekly.setText("Weekly: " + currencyFormatter.format(calcHelper.costPerWeek()));
-		_labelMonthly.setText("Monthly: " + currencyFormatter.format(calcHelper.costPerMonth()));
-		_labelYearly.setText("Yearly: " + currencyFormatter.format(calcHelper.costPerYear()));
+		_labelDaily.setText("Daily: " + calcHelper.toString(calcHelper.costPerDay()));
+		_labelMonthly.setText("Monthly: " + calcHelper.toString(calcHelper.costPerMonth()));
+		_labelYearly.setText("Yearly: " + calcHelper.toString(calcHelper.costPerYear()));
 		layout.refreshDrawableState();
 	}
 	
@@ -100,11 +98,9 @@ public class CalculateActivity extends Activity {
 		chooseProfile.setAdapter(profileAdapter);
 		
 		_labelDaily = new TextView(this);
-		_labelWeekly = new TextView(this);
 		_labelMonthly = new TextView(this);
 		_labelYearly = new TextView(this);
 		layout.addView(_labelDaily);
-		layout.addView(_labelWeekly);
 		layout.addView(_labelMonthly);
 		layout.addView(_labelYearly);
 		setResults(devicePowerFull, deviceTimeFull, chooseProfile.getSelectedItem().toString(), layout);

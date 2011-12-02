@@ -113,8 +113,9 @@ public class DatabaseAdapter {
 	}
 	
 	public Cursor getProfileDevices(String profileName) {
-		return myDatabase.rawQuery("SELECT d.* FROM device d, profile p, profile_device pd WHERE p.profile_name = '"
-				+ profileName + "' AND d._id = pd.device_id AND p._id = pd.profile_id;'" , null);
+		return myDatabase.rawQuery("SELECT * FROM device WHERE _id IN "
+				+ "(SELECT device_id FROM profile_device WHERE profile_id IN "
+				+ "(SELECT _id from profile WHERE profile_name='"+profileName+"'));", null);
 	}
 	
 	private int getId(Cursor cursor) {

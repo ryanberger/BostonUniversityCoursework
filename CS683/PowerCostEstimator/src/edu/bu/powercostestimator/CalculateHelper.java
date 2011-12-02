@@ -1,5 +1,7 @@
 package edu.bu.powercostestimator;
 
+import java.text.NumberFormat;
+
 public class CalculateHelper {
 	
 	private final int DAYS_PER_WEEK = 7;
@@ -11,9 +13,7 @@ public class CalculateHelper {
 	private double powerFull;
 	private double timeFull;
 	
-	public CalculateHelper(){
-		
-	}
+	private NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
 	
 	public CalculateHelper(double costPerKwh, double powerFull, double timeFull) {
 		this.costPerKwh = costPerKwh;
@@ -36,5 +36,9 @@ public class CalculateHelper {
 	
 	public double costPerYear() {
 		return costPerDay() * DAYS_PER_YEAR;
+	}
+	
+	public String toString(double value) {
+		return currencyFormatter.format(value);
 	}
 }

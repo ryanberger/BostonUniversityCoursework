@@ -105,38 +105,36 @@ public class ProfilesActivity extends Activity {
 		alert.setTitle(R.string.label_profile_summary);
 		
 		Cursor c = mDbAdapter.getProfileDevices(profileName);
-		TableLayout tl = new TableLayout(this);
-		tl.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.WRAP_CONTENT));
+		ListView lv = new ListView(this);
+		ArrayList<String> deviceSummary = new ArrayList<String>();
+		
+		double profileCost = mDbAdapter.getProfileCost(profileName);
+		double normalUsage = 0.0, normalTime = 0.0, totalNormalUsage = 0.0, totalNormalTime = 0.0;
+		CalculateHelper calcHelper;
+		
 		while (c.moveToNext()) {
-			TableRow tr = new TableRow(this);
-			tr.setClickable(true);
-			tr.setFocusable(true);
-			tr.setFocusableInTouchMode(false);
-			TextView tv = new TextView(this);
-			tv.setText(c.getString(1));
-			tr.addView(tv);
-			tl.addView(tr);
-			TextView tv2 = new TextView(this);
-			tv2.setText(c.getString(2) + "kWh/" + c.getString(3) + "hours");
-			tr.addView(tv2);
-//			TextView tv3 = new TextView(this);
-//			tv3.setText(c.getString(3) + "hours");
-//			tr.addView(tv3);
-			tr.setOnTouchListener(new OnTouchListener() {
-				@Override
-				public boolean onTouch(View v, MotionEvent event) {
-					if (event.getAction() == MotionEvent.ACTION_DOWN) {
-						v.setBackgroundColor(Color.YELLOW);
-					} else {
-						v.setBackgroundColor(Color.DKGRAY);
-					}
-					// TODO Auto-generated method stub
-					return false;
-				}
-			});
+			normalUsage = c.getDouble(2);
+			normalTime = c.getDouble(3);
+			calcHelper = new CalculateHelper(profileCost, normalUsage, normalTime);
+			totalNormalUsage += normalUsage;
+			totalNormalTime += normalTime;
+			
+			deviceSummary.add(String.format(_res.getString(R.string.format_device_summary), 
+					c.getString(1), "test", normalUsage, normalTime, 
+					calcHelper.toString(calcHelper.costPerDay()), "test", "test", 
+					calcHelper.toString(calcHelper.costPerMonth()), 
+					calcHelper.toString(calcHelper.costPerYear())));
 		}
-		alert.setView(tl);
+		// Now show total usage
+		calcHelper = new CalculateHelper(profileCost, totalNormalUsage, totalNormalTime);
+		deviceSummary.add(String.format(_res.getString(R.string.format_device_summary), 
+				"Total", "100", totalNormalUsage, totalNormalTime, 
+				calcHelper.toString(calcHelper.costPerDay()), "test", "test", 
+				calcHelper.toString(calcHelper.costPerMonth()), 
+				calcHelper.toString(calcHelper.costPerYear())));
+		
+		lv.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item, deviceSummary));
+		alert.setView(lv);
 		
 		alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
 			@Override

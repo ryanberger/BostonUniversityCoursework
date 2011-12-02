@@ -43,12 +43,6 @@
         <item>Toaster</item>
     </string-array>
         
-    <string-array name="hours_array">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-    </string-array>
+    <string name="format_device_summary">%1$s - %2$s\nNormal: %3$s kWh/%4$s hours\t\tDaily: %5$s\nStandby: %6$s kWh/%7$s hours\t\tMonthly: %8$s\n\t\t\t\t\t\t\t\t\t\t\t\t\tYearly: %9$s</string>
 
 </resources>
