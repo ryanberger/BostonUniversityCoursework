@@ -25,7 +25,7 @@ public class PowerCostEstimatorTest extends
         mDbAdapter = DatabaseAdapter.getInstance();
         mDbAdapter.open("PowerCostEstimatorDbTest", 1);
         mDbAdapter.createDatabase();
-        mCalcHelper = new CalculateHelper(0.05, 150, 24);
+        mCalcHelper = new CalculateHelper(0.05, 150, 24, 0.0, 0.0);
     }
 	
 	public void testSetProfile(){
