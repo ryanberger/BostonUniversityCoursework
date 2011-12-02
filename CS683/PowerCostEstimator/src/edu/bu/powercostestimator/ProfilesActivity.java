@@ -36,7 +36,6 @@ public class ProfilesActivity extends Activity {
 		setContentView(R.layout.profiles_layout);
 
 		_dbAdapter = DatabaseAdapter.getInstance();
-		//mDbAdapter.open(this);
 		_res = getResources();
 
 		_lv = (ListView)findViewById(R.id.ListView01);
@@ -169,7 +168,7 @@ public class ProfilesActivity extends Activity {
 		double profileCost;
 
 		if (profileName.trim().length() < 1) {
-			Toast.makeText(getApplicationContext(), "ERROR: required field Name not filled out!", Toast.LENGTH_LONG).show();
+			toast(_res.getString(R.string.error_empty_profile_name_field));
 			return;
 		}
 		
@@ -177,7 +176,7 @@ public class ProfilesActivity extends Activity {
 			profileCost = Double.parseDouble(profileCostString);
 		}
 		else {
-			Toast.makeText(getApplicationContext(), "ERROR: required field Cost not filled out!", Toast.LENGTH_LONG).show();
+			toast(_res.getString(R.string.error_empty_cost_field));
 			return;
 		}
 		
@@ -198,5 +197,8 @@ public class ProfilesActivity extends Activity {
 		
 		_lv.refreshDrawableState();
 	}
-
+	
+	private void toast(String message) {
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+	}
 }
