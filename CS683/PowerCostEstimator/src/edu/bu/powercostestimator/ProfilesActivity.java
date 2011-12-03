@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.ContextMenu;
@@ -21,6 +23,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
+import org.achartengine.ChartFactory;
+import org.achartengine.model.CategorySeries;
+import org.achartengine.renderer.DefaultRenderer;
+import org.achartengine.renderer.SimpleSeriesRenderer;
 
 public class ProfilesActivity extends Activity {
 
@@ -156,6 +162,13 @@ public class ProfilesActivity extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				//Done
+			}
+		});
+		
+		alert.setNeutralButton("Show Chart", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int whichButton) {
+				startActivity(GraphActivityHelper.showGraph(getApplicationContext()));
 			}
 		});
 		
