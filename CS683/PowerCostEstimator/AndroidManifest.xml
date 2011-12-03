@@ -20,8 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CalculateActivity"></activity>
-        <activity android:name=".ProfilesActivity"></activity>
+        <activity android:name=".CalculateActivity" />
+        <activity android:name=".ProfilesActivity" />
+        <activity android:name="org.achartengine.GraphicalActivity" />
     </application>
 
 </manifest>
