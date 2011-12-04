@@ -5,7 +5,7 @@
     android:orientation="horizontal" >
  
   <!-- Screen Design for Profiles -->
-	<ListView android:id="@+id/ListView01"
+	<ListView android:id="@+id/profile_listview"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" />
 </LinearLayout>

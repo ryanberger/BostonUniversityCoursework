@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.ContextMenu;
@@ -22,11 +20,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
-import org.achartengine.ChartFactory;
-import org.achartengine.model.CategorySeries;
-import org.achartengine.renderer.DefaultRenderer;
-import org.achartengine.renderer.SimpleSeriesRenderer;
 
 public class ProfilesActivity extends Activity {
 
@@ -44,10 +39,7 @@ public class ProfilesActivity extends Activity {
 		_dbAdapter = DatabaseAdapter.getInstance();
 		_res = getResources();
 
-		_lv = (ListView)findViewById(R.id.ListView01);
-		
-		// By using setAdpater method in listview we an add string array in list.
-		_lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, _lv_arr));
+		_lv = (ListView)findViewById(R.id.profile_listview);
 		
 		updateProfileList();
 
@@ -56,42 +48,62 @@ public class ProfilesActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				String test = (String)_lv.getItemAtPosition(position);
-				if (test.equals(_res.getString(R.string.listview_add_new_profile))) {
-					showAddNewProfileAlert();
-				}
-				else {
+				if (!test.equals(_res.getString(R.string.listview_add_new_profile))) {
 					showViewExistingProfileAlert(_lv.getItemAtPosition(position).toString());
 				}
+				else {
+					showAddNewProfileAlert();
+				}
 			}
+		});
+		_lv.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
+			@Override public void onCreateContextMenu(ContextMenu menu, final View v, ContextMenuInfo menuInfo) {
+				menu.add(_res.getString(R.string.label_edit_profile))
+				.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override public boolean onMenuItemClick(MenuItem item) {
+						// Get the info on which item was selected
+						AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+						String test = (String)_lv.getItemAtPosition(cmi.position);
+						if (!test.equals(_res.getString(R.string.listview_add_new_profile))) {
+							showEditProfileAlert(test);
+						}
+						return true;
+					}
+				});
+				menu.add(_res.getString(R.string.label_delete_profile))
+				.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override public boolean onMenuItemClick(MenuItem item) {
+						// Get the info on which item was selected
+						AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+						String test = (String)_lv.getItemAtPosition(cmi.position);
+						if (!test.equals(_res.getString(R.string.listview_add_new_profile))) {
+							showDeleteProfileAlert(test);
+						}
+						return true;
+					}
+				});
+			} 
 		});
 	}
 
 	private void showAddNewProfileAlert() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-		alert.setTitle(R.string.label_new_profile);
-
-		// Set an EditText view to get user input
-		LinearLayout layout = new LinearLayout(this);
-		// Set to vertical layout
-		layout.setOrientation(1);
+		
 		final EditText profileNameInput = new EditText(this);
 		final EditText profileCostInput = new EditText(this);
-		profileNameInput.setHint(R.string.label_profile_name);
-		profileCostInput.setHint(R.string.label_price_per_kwh);
-		profileCostInput.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-		layout.addView(profileNameInput);
-		layout.addView(profileCostInput);
-		alert.setView(layout);
+		
+		alert.setTitle(R.string.label_new_profile);
+		alert.setView(getProfileLayout(profileNameInput, profileCostInput));
 
-		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		alert.setPositiveButton(_res.getString(R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
-				addNewProfile(profileNameInput, profileCostInput);
+				// No ID yet since this is a new profile, so we'll use -1
+				updateProfile(-1, profileNameInput, profileCostInput, true);
 			}
 		});
 
-		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		alert.setNegativeButton(_res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				// Canceled.
@@ -101,12 +113,89 @@ public class ProfilesActivity extends Activity {
 		alert.show();
 	}
 	
-	private void showViewExistingProfileAlert(String profileName) {
+	private void showEditProfileAlert(String profileName) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		
+		final EditText profileNameInput = new EditText(this);
+		final EditText profileCostInput = new EditText(this);
+		
+		alert.setTitle(R.string.label_edit_profile);
+		alert.setView(getProfileLayout(profileNameInput, profileCostInput));
+		
+		Cursor c = _dbAdapter.getProfile(profileName);
+		c.moveToFirst();
+		final int profileId = c.getInt(0);
+		profileNameInput.setText(c.getString(1));
+		profileCostInput.setText(c.getString(2));
+		
+		alert.setPositiveButton(_res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int whichButton) {
+				updateProfile(profileId, profileNameInput, profileCostInput, false);
+			}
+		});
+
+		alert.setNegativeButton(_res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int whichButton) {
+				// Canceled.
+			}
+		});
+
+		alert.show();
+	}
+	
+	private void showDeleteProfileAlert(final String profileName) {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		
+		alert.setTitle(R.string.label_delete_profile);
+		TextView tv = new TextView(this);
+		tv.setText(R.string.warning_delete_profile);
+		alert.setView(tv);
+		
+		alert.setPositiveButton(_res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int whichButton) {
+				_dbAdapter.deleteProfile(profileName);
+				updateProfileList();
+			}
+		});
+
+		alert.setNegativeButton(_res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int whichButton) {
+				// Canceled.
+			}
+		});
+		
+		alert.show();
+	}
+	
+	private LinearLayout getProfileLayout(EditText profileNameInput, EditText profileCostInput) {
+		// Set an EditText view to get user input
+		LinearLayout layout = new LinearLayout(this);
+		// Set to vertical layout
+		layout.setOrientation(1);
+		TextView profileName = new TextView(this);
+		TextView profileCost = new TextView(this);
+		profileName.setText(R.string.label_profile_name);
+		profileCost.setText(R.string.label_price_per_kwh);
+		profileNameInput.setHint(R.string.hint_profile_name);
+		profileCostInput.setHint(R.string.hint_price_per_kwh);
+		profileCostInput.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		layout.addView(profileName);
+		layout.addView(profileNameInput);
+		layout.addView(profileCost);
+		layout.addView(profileCostInput);
+		return layout;
+	}
+	
+	private void showViewExistingProfileAlert(final String profileName) {
+		final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		
 		alert.setTitle(R.string.label_profile_summary);
 		
-		Cursor c = _dbAdapter.getProfileDevices(profileName);
+		final Cursor c = _dbAdapter.getProfileDevices(profileName);
 		final ListView lv = new ListView(this);
 		ArrayList<String> deviceSummary = new ArrayList<String>();
 		
@@ -144,21 +233,22 @@ public class ProfilesActivity extends Activity {
 		
 		lv.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
 			@Override public void onCreateContextMenu(ContextMenu menu, final View v, ContextMenuInfo menuInfo) {
-				menu.add("Edit Device");
-				menu.add("Delete Device")
+				menu.add(_res.getString(R.string.label_edit_device));
+				menu.add(_res.getString(R.string.label_delete_device))
 				.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override public boolean onMenuItemClick(MenuItem item) {
-						lv.getItemAtPosition(0); // TODO: determine which device was clicked
+						// Get the info on which item was selected
+						AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+						removeDeviceFromProfile(cmi.position, profileName, c);
 						return true;
 					}
 				});
 			} 
 		});
-
 		
 		alert.setView(lv);
 		
-		alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+		alert.setPositiveButton(_res.getString(R.string.done), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				//Done
@@ -175,7 +265,7 @@ public class ProfilesActivity extends Activity {
 		alert.show();
 	}
 
-	private void addNewProfile(EditText profileNameInput, EditText profileCostInput) {
+	private void updateProfile(int profileId, EditText profileNameInput, EditText profileCostInput, boolean isNewProfile) {
 		String profileName = profileNameInput.getText().toString();
 		String profileCostString = profileCostInput.getText().toString();
 		double profileCost;
@@ -193,13 +283,21 @@ public class ProfilesActivity extends Activity {
 			return;
 		}
 		
-		_dbAdapter.addProfile(profileName, profileCost);
-
+		if (isNewProfile) {
+			_dbAdapter.addProfile(profileName, profileCost);
+		} else {
+			_dbAdapter.updateProfile(profileId, profileName, profileCost);
+		}
+		
 		updateProfileList();
 	}
 	
-	private void removeDeviceFromProfile() {
-		
+	/*
+	 * Remove device from profile by removing relationship in profile_device table
+	 */
+	private void removeDeviceFromProfile(int position, String profileName, Cursor c) {
+		c.moveToPosition(position);
+		_dbAdapter.removeDeviceFromProfile(c.getInt(0), profileName);
 	}
 	
 	private void updateProfileList() {
@@ -208,7 +306,9 @@ public class ProfilesActivity extends Activity {
 		_lv_arr.addAll(_dbAdapter.getProfileNames());
 		_lv_arr.add(_res.getString(R.string.listview_add_new_profile));
 		
-		_lv.refreshDrawableState();
+		_lv.invalidate();
+		// By using setAdpater method in listview we an add string array in list.
+		_lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, _lv_arr));
 	}
 	
 	private void toast(String message) {
