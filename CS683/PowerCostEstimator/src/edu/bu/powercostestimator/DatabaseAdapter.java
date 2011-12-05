@@ -16,7 +16,7 @@ public class DatabaseAdapter {
 	
 	// Database tables
 	private static final String PROFILE_CREATE = "CREATE TABLE IF NOT EXISTS profile (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-		+ "profile_name TEXT NOT NULL, profile_price_per_kwh NUMERIC NOT NULL);";
+		+ "profile_name TEXT UNIQUE NOT NULL, profile_price_per_kwh NUMERIC NOT NULL);";
 	
     private static final String DEVICE_CREATE = "CREATE TABLE IF NOT EXISTS device (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
 		+ "device_name TEXT NOT NULL, device_power_full NUMERIC NOT NULL, device_time_full NUMERIC NOT NULL, " 

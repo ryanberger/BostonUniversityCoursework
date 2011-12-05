@@ -2,7 +2,6 @@ package edu.bu.powercostestimator;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import org.achartengine.ChartFactory;
 import org.achartengine.model.CategorySeries;
 import org.achartengine.renderer.DefaultRenderer;
@@ -12,13 +11,13 @@ import android.content.Intent;
 import android.graphics.Color;
 
 public class GraphActivityHelper {
-	public static Intent showGraph(Context context) {
-		double[] values = new double[] { 12, 14, 11, 10, 19 };
-		DefaultRenderer renderer = buildCategoryRenderer(getRandomColors(5));
-		renderer.setZoomButtonsVisible(true);
+	
+	public static Intent showGraph(Context context, ArrayList<GraphContent> graphContent) {
+		DefaultRenderer renderer = buildCategoryRenderer(getRandomColors(graphContent.size()));
+		//renderer.setZoomButtonsVisible(true);
 		renderer.setZoomEnabled(true);
 		renderer.setChartTitleTextSize(20);
-		return new Intent(ChartFactory.getPieChartIntent(context, buildCategoryDataset("Project budget", values),
+		return new Intent(ChartFactory.getPieChartIntent(context, buildCategoryDataset("Device Breakdown", graphContent),
 				renderer, "Breakdown by total cost"));
 	}
 
@@ -48,11 +47,11 @@ public class GraphActivityHelper {
 	 * @param values the values
 	 * @return the category series
 	 */
-	private static CategorySeries buildCategoryDataset(String title, double[] values) {
+	private static CategorySeries buildCategoryDataset(String title, ArrayList<GraphContent> graphContent) {
 		CategorySeries series = new CategorySeries(title);
-		int k = 0;
-		for (double value : values) {
-			series.add("Project " + ++k, value);
+
+		for (GraphContent gc : graphContent) {
+			series.add(gc.getDeviceName(), gc.getDeviceCost());
 		}
 
 		return series;

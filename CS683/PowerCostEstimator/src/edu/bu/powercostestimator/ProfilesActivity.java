@@ -196,30 +196,36 @@ public class ProfilesActivity extends Activity {
 		alert.setTitle(R.string.label_profile_summary);
 		
 		final Cursor c = _dbAdapter.getProfileDevices(profileName);
+		final ArrayList<GraphContent> gcList = new ArrayList<GraphContent>();
 		final ListView lv = new ListView(this);
 		ArrayList<String> deviceSummary = new ArrayList<String>();
 		
 		double profileCost = _dbAdapter.getProfileCost(profileName);
 		double normalUsage, normalTime, standbyUsage, standbyTime,
 			totalNormalUsage = 0.0, totalNormalTime = 0.0, totalStandbyUsage = 0.0, totalStandbyTime = 0.0;
+		String deviceName;
 		CalculateHelper calcHelper;
+		GraphContent gc;
 		
 		while (c.moveToNext()) {
+			deviceName = c.getString(1);
 			normalUsage = c.getDouble(2);
 			normalTime = c.getDouble(3);
 			standbyUsage = c.getDouble(4);
 			standbyTime = c.getDouble(5);
 			calcHelper = new CalculateHelper(profileCost, normalUsage, normalTime, standbyUsage, standbyTime);
+			gc = new GraphContent(deviceName, calcHelper.costPerYear());
 			totalNormalUsage += normalUsage;
 			totalNormalTime += normalTime;
 			totalStandbyUsage += standbyUsage;
 			totalStandbyTime += standbyTime;
 			
 			deviceSummary.add(String.format(_res.getString(R.string.format_device_summary), 
-					c.getString(1), "test", normalUsage, normalTime, 
+					deviceName, "test", normalUsage, normalTime, 
 					calcHelper.toString(calcHelper.costPerDay()), standbyUsage, standbyTime, 
 					calcHelper.toString(calcHelper.costPerMonth()), 
 					calcHelper.toString(calcHelper.costPerYear())));
+			gcList.add(gc);
 		}
 		// Now show total usage
 		calcHelper = new CalculateHelper(profileCost, totalNormalUsage, totalNormalTime, totalStandbyUsage, totalStandbyTime);
@@ -258,7 +264,7 @@ public class ProfilesActivity extends Activity {
 		alert.setNeutralButton("Show Chart", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
-				startActivity(GraphActivityHelper.showGraph(getApplicationContext()));
+				startActivity(GraphActivityHelper.showGraph(getApplicationContext(), gcList));
 			}
 		});
 		
