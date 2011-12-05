@@ -202,9 +202,10 @@ public class ProfilesActivity extends Activity {
 		
 		double profileCost = _dbAdapter.getProfileCost(profileName);
 		double normalUsage, normalTime, standbyUsage, standbyTime,
-			totalNormalUsage = 0.0, totalNormalTime = 0.0, totalStandbyUsage = 0.0, totalStandbyTime = 0.0;
+			totalNormalUsage = 0.0, totalNormalTime = 0.0, totalStandbyUsage = 0.0, totalStandbyTime = 0.0,
+			totalCostPerDay = 0.0, totalCostPerMonth = 0.0, totalCostPerYear = 0.0;
 		String deviceName;
-		CalculateHelper calcHelper;
+		CalculateHelper calcHelper = new CalculateHelper();
 		GraphContent gc;
 		
 		while (c.moveToNext()) {
@@ -219,21 +220,23 @@ public class ProfilesActivity extends Activity {
 			totalNormalTime += normalTime;
 			totalStandbyUsage += standbyUsage;
 			totalStandbyTime += standbyTime;
+			totalCostPerDay +=calcHelper.costPerDay();
+			totalCostPerMonth += calcHelper.costPerMonth();
+			totalCostPerYear += calcHelper.costPerYear();
 			
 			deviceSummary.add(String.format(_res.getString(R.string.format_device_summary), 
-					deviceName, "test", normalUsage, normalTime, 
-					calcHelper.toString(calcHelper.costPerDay()), standbyUsage, standbyTime, 
+					deviceName, normalUsage, normalTime, standbyUsage, standbyTime,
+					calcHelper.toString(calcHelper.costPerDay()),
 					calcHelper.toString(calcHelper.costPerMonth()), 
 					calcHelper.toString(calcHelper.costPerYear())));
 			gcList.add(gc);
 		}
+		
+		final double totalCost = totalCostPerYear;
 		// Now show total usage
-		calcHelper = new CalculateHelper(profileCost, totalNormalUsage, totalNormalTime, totalStandbyUsage, totalStandbyTime);
 		deviceSummary.add(String.format(_res.getString(R.string.format_device_summary), 
-				"Total", "100", totalNormalUsage, totalNormalTime, 
-				calcHelper.toString(calcHelper.costPerDay()), totalStandbyUsage, totalStandbyTime, 
-				calcHelper.toString(calcHelper.costPerMonth()), 
-				calcHelper.toString(calcHelper.costPerYear())));
+				"Total", totalNormalUsage, totalNormalTime, totalStandbyUsage, totalStandbyTime,
+				calcHelper.toString(totalCostPerDay), calcHelper.toString(totalCostPerMonth), calcHelper.toString(totalCostPerYear)));
 		
 		lv.setAdapter(new ArrayAdapter<String>(this, R.layout.device_summary_list_item, deviceSummary));
 		
@@ -264,7 +267,7 @@ public class ProfilesActivity extends Activity {
 		alert.setNeutralButton("Show Chart", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
-				startActivity(GraphActivityHelper.showGraph(getApplicationContext(), gcList));
+				startActivity(GraphActivityHelper.showGraph(getApplicationContext(), gcList, totalCost));
 			}
 		});
 		

@@ -63,8 +63,6 @@
 	<string name="error_empty_time_field">ERROR: required field Time not filled out!</string>
 	<string name="error_over_24_hours">ERROR: Time cannot exceed 24 hours!</string>
 	<string name="error_empty_device_name_field">ERROR: device name cannot be blank!</string>
-	<string name="format_device_summary">%1$s - %2$s\nNormal: %3$s W/%4$s hours\t\tDaily:
-		%5$s\nStandby: %6$s W/%7$s hours\t\tMonthly:
-		%8$s\n\t\t\t\t\t\t\t\t\t\t\t\t\tYearly: %9$s</string>
+	<string name="format_device_summary">%1$s\nNormal: %2$s W/%3$s hours\nStandby: %4$s W/%5$s hours\nDaily: %6$s\nMonthly: %7$s\nYearly: %8$s</string>
 
 </resources>
