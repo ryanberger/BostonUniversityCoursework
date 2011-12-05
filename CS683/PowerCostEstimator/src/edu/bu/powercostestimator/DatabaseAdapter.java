@@ -2,6 +2,7 @@ package edu.bu.powercostestimator;
 
 import java.util.ArrayList;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -96,7 +97,7 @@ public class DatabaseAdapter {
 	}
 	
 	public double getProfileCost(String profileName) {
-		Cursor c = _database.rawQuery("SELECT profile_price_per_kwh FROM profile WHERE profile_name = '"+profileName+"';", null);
+		Cursor c = _database.rawQuery(String.format("SELECT profile_price_per_kwh FROM profile WHERE profile_name = '%1$s';", profileName), null);
 		c.moveToFirst();
 		return c.getDouble(0);
 	}
@@ -104,29 +105,30 @@ public class DatabaseAdapter {
 	public void addDeviceToProfile(String deviceName, double powerFull, double timeFull,
 			double powerStandby, double timeStandby, String profileName) {
 		// Add device
-		_database.execSQL("INSERT INTO device (device_name, device_power_full, device_time_full, device_power_standby, device_time_standby) VALUES ('"
-				+ deviceName + "', " + powerFull + ", " + timeFull + ", " + powerStandby + ", " + timeStandby + ");");
+		ContentValues cv = new ContentValues();
+		cv.put("device_name", deviceName);
+		cv.put("device_power_full", powerFull);
+		cv.put("device_time_full", timeFull);
+		cv.put("device_power_standby", powerStandby);
+		cv.put("device_time_standby", timeStandby);
+		long deviceId = _database.insert("device", null, cv);
 		// Now, add device to profile
-		_database.execSQL("INSERT INTO profile_device (profile_id, device_id) VALUES ("+getProfileId(profileName)
-				+","+getDeviceId(deviceName, powerFull, timeFull)+");");
-	}
-	
-	public int getDeviceId(String deviceName, double powerFull, double timeFull) {
-		return getId(_database.rawQuery("SELECT _id FROM device WHERE device_name='"+deviceName+"';", null));
+		_database.execSQL(String.format("INSERT INTO profile_device (profile_id, device_id) VALUES (%1$s, %2$s);",
+				getProfileId(profileName), deviceId));
 	}
 	
 	public int getProfileId(String profileName) {
-		return getId(_database.rawQuery("SELECT _id FROM profile WHERE profile_name='"+profileName+"';", null));
+		return getId(_database.rawQuery(String.format("SELECT _id FROM profile WHERE profile_name='%1$s';", profileName), null));
 	}
 	
 	public Cursor getProfileDevices(String profileName) {
-		return _database.rawQuery("SELECT * FROM device WHERE _id IN "
+		return _database.rawQuery(String.format("SELECT * FROM device WHERE _id IN "
 				+ "(SELECT device_id FROM profile_device WHERE profile_id IN "
-				+ "(SELECT _id from profile WHERE profile_name='"+profileName+"'));", null);
+				+ "(SELECT _id from profile WHERE profile_name = '%1$s'));", profileName), null);
 	}
 	
 	public void removeDeviceFromProfile(int deviceId, String profileName) {
-		_database.execSQL(String.format("DELETE FROM profile_device WHERE device_id=%1$s AND profile_id=%2$s", deviceId, getProfileId(profileName)));
+		_database.execSQL(String.format("DELETE FROM profile_device WHERE device_id = %1$s AND profile_id = %2$s", deviceId, getProfileId(profileName)));
 	}
 	
 	private int getId(Cursor cursor) {

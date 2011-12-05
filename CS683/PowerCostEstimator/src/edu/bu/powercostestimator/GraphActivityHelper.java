@@ -1,5 +1,6 @@
 package edu.bu.powercostestimator;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Random;
 import org.achartengine.ChartFactory;
@@ -12,12 +13,12 @@ import android.graphics.Color;
 
 public class GraphActivityHelper {
 	
-	public static Intent showGraph(Context context, ArrayList<GraphContent> graphContent) {
+	public static Intent showGraph(Context context, ArrayList<GraphContent> graphContent, double totalCost) {
 		DefaultRenderer renderer = buildCategoryRenderer(getRandomColors(graphContent.size()));
 		//renderer.setZoomButtonsVisible(true);
 		renderer.setZoomEnabled(true);
 		renderer.setChartTitleTextSize(20);
-		return new Intent(ChartFactory.getPieChartIntent(context, buildCategoryDataset("Device Breakdown", graphContent),
+		return new Intent(ChartFactory.getPieChartIntent(context, buildCategoryDataset("Device Breakdown", graphContent, totalCost),
 				renderer, "Breakdown by total cost"));
 	}
 
@@ -47,11 +48,14 @@ public class GraphActivityHelper {
 	 * @param values the values
 	 * @return the category series
 	 */
-	private static CategorySeries buildCategoryDataset(String title, ArrayList<GraphContent> graphContent) {
+	private static CategorySeries buildCategoryDataset(String title, ArrayList<GraphContent> graphContent, double totalCost) {
 		CategorySeries series = new CategorySeries(title);
-
+		NumberFormat percentFormat = NumberFormat.getPercentInstance();
+		percentFormat.setMaximumFractionDigits(1);
+		
 		for (GraphContent gc : graphContent) {
-			series.add(gc.getDeviceName(), gc.getDeviceCost());
+			String percentOfTotal = percentFormat.format(gc.getDeviceCost() / totalCost);
+			series.add(String.format("%1$s - %2$s", gc.getDeviceName(), percentOfTotal), gc.getDeviceCost());
 		}
 
 		return series;

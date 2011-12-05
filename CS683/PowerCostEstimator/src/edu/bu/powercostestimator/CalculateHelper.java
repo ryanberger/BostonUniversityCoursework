@@ -25,6 +25,8 @@ public class CalculateHelper {
 		this.timeStandby = timeStandby;
 	}
 	
+	public CalculateHelper() {}
+
 	public double costPerDay() {
 		return costPerDayFull() + costPerDayStandby();
 	}
