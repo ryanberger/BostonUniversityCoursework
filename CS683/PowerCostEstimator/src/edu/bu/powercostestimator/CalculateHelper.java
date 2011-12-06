@@ -4,16 +4,12 @@ import java.text.NumberFormat;
 
 public class CalculateHelper {
 	
-	private final int DAYS_PER_WEEK = 7;
 	// Calculation based on average number of days per month in a given year.
 	private final double DAYS_PER_MONTH = 29.53;
 	private final double DAYS_PER_YEAR = 365.25;
 	
-	private double costPerKwh;
-	private double powerFull;
-	private double timeFull;
-	private double powerStandby = 0.0;
-	private double timeStandby = 0.0;
+	private double costPerKwh, powerFull, timeFull;
+	private double powerStandby = 0.0, timeStandby = 0.0;
 	
 	private NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
 	
@@ -29,10 +25,6 @@ public class CalculateHelper {
 
 	public double costPerDay() {
 		return costPerDayFull() + costPerDayStandby();
-	}
-	
-	public double costPerWeek() {
-		return costPerDay() * DAYS_PER_WEEK;
 	}
 	
 	public double costPerMonth() {

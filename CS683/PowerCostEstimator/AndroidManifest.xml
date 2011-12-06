@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".CalculateActivity" />
         <activity android:name=".ProfilesActivity" />
+        <activity android:name=".SummaryActivity" />
         <activity android:name="org.achartengine.GraphicalActivity" />
     </application>
 
