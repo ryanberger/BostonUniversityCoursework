@@ -27,6 +27,7 @@
 	<string name="label_name_device">Name Device</string>
 	<string name="label_edit_device">Edit Device</string>
 	<string name="label_delete_device">Delete Device</string>
+	<string name="label_show_chart">Show Chart</string>
 	
 	<string name="ok">Ok</string>
 	<string name="cancel">Cancel</string>
@@ -63,6 +64,7 @@
 	<string name="error_empty_time_field">ERROR: required field Time not filled out!</string>
 	<string name="error_over_24_hours">ERROR: Time cannot exceed 24 hours!</string>
 	<string name="error_empty_device_name_field">ERROR: device name cannot be blank!</string>
+	<string name="error_duplicate_device_name">ERROR: device name must be unique!</string>
 	<string name="format_device_summary">%1$s\nNormal: %2$s W/%3$s hours\nStandby: %4$s W/%5$s hours\nDaily: %6$s\nMonthly: %7$s\nYearly: %8$s</string>
 
 </resources>
