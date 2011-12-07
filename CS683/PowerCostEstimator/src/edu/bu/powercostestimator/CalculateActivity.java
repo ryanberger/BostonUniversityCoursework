@@ -34,6 +34,9 @@ public class CalculateActivity extends Activity {
 		setContentView(R.layout.calculate_layout);
 	}
 
+	/*
+	 * Action called when user clicks "Submit" button. Collects values and displays calculation.
+	 */
 	public void onSubmitClick(View submitButton) {
 		EditText powerFullField = (EditText) findViewById(R.id.editText_power_full);
 		String powerFullString = powerFullField.getText().toString().trim();
@@ -80,9 +83,9 @@ public class CalculateActivity extends Activity {
 	
 	private void setResults(String profileName, LinearLayout layout) {
 		CalculateHelper calcHelper = new CalculateHelper(_dbAdapter.getProfileCost(profileName), _powerFull, _timeFull, _powerStandby, _timeStandby);
-		_labelDaily.setText("Daily: " + calcHelper.toString(calcHelper.costPerDay()));
-		_labelMonthly.setText("Monthly: " + calcHelper.toString(calcHelper.costPerMonth()));
-		_labelYearly.setText("Yearly: " + calcHelper.toString(calcHelper.costPerYear()));
+		_labelDaily.setText(String.format(_res.getString(R.string.daily), calcHelper.toString(calcHelper.costPerDay())));
+		_labelMonthly.setText(String.format(_res.getString(R.string.monthly), calcHelper.toString(calcHelper.costPerMonth())));
+		_labelYearly.setText(String.format(_res.getString(R.string.yearly), calcHelper.toString(calcHelper.costPerYear())));
 		layout.refreshDrawableState();
 	}
 	
@@ -133,7 +136,7 @@ public class CalculateActivity extends Activity {
 			public void onNothingSelected(AdapterView<?> parentView) {}
 		});
 		
-		alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+		alert.setPositiveButton(_res.getString(R.string.done), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				if (addToProfile.isChecked()) {
@@ -162,7 +165,7 @@ public class CalculateActivity extends Activity {
 		layout.addView(deviceName);
 		alert.setView(layout);
 		
-		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		alert.setPositiveButton(_res.getString(R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String deviceNameValue = deviceName.getText().toString();
@@ -175,7 +178,7 @@ public class CalculateActivity extends Activity {
 			}
 		});
 
-		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		alert.setNegativeButton(_res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				// Canceled.

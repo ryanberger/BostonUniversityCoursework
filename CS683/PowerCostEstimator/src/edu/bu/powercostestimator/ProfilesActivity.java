@@ -89,6 +89,9 @@ public class ProfilesActivity extends Activity {
 		});
 	}
 
+	/*
+	 * Show alert for adding new profile
+	 */
 	private void showAddNewProfileAlert() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		
@@ -120,6 +123,9 @@ public class ProfilesActivity extends Activity {
 		alert.show();
 	}
 	
+	/*
+	 * Show alert for editing existing profile
+	 */
 	private void showEditProfileAlert(String profileName) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		
@@ -156,6 +162,9 @@ public class ProfilesActivity extends Activity {
 		alert.show();
 	}
 	
+	/*
+	 * Show alert for deleting existing profile
+	 */
 	private void showDeleteProfileAlert(final String profileName) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		
@@ -182,6 +191,9 @@ public class ProfilesActivity extends Activity {
 		alert.show();
 	}
 	
+	/*
+	 * Layout code used in both "create profile" and "edit profile"
+	 */
 	private LinearLayout getProfileLayout(EditText profileNameInput, EditText profileCostInput) {
 		// Set an EditText view to get user input
 		LinearLayout layout = new LinearLayout(this);
@@ -201,6 +213,9 @@ public class ProfilesActivity extends Activity {
 		return layout;
 	}
 
+	/*
+	 * Update existing profile
+	 */
 	private void updateProfile(int profileId, EditText profileNameInput, EditText profileCostInput, boolean isNewProfile) {
 		String profileName = profileNameInput.getText().toString();
 		String profileCostString = profileCostInput.getText().toString();
@@ -228,6 +243,9 @@ public class ProfilesActivity extends Activity {
 		updateProfileList();
 	}
 	
+	/*
+	 * Redraw profile list based on current values
+	 */
 	private void updateProfileList() {
 		_lv_arr.clear();
 		

@@ -10,19 +10,20 @@ import android.widget.TabHost;
 
 public class PowerCostEstimator extends TabActivity {
 
+	DatabaseAdapter _dbAdapter;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		//Initialize Database TODO: only do this on first run
-		DatabaseAdapter myDbAdapter = DatabaseAdapter.getInstance();
-		myDbAdapter.open(this);
-		myDbAdapter.createDatabase();
+		_dbAdapter = DatabaseAdapter.getInstance();
+		_dbAdapter.open(this);
+		_dbAdapter.createDatabase();
 
 		TabHost tabHost = getTabHost();  // The activity TabHost
-		TabHost.TabSpec spec;  // Resusable TabSpec for each tab
+		TabHost.TabSpec spec;  // Reusable TabSpec for each tab
 		Intent intent;  // Reusable Intent for each tab
 
 		// Create an Intent to launch an Activity for the tab (to be reused)
@@ -39,7 +40,8 @@ public class PowerCostEstimator extends TabActivity {
 		.setContent(intent);
 		tabHost.addTab(spec);
 
-		tabHost.setCurrentTab(2);
+		// Set current table to "Calculate"
+		tabHost.setCurrentTab(0);
 	}
 
 	@Override
@@ -59,5 +61,11 @@ public class PowerCostEstimator extends TabActivity {
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		_dbAdapter.close();
 	}
 }

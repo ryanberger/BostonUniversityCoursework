@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.ContextMenu;
@@ -126,10 +125,13 @@ public class SummaryActivity extends Activity {
 				// Canceled.
 			}
 		});
-
+		
 		alert.show();
 	}
 	
+	/*
+	 * Edit existing device
+	 */
 	private void editDevice(int deviceId, EditText deviceNameField, EditText powerFullField,
 			EditText timeFullField, EditText powerStandbyField, EditText timeStandbyField) {
 		double powerFull, timeFull, powerStandby = 0.0, timeStandby = 0.0;
@@ -180,21 +182,52 @@ public class SummaryActivity extends Activity {
 	}
 	
 	/*
+	 * Show delete device alert
+	 */
+	private void showDeleteDeviceAlert(int position, Cursor c) {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		
+		final int deviceId = getDeviceId(position, c);
+		alert.setTitle(R.string.label_delete_device);
+		TextView tv = new TextView(this);
+		tv.setText(R.string.warning_delete_device);
+		alert.setView(tv);
+		
+		alert.setPositiveButton(_res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int whichButton) {
+				deleteDevice(deviceId);
+			}
+		});
+
+		alert.setNegativeButton(_res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int whichButton) {
+				// Canceled.
+			}
+		});
+		
+		alert.show();
+	}
+	
+	/*
 	 * Remove device from database
 	 */
-	private void removeDeviceFromProfile(int position, Cursor c) {
-		c.moveToPosition(position);
-		_dbAdapter.deleteDevice(c.getInt(0));
+	private void deleteDevice(int deviceId) {
+		_dbAdapter.deleteDevice(deviceId);
 		updateSummaryList();
 	}
 	
+	/*
+	 * Retrieve device ID based on current list position (will match database results)
+	 */
 	private int getDeviceId(int position, Cursor c) {
 		c.moveToPosition(position);
 		return c.getInt(0);
 	}
 	
 	/*
-	 * Refresh summary list with new values
+	 * Refresh summary list with current values
 	 */
 	private void updateSummaryList() {
 		_lv_arr.clear();
@@ -256,7 +289,7 @@ public class SummaryActivity extends Activity {
 					@Override public boolean onMenuItemClick(MenuItem item) {
 						// Get the info on which item was selected
 						AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-						removeDeviceFromProfile(cmi.position, c);
+						showDeleteDeviceAlert(cmi.position, c);
 						return true;
 					}
 				});
@@ -278,5 +311,11 @@ public class SummaryActivity extends Activity {
 	
 	private void toast(String message) {
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		_dbAdapter.close();
 	}
 }
