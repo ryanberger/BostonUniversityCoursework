@@ -27,10 +27,18 @@ public class SettingsActivity extends PreferenceActivity {
 		
 		addPreferencesFromResource(R.xml.preferences);
 
-		Preference customPref = (Preference) findPreference("clearData");
-		customPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+		Preference clearData = (Preference) findPreference("clearData");
+		clearData.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			public boolean onPreferenceClick(Preference preference) {
 				showClearDataAlert();
+				return true;
+			}
+		});
+		
+		Preference about = (Preference) findPreference("about");
+		about.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			public boolean onPreferenceClick(Preference preference) {
+				showAboutAlert();
 				return true;
 			}
 		});
@@ -68,6 +76,22 @@ public class SettingsActivity extends PreferenceActivity {
 				// Canceled.
 			}
 		});
+		
+		alert.show();
+	}
+	
+	private void showAboutAlert() {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		
+		alert.setTitle(R.string.settings_about);
+		
+		LinearLayout layout = new LinearLayout(this);
+		// Set to vertical layout
+		layout.setOrientation(1);
+		TextView about = new TextView(this);
+		about.setText(R.string.settings_about_desc);
+		layout.addView(about);
+		alert.setView(layout);
 		
 		alert.show();
 	}
