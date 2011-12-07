@@ -128,8 +128,13 @@ public class DatabaseAdapter {
 				+ "(SELECT _id from profile WHERE profile_name = '%1$s'));", profileName), null);
 	}
 
-	public void removeDeviceFromProfile(int deviceId, String profileName) {
-		_database.execSQL(String.format("DELETE FROM profile_device WHERE device_id = %1$s AND profile_id = %2$s", deviceId, getProfileId(profileName)));
+	public void deleteDevice(int deviceId) {
+		_database.execSQL(String.format("DELETE FROM device WHERE device_id = %1$s", deviceId));
+	}
+	
+	public void updateDevice(int deviceId, String deviceName, double powerFull, double timeFull, double powerStandby, double timeStandby) throws SQLException {
+		_database.execSQL(String.format("UPDATE device SET device_name = '%1$s', device_power_full = %2$s, device_time_full = %3$s, device_power_standby = %4$s, "
+				+ "device_time_standby = %5$s WHERE _id = '%6$s';", deviceName, powerFull, timeFull, powerStandby, timeStandby, deviceId));
 	}
 
 	private int getId(Cursor cursor) {
