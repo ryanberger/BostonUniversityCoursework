@@ -13,6 +13,12 @@ public class CalculateHelper {
 	
 	private NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
 	
+	public CalculateHelper(double costPerKwh, double powerFull, double timeFull) {
+		this.costPerKwh = costPerKwh;
+		this.powerFull = powerFull;
+		this.timeFull = timeFull;
+	}
+	
 	public CalculateHelper(double costPerKwh, double powerFull, double timeFull, double powerStandby, double timeStandby) {
 		this.costPerKwh = costPerKwh;
 		this.powerFull = powerFull;
