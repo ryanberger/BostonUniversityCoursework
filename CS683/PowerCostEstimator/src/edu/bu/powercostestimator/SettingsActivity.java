@@ -88,6 +88,7 @@ public class SettingsActivity extends PreferenceActivity {
 		LinearLayout layout = new LinearLayout(this);
 		// Set to vertical layout
 		layout.setOrientation(1);
+		layout.setPadding(8, 8, 8, 8);
 		TextView about = new TextView(this);
 		about.setText(R.string.settings_about_desc);
 		layout.addView(about);
