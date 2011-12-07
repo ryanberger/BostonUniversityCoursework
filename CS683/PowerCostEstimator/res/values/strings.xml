@@ -33,7 +33,7 @@
 	<string name="monthly">Monthly: %1$s</string>
 	<string name="yearly">Yearly: %1$s</string>
 
-	<string name="ok">Ok</string>
+	<string name="ok">OK</string>
 	<string name="cancel">Cancel</string>
 	<string name="done">Done</string>
 	<string name="submit">Submit</string>
@@ -41,6 +41,8 @@
 	<string name="settings_clear_data">Clear Data</string>
 	<string name="settings_clear_data_desc">Erases all profile and device data</string>
 	<string name="settings_clear_data_warn">WARNING: this will erase all profile and device data. Proceed?</string>
+	<string name="settings_about">About</string>
+	<string name="settings_about_desc">Power Cost Estimator was created by Ryan Berger. All right reserved.</string>
 
 	<string-array name="devices_array">
 		<item>Air Conditioner</item>
