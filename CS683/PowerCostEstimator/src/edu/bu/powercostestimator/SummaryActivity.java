@@ -312,10 +312,5 @@ public class SummaryActivity extends Activity {
 	private void toast(String message) {
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 	}
-	
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		_dbAdapter.close();
-	}
+
 }

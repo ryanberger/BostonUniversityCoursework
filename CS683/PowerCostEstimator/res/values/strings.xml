@@ -32,11 +32,15 @@
 	<string name="daily">Daily: %1$s</string>
 	<string name="monthly">Monthly: %1$s</string>
 	<string name="yearly">Yearly: %1$s</string>
-	
+
 	<string name="ok">Ok</string>
 	<string name="cancel">Cancel</string>
 	<string name="done">Done</string>
 	<string name="submit">Submit</string>
+
+	<string name="settings_clear_data">Clear Data</string>
+	<string name="settings_clear_data_desc">Erases all profile and device data</string>
+	<string name="settings_clear_data_warn">WARNING: this will erase all profile and device data. Proceed?</string>
 
 	<string-array name="devices_array">
 		<item>Air Conditioner</item>
@@ -60,16 +64,21 @@
 	</string-array>
 
 	<string name="success_add_to_profile">Successfully added %1$s to %2$s.</string>
-	<string name="warning_delete_profile">Are you sure you want to delete this profile?</string>
-	<string name="warning_delete_device">Are you sure you want to delete this device?</string>
+	<string name="warning_delete_profile">Are you sure you want to delete this profile?
+	</string>
+	<string name="warning_delete_device">Are you sure you want to delete this device?
+	</string>
 	<string name="error_empty_profile_name_field">ERROR: required field Name not filled out!</string>
 	<string name="error_empty_cost_field">ERROR: required field Cost not filled out!</string>
-	<string name="error_no_profiles">ERROR: cannot calculate until at least one profile has been added!</string>
-	<string name="error_empty_power_field">ERROR: required field Power Usage not filled out!</string>
+	<string name="error_no_profiles">ERROR: cannot calculate until at least one profile
+		has been added!</string>
+	<string name="error_empty_power_field">ERROR: required field Power Usage not filled out!
+	</string>
 	<string name="error_empty_time_field">ERROR: required field Time not filled out!</string>
 	<string name="error_over_24_hours">ERROR: Time cannot exceed 24 hours!</string>
 	<string name="error_empty_device_name_field">ERROR: device name cannot be blank!</string>
 	<string name="error_duplicate_profile_name">ERROR: profile name must be unique!</string>
-	<string name="format_device_summary"><b>%1$s</b>\nNormal: %2$s W/%3$s hours\nStandby: %4$s W/%5$s hours\nDaily: %6$s\nMonthly: %7$s\nYearly: %8$s</string>
+	<string name="format_device_summary">%1$s\nNormal: %2$s W/%3$s hours\nStandby: %4$s W/%5$s hours\nDaily: %6$s\nMonthly: %7$s\nYearly: %8$s
+	</string>
 
 </resources>
