@@ -51,7 +51,6 @@ public class ProfilesActivity extends Activity {
 					int position, long id) {
 				String test = (String)_lv.getItemAtPosition(position);
 				if (!test.equals(_res.getString(R.string.listview_add_new_profile))) {
-					//showViewExistingProfileAlert(_lv.getItemAtPosition(position).toString());
 					startActivity(new Intent(view.getContext(), SummaryActivity.class).putExtra("profileName", _lv.getItemAtPosition(position).toString()));
 				}
 				else {

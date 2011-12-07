@@ -55,8 +55,9 @@ public class PowerCostEstimator extends TabActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 		switch (item.getItemId()) {
-			case R.menu.settings_menu:
-				//newGame();
+			case R.id.settings:
+				// Start menu Intent
+				startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
