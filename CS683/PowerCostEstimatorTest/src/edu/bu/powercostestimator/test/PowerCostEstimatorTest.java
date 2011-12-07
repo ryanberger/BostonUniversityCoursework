@@ -7,7 +7,8 @@ import edu.bu.powercostestimator.PowerCostEstimator;
 public class PowerCostEstimatorTest extends
 		ActivityInstrumentationTestCase2<PowerCostEstimator> {
 
-	private CalculateHelper _calcHelper;
+	private CalculateHelper _calcHelperWithoutStandby;
+	private CalculateHelper _calcHelperWithStandby;
 
 	public PowerCostEstimatorTest() {
 		super("edu.bu.powercostestimator", PowerCostEstimator.class);
@@ -16,19 +17,23 @@ public class PowerCostEstimatorTest extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		_calcHelper = new CalculateHelper(0.05, 142.0, 8.0, 67.0, 12.0);
+		_calcHelperWithoutStandby = new CalculateHelper(0.05, 134.0, 5.0);
+		_calcHelperWithStandby = new CalculateHelper(0.05, 142.0, 8.0, 67.0, 12.0);
 	}
 
 	public void testCalculateCostPerDay() {
-		assertEquals(_calcHelper.toString(_calcHelper.costPerDay()), "$0.10");
+		assertEquals(_calcHelperWithStandby.toString(_calcHelperWithoutStandby.costPerDay()), "$0.03");
+		assertEquals(_calcHelperWithStandby.toString(_calcHelperWithStandby.costPerDay()), "$0.10");
 	}
 	
 	public void testCalculateCostPerMonth() {
-		assertEquals(_calcHelper.toString(_calcHelper.costPerMonth()), "$2.86");
+		assertEquals(_calcHelperWithStandby.toString(_calcHelperWithoutStandby.costPerMonth()), "$0.99");
+		assertEquals(_calcHelperWithStandby.toString(_calcHelperWithStandby.costPerMonth()), "$2.86");
 	}
 	
 	public void testCalculateCostPerYear() {
-		assertEquals(_calcHelper.toString(_calcHelper.costPerYear()), "$35.43");
+		assertEquals(_calcHelperWithStandby.toString(_calcHelperWithoutStandby.costPerYear()), "$12.24");
+		assertEquals(_calcHelperWithStandby.toString(_calcHelperWithStandby.costPerYear()), "$35.43");
 	}
 
 	@Override
