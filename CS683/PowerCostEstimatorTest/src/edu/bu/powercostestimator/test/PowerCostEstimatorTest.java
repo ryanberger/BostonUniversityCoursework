@@ -1,48 +1,42 @@
 package edu.bu.powercostestimator.test;
 
-import android.database.Cursor;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.TextView;
 import edu.bu.powercostestimator.CalculateHelper;
-import edu.bu.powercostestimator.DatabaseAdapter;
 import edu.bu.powercostestimator.PowerCostEstimator;
 
 public class PowerCostEstimatorTest extends
 		ActivityInstrumentationTestCase2<PowerCostEstimator> {
-	
-	private PowerCostEstimator mActivity;
-    private DatabaseAdapter mDbAdapter;
-    private CalculateHelper mCalcHelper;
+
+	private CalculateHelper _calcHelper;
 
 	public PowerCostEstimatorTest() {
-	      super("edu.bu.powercostestimator", PowerCostEstimator.class);
+		super("edu.bu.powercostestimator", PowerCostEstimator.class);
 	}
 
 	@Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        mActivity = this.getActivity();
-        mDbAdapter = DatabaseAdapter.getInstance();
-        mDbAdapter.open("PowerCostEstimatorDbTest", 1);
-        mDbAdapter.createDatabase();
-        mCalcHelper = new CalculateHelper(0.05, 150, 24, 0.0, 0.0);
-    }
-	
-	public void testSetProfile(){
-		mDbAdapter.addProfile("Home_TEST", 0.10);
-		Cursor c = mDbAdapter.getProfile("Home_TEST");
-		int profileNameColumn = c.getColumnIndex("profile_name");
-		c.moveToFirst();
-		assertEquals(c.getString(profileNameColumn), "Home_TEST");
+	protected void setUp() throws Exception {
+		super.setUp();
+		_calcHelper = new CalculateHelper(0.05, 142.0, 8.0, 67.0, 12.0);
 	}
-	
+
 	public void testCalculateCostPerDay() {
-		assertEquals(mCalcHelper.costPerDay(), 0.18);
+		assertEquals(_calcHelper.toString(_calcHelper.costPerDay()), "$0.10");
 	}
 	
+	public void testCalculateCostPerMonth() {
+		assertEquals(_calcHelper.toString(_calcHelper.costPerMonth()), "$2.86");
+	}
+	
+	public void testCalculateCostPerYear() {
+		assertEquals(_calcHelper.toString(_calcHelper.costPerYear()), "$35.43");
+	}
+
 	@Override
 	public void tearDown() {
-		mDbAdapter.clearDatabase();
-		mDbAdapter.close();
+		try {
+			super.tearDown();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
