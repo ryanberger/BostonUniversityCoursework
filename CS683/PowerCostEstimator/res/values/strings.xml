@@ -70,6 +70,6 @@
 	<string name="error_over_24_hours">ERROR: Time cannot exceed 24 hours!</string>
 	<string name="error_empty_device_name_field">ERROR: device name cannot be blank!</string>
 	<string name="error_duplicate_profile_name">ERROR: profile name must be unique!</string>
-	<string name="format_device_summary">%1$s\nNormal: %2$s W/%3$s hours\nStandby: %4$s W/%5$s hours\nDaily: %6$s\nMonthly: %7$s\nYearly: %8$s</string>
+	<string name="format_device_summary"><b>%1$s</b>\nNormal: %2$s W/%3$s hours\nStandby: %4$s W/%5$s hours\nDaily: %6$s\nMonthly: %7$s\nYearly: %8$s</string>
 
 </resources>

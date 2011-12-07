@@ -129,7 +129,7 @@ public class DatabaseAdapter {
 	}
 
 	public void deleteDevice(int deviceId) {
-		_database.execSQL(String.format("DELETE FROM device WHERE device_id = %1$s", deviceId));
+		_database.execSQL(String.format("DELETE FROM device WHERE _id = %1$s", deviceId));
 	}
 	
 	public void updateDevice(int deviceId, String deviceName, double powerFull, double timeFull, double powerStandby, double timeStandby) throws SQLException {
