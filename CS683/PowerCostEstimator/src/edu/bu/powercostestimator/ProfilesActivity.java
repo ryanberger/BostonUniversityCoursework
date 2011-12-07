@@ -105,7 +105,7 @@ public class ProfilesActivity extends Activity {
 					// No ID yet since this is a new profile, so we'll use -1
 					updateProfile(-1, profileNameInput, profileCostInput, true);
 				} catch (SQLException e) {
-					toast(_res.getString(R.string.error_duplicate_device_name));
+					toast(_res.getString(R.string.error_duplicate_profile_name));
 				}
 			}
 		});
@@ -141,7 +141,7 @@ public class ProfilesActivity extends Activity {
 				try {
 					updateProfile(profileId, profileNameInput, profileCostInput, false);
 				} catch (SQLException e) {
-					toast(_res.getString(R.string.error_duplicate_device_name));
+					toast(_res.getString(R.string.error_duplicate_profile_name));
 				}
 			}
 		});
