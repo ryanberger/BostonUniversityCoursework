@@ -22,22 +22,22 @@
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:hint="@string/hint_time_full" android:inputType="numberDecimal"
 			android:maxLength="2" />
-		
+
 		<TextView android:id="@+id/textView_power_standby"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/label_power_standby" />
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:text="@string/label_power_standby" />
 
 		<EditText android:id="@+id/editText_power_standby"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:hint="@string/hint_power_standby" android:inputType="numberDecimal" />
-		
-		<TextView android:id="@+id/textView_time_standby"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/label_time_standby" />
 
-        <EditText android:id="@+id/editText_time_standby"
-            android:layout_width="fill_parent" android:layout_height="wrap_content"
-            android:hint="@string/hint_time_standby" android:inputType="numberDecimal" />
+		<TextView android:id="@+id/textView_time_standby"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:text="@string/label_time_standby" />
+
+		<EditText android:id="@+id/editText_time_standby"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:hint="@string/hint_time_standby" android:inputType="numberDecimal" />
 
 		<Button android:id="@+id/button_submit" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:onClick="onSubmitClick"
