@@ -15,11 +15,11 @@ public class GraphActivityHelper {
 	
 	public static Intent showGraph(Context context, ArrayList<GraphContent> graphContent, double totalCost) {
 		DefaultRenderer renderer = buildCategoryRenderer(getRandomColors(graphContent.size()));
-		//renderer.setZoomButtonsVisible(true);
+		renderer.setZoomButtonsVisible(true);
 		renderer.setZoomEnabled(true);
 		renderer.setChartTitleTextSize(20);
 		return new Intent(ChartFactory.getPieChartIntent(context, buildCategoryDataset("Device Breakdown", graphContent, totalCost),
-				renderer, "Breakdown by total cost"));
+				renderer, context.getString(R.string.breakdown)));
 	}
 
 	/**

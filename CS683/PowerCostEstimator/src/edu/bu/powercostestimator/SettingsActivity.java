@@ -3,30 +3,33 @@ package edu.bu.powercostestimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class SettingsActivity extends PreferenceActivity {
 	
+	SharedPreferences _sp;
 	DatabaseAdapter _dbAdapter;
 	private Resources _res;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.settings_layout);
 		
+		_sp = PreferenceManager.getDefaultSharedPreferences(this);
 		_dbAdapter = DatabaseAdapter.getInstance();
 		_dbAdapter.open(this);
 		_res = getResources();
 		
 		addPreferencesFromResource(R.xml.preferences);
-
+		
 		Preference clearData = (Preference) findPreference("clearData");
 		clearData.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			public boolean onPreferenceClick(Preference preference) {

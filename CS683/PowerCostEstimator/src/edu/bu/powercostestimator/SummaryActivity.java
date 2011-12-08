@@ -89,16 +89,16 @@ public class SummaryActivity extends Activity {
 		deviceNameInput.setHint(R.string.label_device);
 		devicePowerFullInput.setText(c.getString(2));
 		devicePowerFullInput.setHint(R.string.hint_power_full);
-		devicePowerFullInput.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		devicePowerFullInput.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		deviceTimeFullInput.setText(c.getString(3));
 		deviceTimeFullInput.setHint(R.string.hint_time_full);
-		deviceTimeFullInput.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		deviceTimeFullInput.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		devicePowerStandbyInput.setText(c.getString(4));
 		devicePowerStandbyInput.setHint(R.string.hint_power_standby);
-		devicePowerStandbyInput.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		devicePowerStandbyInput.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		deviceTimeStandbyInput.setText(c.getString(5));
 		deviceTimeStandbyInput.setHint(R.string.hint_time_standby);
-		deviceTimeStandbyInput.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		deviceTimeStandbyInput.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		
 		layout.addView(deviceName);
 		layout.addView(deviceNameInput);

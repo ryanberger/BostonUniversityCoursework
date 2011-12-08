@@ -204,7 +204,7 @@ public class ProfilesActivity extends Activity {
 		profileCost.setText(R.string.label_price_per_kwh);
 		profileNameInput.setHint(R.string.hint_profile_name);
 		profileCostInput.setHint(R.string.hint_price_per_kwh);
-		profileCostInput.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		profileCostInput.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		layout.addView(profileName);
 		layout.addView(profileNameInput);
 		layout.addView(profileCost);
