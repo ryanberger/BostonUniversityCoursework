@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Estimateur des coûts d\'Alimentation</string>
+	<string name="calculate">Calculer</string>
+	<string name="profiles">Profils</string>
+	<string name="settings">Réglages</string>
+	<string name="listview_add_new_profile">+ Ajouter un Nouvel</string>
+	<string name="label_new_profile">Nouveau Profil</string>
+	<string name="label_edit_profile">Modifier le Profil</string>
+	<string name="label_delete_profile">Supprimer le Profil</string>
+	<string name="label_profile_summary">Résumé du Profil</string>
+	<string name="label_profile_name">Nom du Profil:</string>
+	<string name="hint_profile_name">Nom du Profil</string>
+	<string name="label_price_per_kwh">Prix du kWh:</string>
+	<string name="hint_price_per_kwh">Prix du kWh</string>
+	<string name="label_device">Nom du Périphérique</string>
+	<string name="label_power_full">Consommation d\'Énergie:</string>
+	<string name="hint_power_full">Consommation d\'Énergie (watts)</string>
+	<string name="label_time_full">Temps d\'Utilisation:</string>
+	<string name="hint_time_full">Temps (heures par jour)</string>
+	<string name="label_power_standby">Power Usage Veille (facultatif):</string>
+	<string name="hint_power_standby">Power Usage Veille (watts)</string>
+	<string name="label_time_standby">Temps d\'Attente (facultatif):</string>
+	<string name="hint_time_standby">Temps d\'Attente (heures par jour)</string>
+	<string name="label_add_to_profile">Enregistrer le Profil</string>
+	<string name="label_choose_profile">Choix d\'un Profil</string>
+	<string name="label_name_device">Périphérique Nom</string>
+	<string name="label_edit_device">Modifier Périphérique</string>
+	<string name="label_delete_device">Supprimer Appareil</string>
+	<string name="label_show_chart">Afficher le Graphique</string>
+	<string name="label_summary">%1$s Sommaire</string>
+	<string name="daily">Quotidienne: %1$s</string>
+	<string name="monthly">Mensuel: %1$s</string>
+	<string name="yearly">Annuel: %1$s</string>
+	<string name="breakdown">Répartition par le coût total</string>
+
+	<string name="ok">OK</string>
+	<string name="cancel">Annuler</string>
+	<string name="done">Fait</string>
+	<string name="submit">Soumettre</string>
+
+	<string name="settings_clear_data">Données Claires</string>
+	<string name="settings_clear_data_desc">Efface toutes les données du profil et du dispositif</string>
+	<string name="settings_clear_data_warn">ATTENTION: Cette opération efface toutes les données de profil et de périphérique. Procéder?</string>
+	<string name="settings_about">À propos</string>
+	<string name="settings_about_desc">Estimateur des coûts d\'alimentation a été créé par Ryan Berger. Tous droits réservés.</string>
+
+	<string name="success_add_to_profile">Vous avez joint %1$s à %2$s.</string>
+	<string name="warning_delete_profile">Etes-vous sûr de vouloir supprimer ce profil?</string>
+	<string name="warning_delete_device">Etes-vous sûr de vouloir supprimer ce dispositif?</string>
+	<string name="error_empty_profile_name_field">ERREUR: Nom champ obligatoire n\'est pas rempli!</string>
+	<string name="error_empty_cost_field">ERREUR: Coût champ obligatoire n\'est pas rempli!</string>
+	<string name="error_no_profiles">ERREUR: ne peut pas calculer jusqu\'à au moins un profil a été ajouté!</string>
+	<string name="error_empty_power_field">ERREUR: nécessaire Consommation d\'Énergie champ non rempli!</string>
+	<string name="error_empty_time_field">ERREUR: Temps champ obligatoire n\'est pas rempli!</string>
+	<string name="error_over_24_hours">ERREUR: Le temps ne peut pas dépasser 24 heures!</string>
+	<string name="error_empty_device_name_field">ERREUR: le nom du périphérique ne peut pas être vide!</string>
+	<string name="error_duplicate_profile_name">ERREUR: le nom du profil doit être unique!</string>
+	<string name="format_device_summary">%1$s\nNormale: %2$s W/%3$s heures\nVeille: %4$s W/%5$s heures\Quotidienne: %6$s\Mensuel: %7$s\Annuel: %8$s
+	</string>
+
+</resources>

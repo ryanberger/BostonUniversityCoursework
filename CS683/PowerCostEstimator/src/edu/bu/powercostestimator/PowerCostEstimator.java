@@ -30,13 +30,13 @@ public class PowerCostEstimator extends TabActivity {
 		intent = new Intent().setClass(this, CalculateActivity.class);
 
 		// Initialize a TabSpec for each tab and add it to the TabHost
-		spec = tabHost.newTabSpec("calculate").setIndicator("Calculate")
+		spec = tabHost.newTabSpec("calculate").setIndicator(getString(R.string.calculate))
 		.setContent(intent);
 		tabHost.addTab(spec);
 
 		// Do the same for the other tabs
 		intent = new Intent().setClass(this, ProfilesActivity.class);
-		spec = tabHost.newTabSpec("profiles").setIndicator("Profiles")
+		spec = tabHost.newTabSpec("profiles").setIndicator(getString(R.string.profiles))
 		.setContent(intent);
 		tabHost.addTab(spec);
 

@@ -67,6 +67,8 @@ public class CalculateActivity extends Activity {
 		String powerStandbyText = powerStandbyField.getText().toString().trim();
 		if (powerStandbyText.length() > 0) {
 			_powerStandby = Double.parseDouble(powerStandbyText);
+		} else {
+			_powerStandby = 0.0;
 		}
 		EditText timeStandbyField = (EditText) findViewById(R.id.editText_time_standby);
 		String timeStandbyText = timeStandbyField.getText().toString().trim();
@@ -76,6 +78,8 @@ public class CalculateActivity extends Activity {
 				toast(_res.getString(R.string.error_over_24_hours));
 				return;
 			}
+		} else {
+			_timeStandby = 0.0;
 		}
 		
 		showChooseProfile();
