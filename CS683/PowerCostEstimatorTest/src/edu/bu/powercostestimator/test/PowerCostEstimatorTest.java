@@ -22,18 +22,18 @@ public class PowerCostEstimatorTest extends
 	}
 
 	public void testCalculateCostPerDay() {
-		assertEquals(_calcHelperWithStandby.toString(_calcHelperWithoutStandby.costPerDay()), "$0.03");
-		assertEquals(_calcHelperWithStandby.toString(_calcHelperWithStandby.costPerDay()), "$0.10");
+		assertEquals(CalculateHelper.toString(_calcHelperWithoutStandby.costPerDay()), "$0.03");
+		assertEquals(CalculateHelper.toString(_calcHelperWithStandby.costPerDay()), "$0.10");
 	}
 	
 	public void testCalculateCostPerMonth() {
-		assertEquals(_calcHelperWithStandby.toString(_calcHelperWithoutStandby.costPerMonth()), "$0.99");
-		assertEquals(_calcHelperWithStandby.toString(_calcHelperWithStandby.costPerMonth()), "$2.86");
+		assertEquals(CalculateHelper.toString(_calcHelperWithoutStandby.costPerMonth()), "$0.99");
+		assertEquals(CalculateHelper.toString(_calcHelperWithStandby.costPerMonth()), "$2.86");
 	}
 	
 	public void testCalculateCostPerYear() {
-		assertEquals(_calcHelperWithStandby.toString(_calcHelperWithoutStandby.costPerYear()), "$12.24");
-		assertEquals(_calcHelperWithStandby.toString(_calcHelperWithStandby.costPerYear()), "$35.43");
+		assertEquals(CalculateHelper.toString(_calcHelperWithoutStandby.costPerYear()), "$12.24");
+		assertEquals(CalculateHelper.toString(_calcHelperWithStandby.costPerYear()), "$35.43");
 	}
 
 	@Override
