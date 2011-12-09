@@ -66,6 +66,8 @@
 		<item>Television</item>
 		<item>Toaster</item>
 	</string-array>
+	
+	<string name="decimalInput">1234567890.</string>
 
 	<string name="success_add_to_profile">Successfully added %1$s to %2$s.</string>
 	<string name="warning_delete_profile">Are you sure you want to delete this profile?</string>

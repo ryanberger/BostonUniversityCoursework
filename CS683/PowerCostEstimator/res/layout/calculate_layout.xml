@@ -12,7 +12,8 @@
 
 		<EditText android:id="@+id/editText_power_full"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:hint="@string/hint_power_full" android:inputType="numberDecimal" />
+			android:hint="@string/hint_power_full" android:inputType="phone"
+			android:digits="@string/decimalInput" android:imeOptions="actionNext" />
 
 		<TextView android:id="@+id/textView_power_full"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -20,7 +21,8 @@
 
 		<EditText android:id="@+id/editText_time_full"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:hint="@string/hint_time_full" android:inputType="numberDecimal"
+			android:hint="@string/hint_time_full" android:inputType="phone"
+			android:digits="@string/decimalInput" android:imeOptions="actionNext"
 			android:maxLength="2" />
 
 		<TextView android:id="@+id/textView_power_standby"
@@ -29,7 +31,8 @@
 
 		<EditText android:id="@+id/editText_power_standby"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:hint="@string/hint_power_standby" android:inputType="numberDecimal" />
+			android:hint="@string/hint_power_standby" android:inputType="phone"
+			android:digits="@string/decimalInput" android:imeOptions="actionNext" />
 
 		<TextView android:id="@+id/textView_time_standby"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -37,7 +40,8 @@
 
 		<EditText android:id="@+id/editText_time_standby"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:hint="@string/hint_time_standby" android:inputType="numberDecimal" />
+			android:hint="@string/hint_time_standby" android:inputType="phone"
+			android:digits="@string/decimalInput" android:imeOptions="actionNext" />
 
 		<Button android:id="@+id/button_submit" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:onClick="onSubmitClick"

@@ -103,8 +103,7 @@ public class CalculateActivity extends Activity {
 		}
 		
 		final LinearLayout layout = new LinearLayout(this);
-		// Set to vertical layout
-		layout.setOrientation(1);
+		layout.setOrientation(LinearLayout.VERTICAL);
 		
 		final Spinner chooseProfile = new Spinner(this);
 		final CheckBox addToProfile = new CheckBox(this);
@@ -160,7 +159,7 @@ public class CalculateActivity extends Activity {
 		ArrayAdapter<String> deviceAdapter = new ArrayAdapter<String>(this, R.layout.list_item, devices);
 		
 		LinearLayout layout = new LinearLayout(this);
-		layout.setOrientation(1);
+		layout.setOrientation(LinearLayout.VERTICAL);
 		deviceName.setAdapter(deviceAdapter);
 		deviceName.setHint(R.string.label_device);
 		layout.addView(deviceName);
