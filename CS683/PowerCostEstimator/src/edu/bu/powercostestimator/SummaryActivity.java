@@ -1,11 +1,15 @@
 package edu.bu.powercostestimator;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
@@ -16,15 +20,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import au.com.bytecode.opencsv.CSVWriter;
 
 public class SummaryActivity extends Activity {
 
 	private DatabaseAdapter _dbAdapter;
 	private ListView _lv;
 	private ArrayList<String> _lv_arr = new ArrayList<String>();
+	private ArrayList<DeviceContent> _dcList = new ArrayList<DeviceContent>();
 	private ArrayList<GraphContent> _gcList = new ArrayList<GraphContent>();
 	private double _totalCost;
 	private String _profileName;
@@ -73,7 +80,8 @@ public class SummaryActivity extends Activity {
 		alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
-				editDevice(deviceId, deviceNameInput, devicePowerFullInput, deviceTimeFullInput, devicePowerStandbyInput, deviceTimeStandbyInput);
+				editDevice(deviceId, deviceNameInput, devicePowerFullInput, deviceTimeFullInput,
+						devicePowerStandbyInput, deviceTimeStandbyInput);
 			}
 		});
 
@@ -189,38 +197,38 @@ public class SummaryActivity extends Activity {
 	 */
 	private void updateSummaryList() {
 		_lv_arr.clear();
+		_dcList.clear();
 		_gcList.clear();
 		
 		Button showChart = (Button) findViewById(R.id.button_show_chart);
+		Button export = (Button) findViewById(R.id.button_export);
 		final Cursor c = _dbAdapter.getProfileDevices(_profileName);
 		double profileCost = _dbAdapter.getProfileCost(_profileName);
-		double normalUsage, normalTime, standbyUsage, standbyTime,
-			totalNormalUsage = 0.0, totalNormalTime = 0.0, totalStandbyUsage = 0.0, totalStandbyTime = 0.0,
-			totalCostPerDay = 0.0, totalCostPerMonth = 0.0, totalCostPerYear = 0.0;
-		String deviceName;
+		double totalNormalUsage = 0.0, totalNormalTime = 0.0, totalStandbyUsage = 0.0,
+			totalStandbyTime = 0.0, totalCostPerDay = 0.0, totalCostPerMonth = 0.0, totalCostPerYear = 0.0;
+		DeviceContent dc;
 		GraphContent gc;
 		
 		while (c.moveToNext()) {
-			deviceName = c.getString(1);
-			normalUsage = c.getDouble(2);
-			normalTime = c.getDouble(3);
-			standbyUsage = c.getDouble(4);
-			standbyTime = c.getDouble(5);
-			CalculateHelper calcHelper = new CalculateHelper(profileCost, normalUsage, normalTime, standbyUsage, standbyTime);
-			gc = new GraphContent(deviceName, calcHelper.costPerYear());
-			totalNormalUsage += normalUsage;
-			totalNormalTime += normalTime;
-			totalStandbyUsage += standbyUsage;
-			totalStandbyTime += standbyTime;
+			dc = new DeviceContent(c.getString(1), c.getDouble(2), c.getDouble(3), c.getDouble(4), c.getDouble(5));
+			CalculateHelper calcHelper = new CalculateHelper(profileCost, dc.getNormalUsage(), dc.getNormalTime(),
+					dc.getStandbyUsage(), dc.getStandbyTime());
+			gc = new GraphContent(dc.getDeviceName(), calcHelper.costPerYear());
+			
+			totalNormalUsage += dc.getNormalUsage();
+			totalNormalTime += dc.getNormalTime();
+			totalStandbyUsage += dc.getStandbyUsage();
+			totalStandbyTime += dc.getStandbyTime();
 			totalCostPerDay +=calcHelper.costPerDay();
 			totalCostPerMonth += calcHelper.costPerMonth();
 			totalCostPerYear += calcHelper.costPerYear();
 			
 			_lv_arr.add(String.format(getString(R.string.format_device_summary), 
-					deviceName, normalUsage, normalTime, standbyUsage, standbyTime,
+					dc.getDeviceName(), dc.getNormalUsage(), dc.getNormalTime(), dc.getStandbyUsage(), dc.getStandbyTime(),
 					CalculateHelper.toString(calcHelper.costPerDay()),
 					CalculateHelper.toString(calcHelper.costPerMonth()), 
 					CalculateHelper.toString(calcHelper.costPerYear())));
+			_dcList.add(dc);
 			_gcList.add(gc);
 		}
 		
@@ -229,8 +237,9 @@ public class SummaryActivity extends Activity {
 		if (c.getCount() > 0) {
 			// Now show total usage
 			_lv_arr.add(String.format(getString(R.string.format_device_summary), 
-					"Total", totalNormalUsage, totalNormalTime, totalStandbyUsage, totalStandbyTime,
-					CalculateHelper.toString(totalCostPerDay), CalculateHelper.toString(totalCostPerMonth), CalculateHelper.toString(totalCostPerYear)));
+					getString(R.string.total), totalNormalUsage, totalNormalTime, totalStandbyUsage, totalStandbyTime,
+					CalculateHelper.toString(totalCostPerDay), CalculateHelper.toString(totalCostPerMonth),
+						CalculateHelper.toString(totalCostPerYear)));
 			
 			_lv.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
 				@Override public void onCreateContextMenu(ContextMenu menu, final View v, ContextMenuInfo menuInfo) {
@@ -260,18 +269,77 @@ public class SummaryActivity extends Activity {
 			showChart.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					startActivity(GraphActivity.showGraph(getApplicationContext(), _gcList, _totalCost));
-					
+					startActivity(GraphActivityHelper.showGraph(getApplicationContext(), _gcList, _totalCost));
+				}
+			});
+			
+			export.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					showExportAlert();
 				}
 			});
 		} else {
 			_lv_arr.add(getString(R.string.warning_no_devices));
 			showChart.setVisibility(View.GONE);
+			export.setVisibility(View.GONE);
 		}
 		
 		_lv.invalidate();
 		// By using setAdpater method in listview we an add string array in list.
 		_lv.setAdapter(new ArrayAdapter<String>(this, R.layout.device_summary_list_item, _lv_arr));
+	}
+	
+	private void showExportAlert() {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		
+		alert.setTitle(R.string.label_export_profile);
+		
+		LinearLayout layout = new LinearLayout(this);
+		layout.setOrientation(LinearLayout.VERTICAL);
+		
+		TextView tv = new TextView(this);
+		final EditText et = new EditText(this);
+		tv.setText("Specify file name:");
+		et.setHint("filename.csv");
+		layout.addView(tv);
+		layout.addView(et);
+		
+		alert.setView(layout);
+		
+		alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int whichButton) {
+				export(et.getText().toString().trim());
+			}
+		});
+
+		alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int whichButton) {
+				// Canceled.
+			}
+		});
+		
+		alert.show();
+	}
+	
+	private void export(String filename) {
+		CSVWriter writer = null;
+		try 
+		{
+			File sdCard = Environment.getExternalStorageDirectory();
+			String outputPath = sdCard.getAbsolutePath() + "/" + filename;
+			writer = new CSVWriter(new FileWriter(outputPath), ',');
+			String[] entries = "first#second#third".split("#"); // array of your values
+			writer.writeNext(entries);  
+			writer.close();
+			toast(String.format("Successfully wrote file to: %1$s", outputPath));
+		} 
+		catch (IOException e)
+		{
+			toast(String.format("ERROR: %1$s", e));
+		}
 	}
 	
 	private void toast(String message) {

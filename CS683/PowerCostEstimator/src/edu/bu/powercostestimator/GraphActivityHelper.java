@@ -11,7 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 
-public class GraphActivity {
+public class GraphActivityHelper {
 	
 	public static Intent showGraph(Context context, ArrayList<GraphContent> graphContent, double totalCost) {
 		DefaultRenderer renderer = buildCategoryRenderer(getRandomColors(graphContent.size()));

@@ -28,17 +28,20 @@
 	<string name="label_name_device">Name Device</string>
 	<string name="label_edit_device">Edit Device</string>
 	<string name="label_delete_device">Delete Device</string>
-	<string name="label_show_chart">Show Chart</string>
 	<string name="label_summary">%1$s Summary</string>
 	<string name="daily">Daily: %1$s</string>
 	<string name="monthly">Monthly: %1$s</string>
 	<string name="yearly">Yearly: %1$s</string>
+	<string name="total">Total</string>
 	<string name="breakdown">Breakdown by total cost</string>
+	<string name="label_export_profile">Export Profile</string>
 
 	<string name="ok">OK</string>
 	<string name="cancel">Cancel</string>
 	<string name="done">Done</string>
 	<string name="submit">Submit</string>
+	<string name="show_chart">Show Chart</string>
+	<string name="export">Export</string>
 
 	<string name="settings_clear_data">Clear Data</string>
 	<string name="settings_clear_data_desc">Erases all profile and device data</string>
