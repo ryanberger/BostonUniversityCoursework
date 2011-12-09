@@ -85,12 +85,13 @@ public class ProfilesActivity extends Activity {
 	 */
 	private void showAddNewProfileAlert() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		View alertView = View.inflate(getBaseContext(), R.layout.profiles_alert_layout, null);
 		
 		alert.setTitle(R.string.label_new_profile);
-		alert.setView(View.inflate(getBaseContext(), R.layout.profiles_alert_layout, null));
+		alert.setView(alertView);
 
-		final EditText profileNameInput = (EditText) findViewById(R.id.editText_profile_name);
-		final EditText profileCostInput = (EditText) findViewById(R.id.editText_price_per_kwh);
+		final EditText profileNameInput = (EditText) alertView.findViewById(R.id.editText_alert_profile_name);
+		final EditText profileCostInput = (EditText) alertView.findViewById(R.id.editText_alert_price_per_kwh);
 		
 		alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
@@ -119,12 +120,13 @@ public class ProfilesActivity extends Activity {
 	 */
 	private void showEditProfileAlert(String profileName) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		View alertView = View.inflate(getBaseContext(), R.layout.profiles_alert_layout, null);
 		
 		alert.setTitle(R.string.label_edit_profile);
-		alert.setView(View.inflate(getBaseContext(), R.layout.profiles_alert_layout, null));
+		alert.setView(alertView);
 		
-		final EditText profileNameInput = (EditText) findViewById(R.id.editText_profile_name);
-		final EditText profileCostInput = (EditText) findViewById(R.id.editText_price_per_kwh);
+		final EditText profileNameInput = (EditText) alertView.findViewById(R.id.editText_alert_profile_name);
+		final EditText profileCostInput = (EditText) alertView.findViewById(R.id.editText_alert_price_per_kwh);
 		
 		Cursor c = _dbAdapter.getProfile(profileName);
 		c.moveToFirst();

@@ -6,23 +6,24 @@
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:orientation="vertical">
 
-		<TextView android:id="@+id/textView_profile_name"
+		<TextView android:id="@+id/textView_alert_profile_name"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:text="@string/label_profile_name" />
 
-		<EditText android:id="@+id/editText_profile_name"
+		<EditText android:id="@+id/editText_alert_profile_name"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:hint="@string/hint_profile_name" android:singleLine="true" android:imeOptions="actionNext" />
+			android:hint="@string/hint_profile_name" android:singleLine="true"
+			android:imeOptions="actionNext" />
 
-		<TextView android:id="@+id/textView_price_per_kwh"
+		<TextView android:id="@+id/textView_alert_price_per_kwh"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:text="@string/label_price_per_kwh" />
 
-		<EditText android:id="@+id/editText_price_per_kwh"
+		<EditText android:id="@+id/editText_alert_price_per_kwh"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:hint="@string/hint_price_per_kwh" android:inputType="phone"
 			android:digits="@string/decimalInput" android:imeOptions="actionDone" />
-		
+
 	</LinearLayout>
 
 </ScrollView>

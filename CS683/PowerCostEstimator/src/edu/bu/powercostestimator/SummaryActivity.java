@@ -6,18 +6,16 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.ContextMenu;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.View;
 import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,59 +52,23 @@ public class SummaryActivity extends Activity {
 	 */
 	private void showEditDeviceAlert(int position, Cursor c) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		
-		// Set an EditText view to get user input
-		LinearLayout layout = new LinearLayout(this);
-		layout.setOrientation(LinearLayout.VERTICAL);
-		
-		TextView deviceName = new TextView(this);
-		TextView devicePowerFull = new TextView(this);
-		TextView deviceTimeFull = new TextView(this);
-		TextView devicePowerStandby = new TextView(this);
-		TextView deviceTimeStandby = new TextView(this);
-		deviceName.setText(R.string.label_device);
-		devicePowerFull.setText(R.string.label_power_full);
-		deviceTimeFull.setText(R.string.label_time_full);
-		devicePowerStandby.setText(R.string.label_power_standby);
-		deviceTimeStandby.setText(R.string.label_time_standby);
-		
-		final EditText deviceNameInput = new EditText(this);
-		final EditText devicePowerFullInput = new EditText(this);
-		final EditText deviceTimeFullInput = new EditText(this);
-		final EditText devicePowerStandbyInput = new EditText(this);
-		final EditText deviceTimeStandbyInput = new EditText(this);
+		View alertView = View.inflate(getBaseContext(), R.layout.summary_alert_layout, null);
 		
 		alert.setTitle(R.string.label_edit_device);
-		//alert.setView(getProfileLayout(profileNameInput, profileCostInput));
+		alert.setView(alertView);
 		
+		final EditText deviceNameInput = (EditText) alertView.findViewById(R.id.editText_alert_device_name);
+		final EditText devicePowerFullInput = (EditText) alertView.findViewById(R.id.editText_alert_power_full);
+		final EditText deviceTimeFullInput = (EditText) alertView.findViewById(R.id.editText_alert_time_full);
+		final EditText devicePowerStandbyInput = (EditText) alertView.findViewById(R.id.editText_alert_power_standby);
+		final EditText deviceTimeStandbyInput = (EditText) alertView.findViewById(R.id.editText_alert_time_standby);
 		final int deviceId = getDeviceId(position, c);
-		deviceNameInput.setText(c.getString(1));
-		deviceNameInput.setSingleLine();
-		deviceNameInput.setHint(R.string.label_device);
-		devicePowerFullInput.setText(c.getString(2));
-		devicePowerFullInput.setHint(R.string.hint_power_full);
-		devicePowerFullInput.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
-		deviceTimeFullInput.setText(c.getString(3));
-		deviceTimeFullInput.setHint(R.string.hint_time_full);
-		deviceTimeFullInput.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
-		devicePowerStandbyInput.setText(c.getString(4));
-		devicePowerStandbyInput.setHint(R.string.hint_power_standby);
-		devicePowerStandbyInput.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
-		deviceTimeStandbyInput.setText(c.getString(5));
-		deviceTimeStandbyInput.setHint(R.string.hint_time_standby);
-		deviceTimeStandbyInput.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		
-		layout.addView(deviceName);
-		layout.addView(deviceNameInput);
-		layout.addView(devicePowerFull);
-		layout.addView(devicePowerFullInput);
-		layout.addView(deviceTimeFull);
-		layout.addView(deviceTimeFullInput);
-		layout.addView(devicePowerStandby);
-		layout.addView(devicePowerStandbyInput);
-		layout.addView(deviceTimeStandby);
-		layout.addView(deviceTimeStandbyInput);
-		alert.setView(layout);
+		deviceNameInput.setText(c.getString(1));
+		devicePowerFullInput.setText(c.getString(2));
+		deviceTimeFullInput.setText(c.getString(3));
+		devicePowerStandbyInput.setText(c.getString(4));
+		deviceTimeStandbyInput.setText(c.getString(5));
 		
 		alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 			@Override

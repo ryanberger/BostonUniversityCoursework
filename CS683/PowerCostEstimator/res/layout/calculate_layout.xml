@@ -41,7 +41,7 @@
 		<EditText android:id="@+id/editText_time_standby"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:hint="@string/hint_time_standby" android:inputType="phone"
-			android:digits="@string/decimalInput" android:imeOptions="actionNext" />
+			android:digits="@string/decimalInput" android:imeOptions="actionDone" />
 
 		<Button android:id="@+id/button_submit" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:onClick="onSubmitClick"
