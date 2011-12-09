@@ -11,7 +11,7 @@ public class CalculateHelper {
 	private double costPerKwh, powerFull, timeFull;
 	private double powerStandby = 0.0, timeStandby = 0.0;
 	
-	private NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+	private static NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
 	
 	public CalculateHelper(double costPerKwh, double powerFull, double timeFull) {
 		this.costPerKwh = costPerKwh;
@@ -26,8 +26,6 @@ public class CalculateHelper {
 		this.powerStandby = powerStandby;
 		this.timeStandby = timeStandby;
 	}
-	
-	public CalculateHelper() {}
 
 	public double costPerDay() {
 		return costPerDayFull() + costPerDayStandby();
@@ -41,7 +39,7 @@ public class CalculateHelper {
 		return costPerDay() * DAYS_PER_YEAR;
 	}
 	
-	public String toString(double value) {
+	public static String toString(double value) {
 		return currencyFormatter.format(value);
 	}
 	

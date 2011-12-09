@@ -49,6 +49,7 @@
 	<string name="success_add_to_profile">Vous avez joint %1$s à %2$s.</string>
 	<string name="warning_delete_profile">Etes-vous sûr de vouloir supprimer ce profil?</string>
 	<string name="warning_delete_device">Etes-vous sûr de vouloir supprimer ce dispositif?</string>
+	<string name="warning_no_devices">Vous n\'avez pas tous les périphériques dans ce profil encore. Essayez d\'ajouter dans l\'onglet Calcul.</string>
 	<string name="error_empty_profile_name_field">ERREUR: Nom champ obligatoire n\'est pas rempli!</string>
 	<string name="error_empty_cost_field">ERREUR: Coût champ obligatoire n\'est pas rempli!</string>
 	<string name="error_no_profiles">ERREUR: ne peut pas calculer jusqu\'à au moins un profil a été ajouté!</string>

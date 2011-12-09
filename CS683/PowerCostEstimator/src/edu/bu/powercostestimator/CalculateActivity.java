@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,13 +22,11 @@ public class CalculateActivity extends Activity {
 	private DatabaseAdapter _dbAdapter;
 	private TextView _labelDaily, _labelMonthly, _labelYearly;
 	private double _powerFull, _timeFull, _powerStandby, _timeStandby;
-	private Resources _res;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		_dbAdapter = DatabaseAdapter.getInstance();
-		_res = getResources();
 
 		setContentView(R.layout.calculate_layout);
 	}
@@ -44,7 +41,7 @@ public class CalculateActivity extends Activity {
 			_powerFull = Double.parseDouble(powerFullString);
 		}
 		else {
-			toast(_res.getString(R.string.error_empty_power_field));
+			toast(getString(R.string.error_empty_power_field));
 			return;
 		}
 		
@@ -53,12 +50,12 @@ public class CalculateActivity extends Activity {
 		if (timeFullString.length() > 0) {
 			_timeFull = Double.parseDouble(timeFullString);
 			if (_timeFull > 24) {
-				toast(_res.getString(R.string.error_over_24_hours));
+				toast(getString(R.string.error_over_24_hours));
 				return;
 			}
 		}
 		else {
-			toast(_res.getString(R.string.error_empty_time_field));
+			toast(getString(R.string.error_empty_time_field));
 			return;
 		}
 		
@@ -75,7 +72,7 @@ public class CalculateActivity extends Activity {
 		if (timeStandbyText.length() > 0) {
 			_timeStandby = Double.parseDouble(timeStandbyText);
 			if (_timeStandby > 24) {
-				toast(_res.getString(R.string.error_over_24_hours));
+				toast(getString(R.string.error_over_24_hours));
 				return;
 			}
 		} else {
@@ -87,9 +84,9 @@ public class CalculateActivity extends Activity {
 	
 	private void setResults(String profileName, LinearLayout layout) {
 		CalculateHelper calcHelper = new CalculateHelper(_dbAdapter.getProfileCost(profileName), _powerFull, _timeFull, _powerStandby, _timeStandby);
-		_labelDaily.setText(String.format(_res.getString(R.string.daily), calcHelper.toString(calcHelper.costPerDay())));
-		_labelMonthly.setText(String.format(_res.getString(R.string.monthly), calcHelper.toString(calcHelper.costPerMonth())));
-		_labelYearly.setText(String.format(_res.getString(R.string.yearly), calcHelper.toString(calcHelper.costPerYear())));
+		_labelDaily.setText(String.format(getString(R.string.daily), CalculateHelper.toString(calcHelper.costPerDay())));
+		_labelMonthly.setText(String.format(getString(R.string.monthly), CalculateHelper.toString(calcHelper.costPerMonth())));
+		_labelYearly.setText(String.format(getString(R.string.yearly), CalculateHelper.toString(calcHelper.costPerYear())));
 		layout.refreshDrawableState();
 	}
 	
@@ -101,7 +98,7 @@ public class CalculateActivity extends Activity {
 		ArrayList<String> profiles = _dbAdapter.getProfileNames();
 		
 		if (profiles.size() < 1) {
-			toast(_res.getString(R.string.error_no_profiles));
+			toast(getString(R.string.error_no_profiles));
 			return;
 		}
 		
@@ -140,7 +137,7 @@ public class CalculateActivity extends Activity {
 			public void onNothingSelected(AdapterView<?> parentView) {}
 		});
 		
-		alert.setPositiveButton(_res.getString(R.string.done), new DialogInterface.OnClickListener() {
+		alert.setPositiveButton(getString(R.string.done), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				if (addToProfile.isChecked()) {
@@ -169,20 +166,20 @@ public class CalculateActivity extends Activity {
 		layout.addView(deviceName);
 		alert.setView(layout);
 		
-		alert.setPositiveButton(_res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+		alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String deviceNameValue = deviceName.getText().toString();
 				if (deviceNameValue.trim().length() > 0) {
 					_dbAdapter.addDeviceToProfile(deviceNameValue, _powerFull, _timeFull, _powerStandby, _timeStandby, profileName);
-					toast(String.format(_res.getString(R.string.success_add_to_profile), deviceNameValue, profileName));
+					toast(String.format(getString(R.string.success_add_to_profile), deviceNameValue, profileName));
 				} else {
-					toast(_res.getString(R.string.error_empty_device_name_field));
+					toast(getString(R.string.error_empty_device_name_field));
 				}
 			}
 		});
 
-		alert.setNegativeButton(_res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+		alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				// Canceled.

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.InputType;
@@ -30,7 +29,6 @@ public class SummaryActivity extends Activity {
 	private ArrayList<String> _lv_arr = new ArrayList<String>();
 	private ArrayList<GraphContent> _gcList = new ArrayList<GraphContent>();
 	private double _totalCost;
-	private Resources _res;
 	private String _profileName;
 	
 	@Override
@@ -40,10 +38,9 @@ public class SummaryActivity extends Activity {
 		// Get profile name from ProfileActivity
 		Bundle extras = getIntent().getExtras();
 		_profileName = extras.getString("profileName");
-		_res = getResources();
 		
 		setContentView(R.layout.summary_layout);
-		setTitle(String.format(_res.getString(R.string.label_summary), _profileName));
+		setTitle(String.format(getString(R.string.label_summary), _profileName));
 		
 		_lv = (ListView)findViewById(R.id.summary_listview);
 		_dbAdapter = DatabaseAdapter.getInstance();
@@ -112,14 +109,14 @@ public class SummaryActivity extends Activity {
 		layout.addView(deviceTimeStandbyInput);
 		alert.setView(layout);
 		
-		alert.setPositiveButton(_res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+		alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				editDevice(deviceId, deviceNameInput, devicePowerFullInput, deviceTimeFullInput, devicePowerStandbyInput, deviceTimeStandbyInput);
 			}
 		});
 
-		alert.setNegativeButton(_res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+		alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				// Canceled.
@@ -137,7 +134,7 @@ public class SummaryActivity extends Activity {
 		double powerFull, timeFull, powerStandby = 0.0, timeStandby = 0.0;
 		String deviceName = deviceNameField.getText().toString().trim();
 		if (deviceName.length() < 1) {
-			toast(_res.getString(R.string.error_empty_profile_name_field));
+			toast(getString(R.string.error_empty_profile_name_field));
 			return;
 		}
 		
@@ -146,7 +143,7 @@ public class SummaryActivity extends Activity {
 			powerFull = Double.parseDouble(powerFullString);
 		}
 		else {
-			toast(_res.getString(R.string.error_empty_power_field));
+			toast(getString(R.string.error_empty_power_field));
 			return;
 		}
 		
@@ -154,12 +151,12 @@ public class SummaryActivity extends Activity {
 		if (timeFullString.length() > 0) {
 			timeFull = Double.parseDouble(timeFullString);
 			if (timeFull > 24) {
-				toast(_res.getString(R.string.error_over_24_hours));
+				toast(getString(R.string.error_over_24_hours));
 				return;
 			}
 		}
 		else {
-			toast(_res.getString(R.string.error_empty_time_field));
+			toast(getString(R.string.error_empty_time_field));
 			return;
 		}
 		
@@ -172,7 +169,7 @@ public class SummaryActivity extends Activity {
 		if (timeStandbyText.length() > 0) {
 			timeStandby = Double.parseDouble(timeStandbyText);
 			if (timeStandby > 24) {
-				toast(_res.getString(R.string.error_over_24_hours));
+				toast(getString(R.string.error_over_24_hours));
 				return;
 			}
 		}
@@ -193,14 +190,14 @@ public class SummaryActivity extends Activity {
 		tv.setText(R.string.warning_delete_device);
 		alert.setView(tv);
 		
-		alert.setPositiveButton(_res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+		alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				deleteDevice(deviceId);
 			}
 		});
 
-		alert.setNegativeButton(_res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+		alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				// Canceled.
@@ -235,13 +232,11 @@ public class SummaryActivity extends Activity {
 		
 		Button showChart = (Button) findViewById(R.id.button_show_chart);
 		final Cursor c = _dbAdapter.getProfileDevices(_profileName);
-		
 		double profileCost = _dbAdapter.getProfileCost(_profileName);
 		double normalUsage, normalTime, standbyUsage, standbyTime,
 			totalNormalUsage = 0.0, totalNormalTime = 0.0, totalStandbyUsage = 0.0, totalStandbyTime = 0.0,
 			totalCostPerDay = 0.0, totalCostPerMonth = 0.0, totalCostPerYear = 0.0;
 		String deviceName;
-		CalculateHelper calcHelper = new CalculateHelper();
 		GraphContent gc;
 		
 		while (c.moveToNext()) {
@@ -250,7 +245,7 @@ public class SummaryActivity extends Activity {
 			normalTime = c.getDouble(3);
 			standbyUsage = c.getDouble(4);
 			standbyTime = c.getDouble(5);
-			calcHelper = new CalculateHelper(profileCost, normalUsage, normalTime, standbyUsage, standbyTime);
+			CalculateHelper calcHelper = new CalculateHelper(profileCost, normalUsage, normalTime, standbyUsage, standbyTime);
 			gc = new GraphContent(deviceName, calcHelper.costPerYear());
 			totalNormalUsage += normalUsage;
 			totalNormalTime += normalTime;
@@ -260,49 +255,58 @@ public class SummaryActivity extends Activity {
 			totalCostPerMonth += calcHelper.costPerMonth();
 			totalCostPerYear += calcHelper.costPerYear();
 			
-			_lv_arr.add(String.format(_res.getString(R.string.format_device_summary), 
+			_lv_arr.add(String.format(getString(R.string.format_device_summary), 
 					deviceName, normalUsage, normalTime, standbyUsage, standbyTime,
-					calcHelper.toString(calcHelper.costPerDay()),
-					calcHelper.toString(calcHelper.costPerMonth()), 
-					calcHelper.toString(calcHelper.costPerYear())));
+					CalculateHelper.toString(calcHelper.costPerDay()),
+					CalculateHelper.toString(calcHelper.costPerMonth()), 
+					CalculateHelper.toString(calcHelper.costPerYear())));
 			_gcList.add(gc);
 		}
 		
 		_totalCost = totalCostPerYear;
-		// Now show total usage
-		_lv_arr.add(String.format(_res.getString(R.string.format_device_summary), 
-				"Total", totalNormalUsage, totalNormalTime, totalStandbyUsage, totalStandbyTime,
-				calcHelper.toString(totalCostPerDay), calcHelper.toString(totalCostPerMonth), calcHelper.toString(totalCostPerYear)));
-		
-		_lv.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
-			@Override public void onCreateContextMenu(ContextMenu menu, final View v, ContextMenuInfo menuInfo) {
-				menu.add(_res.getString(R.string.label_edit_device)).setOnMenuItemClickListener(new OnMenuItemClickListener() {
-					@Override public boolean onMenuItemClick(MenuItem item) {
-						// Get the info on which item was selected
-						AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-						showEditDeviceAlert(cmi.position, c);
-						return true;
+		// Only show results if devices have been added to profile
+		if (c.getCount() > 0) {
+			// Now show total usage
+			_lv_arr.add(String.format(getString(R.string.format_device_summary), 
+					"Total", totalNormalUsage, totalNormalTime, totalStandbyUsage, totalStandbyTime,
+					CalculateHelper.toString(totalCostPerDay), CalculateHelper.toString(totalCostPerMonth), CalculateHelper.toString(totalCostPerYear)));
+			
+			_lv.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
+				@Override public void onCreateContextMenu(ContextMenu menu, final View v, ContextMenuInfo menuInfo) {
+					// Get the info on which item was selected
+					final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
+					
+					// Ensure that item selected is not last item in listview (which shows total values)
+					if (cmi.position < _lv_arr.size() - 1) {
+						menu.add(getString(R.string.label_edit_device)).setOnMenuItemClickListener(new OnMenuItemClickListener() {
+							@Override public boolean onMenuItemClick(MenuItem item) {
+								
+								showEditDeviceAlert(cmi.position, c);
+								return true;
+							}
+						});
+						menu.add(getString(R.string.label_delete_device))
+						.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+							@Override public boolean onMenuItemClick(MenuItem item) {
+								showDeleteDeviceAlert(cmi.position, c);
+								return true;
+							}
+						});
 					}
-				});
-				menu.add(_res.getString(R.string.label_delete_device))
-				.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-					@Override public boolean onMenuItemClick(MenuItem item) {
-						// Get the info on which item was selected
-						AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-						showDeleteDeviceAlert(cmi.position, c);
-						return true;
-					}
-				});
-			} 
-		});
-		
-		showChart.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				startActivity(GraphActivityHelper.showGraph(getApplicationContext(), _gcList, _totalCost));
-				
-			}
-		});
+				} 
+			});
+			
+			showChart.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					startActivity(GraphActivity.showGraph(getApplicationContext(), _gcList, _totalCost));
+					
+				}
+			});
+		} else {
+			_lv_arr.add(getString(R.string.warning_no_devices));
+			showChart.setVisibility(View.GONE);
+		}
 		
 		_lv.invalidate();
 		// By using setAdpater method in listview we an add string array in list.
