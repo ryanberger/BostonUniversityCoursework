@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.os.Bundle;
@@ -30,7 +29,6 @@ public class ProfilesActivity extends Activity {
 	private DatabaseAdapter _dbAdapter;
 	private ListView _lv;
 	private ArrayList<String> _lv_arr = new ArrayList<String>();
-	private Resources _res;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +37,6 @@ public class ProfilesActivity extends Activity {
 		setContentView(R.layout.profiles_layout);
 
 		_dbAdapter = DatabaseAdapter.getInstance();
-		_res = getResources();
 
 		_lv = (ListView)findViewById(R.id.profile_listview);
 		
@@ -50,8 +47,9 @@ public class ProfilesActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				String test = (String)_lv.getItemAtPosition(position);
-				if (!test.equals(_res.getString(R.string.listview_add_new_profile))) {
-					startActivity(new Intent(view.getContext(), SummaryActivity.class).putExtra("profileName", _lv.getItemAtPosition(position).toString()));
+				if (!test.equals(getString(R.string.listview_add_new_profile))) {
+					startActivity(new Intent(view.getContext(), SummaryActivity.class)
+						.putExtra("profileName", _lv.getItemAtPosition(position).toString()));
 				}
 				else {
 					showAddNewProfileAlert();
@@ -60,30 +58,26 @@ public class ProfilesActivity extends Activity {
 		});
 		_lv.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
 			@Override public void onCreateContextMenu(ContextMenu menu, final View v, ContextMenuInfo menuInfo) {
-				menu.add(_res.getString(R.string.label_edit_profile))
-				.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-					@Override public boolean onMenuItemClick(MenuItem item) {
-						// Get the info on which item was selected
-						AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-						String test = (String)_lv.getItemAtPosition(cmi.position);
-						if (!test.equals(_res.getString(R.string.listview_add_new_profile))) {
-							showEditProfileAlert(test);
+				// Get the info on which item was selected
+				AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
+				final String profileName = (String)_lv.getItemAtPosition(cmi.position);
+				
+				if (!profileName.equals(getString(R.string.listview_add_new_profile))) {
+					menu.add(getString(R.string.label_edit_profile))
+					.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+						@Override public boolean onMenuItemClick(MenuItem item) {
+							showEditProfileAlert(profileName);
+							return true;
 						}
-						return true;
-					}
-				});
-				menu.add(_res.getString(R.string.label_delete_profile))
-				.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-					@Override public boolean onMenuItemClick(MenuItem item) {
-						// Get the info on which item was selected
-						AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-						String test = (String)_lv.getItemAtPosition(cmi.position);
-						if (!test.equals(_res.getString(R.string.listview_add_new_profile))) {
-							showDeleteProfileAlert(test);
+					});
+					menu.add(getString(R.string.label_delete_profile))
+					.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+						@Override public boolean onMenuItemClick(MenuItem item) {
+							showDeleteProfileAlert(profileName);
+							return true;
 						}
-						return true;
-					}
-				});
+					});
+				}
 			} 
 		});
 	}
@@ -100,19 +94,19 @@ public class ProfilesActivity extends Activity {
 		alert.setTitle(R.string.label_new_profile);
 		alert.setView(getProfileLayout(profileNameInput, profileCostInput));
 
-		alert.setPositiveButton(_res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+		alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				try {
 					// No ID yet since this is a new profile, so we'll use -1
 					updateProfile(-1, profileNameInput, profileCostInput, true);
 				} catch (SQLException e) {
-					toast(_res.getString(R.string.error_duplicate_profile_name));
+					toast(getString(R.string.error_duplicate_profile_name));
 				}
 			}
 		});
 
-		alert.setNegativeButton(_res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+		alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				// Canceled.
@@ -140,18 +134,18 @@ public class ProfilesActivity extends Activity {
 		profileNameInput.setText(c.getString(1));
 		profileCostInput.setText(c.getString(2));
 		
-		alert.setPositiveButton(_res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+		alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				try {
 					updateProfile(profileId, profileNameInput, profileCostInput, false);
 				} catch (SQLException e) {
-					toast(_res.getString(R.string.error_duplicate_profile_name));
+					toast(getString(R.string.error_duplicate_profile_name));
 				}
 			}
 		});
 
-		alert.setNegativeButton(_res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+		alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				// Canceled.
@@ -172,7 +166,7 @@ public class ProfilesActivity extends Activity {
 		tv.setText(R.string.warning_delete_profile);
 		alert.setView(tv);
 		
-		alert.setPositiveButton(_res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+		alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				_dbAdapter.deleteProfile(profileName);
@@ -180,7 +174,7 @@ public class ProfilesActivity extends Activity {
 			}
 		});
 
-		alert.setNegativeButton(_res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+		alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				// Canceled.
@@ -221,7 +215,7 @@ public class ProfilesActivity extends Activity {
 		double profileCost;
 
 		if (profileName.trim().length() < 1) {
-			toast(_res.getString(R.string.error_empty_profile_name_field));
+			toast(getString(R.string.error_empty_profile_name_field));
 			return;
 		}
 		
@@ -229,7 +223,7 @@ public class ProfilesActivity extends Activity {
 			profileCost = Double.parseDouble(profileCostString);
 		}
 		else {
-			toast(_res.getString(R.string.error_empty_cost_field));
+			toast(getString(R.string.error_empty_cost_field));
 			return;
 		}
 		
@@ -249,7 +243,7 @@ public class ProfilesActivity extends Activity {
 		_lv_arr.clear();
 		
 		_lv_arr.addAll(_dbAdapter.getProfileNames());
-		_lv_arr.add(_res.getString(R.string.listview_add_new_profile));
+		_lv_arr.add(getString(R.string.listview_add_new_profile));
 		
 		_lv.invalidate();
 		// By using setAdpater method in listview we an add string array in list.
