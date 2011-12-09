@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
@@ -19,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -88,12 +86,12 @@ public class ProfilesActivity extends Activity {
 	private void showAddNewProfileAlert() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		
-		final EditText profileNameInput = new EditText(this);
-		final EditText profileCostInput = new EditText(this);
-		
 		alert.setTitle(R.string.label_new_profile);
-		alert.setView(getProfileLayout(profileNameInput, profileCostInput));
+		alert.setView(View.inflate(getBaseContext(), R.layout.profiles_alert_layout, null));
 
+		final EditText profileNameInput = (EditText) findViewById(R.id.editText_profile_name);
+		final EditText profileCostInput = (EditText) findViewById(R.id.editText_price_per_kwh);
+		
 		alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
@@ -122,11 +120,11 @@ public class ProfilesActivity extends Activity {
 	private void showEditProfileAlert(String profileName) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		
-		final EditText profileNameInput = new EditText(this);
-		final EditText profileCostInput = new EditText(this);
-		
 		alert.setTitle(R.string.label_edit_profile);
-		alert.setView(getProfileLayout(profileNameInput, profileCostInput));
+		alert.setView(View.inflate(getBaseContext(), R.layout.profiles_alert_layout, null));
+		
+		final EditText profileNameInput = (EditText) findViewById(R.id.editText_profile_name);
+		final EditText profileCostInput = (EditText) findViewById(R.id.editText_price_per_kwh);
 		
 		Cursor c = _dbAdapter.getProfile(profileName);
 		c.moveToFirst();
@@ -182,28 +180,6 @@ public class ProfilesActivity extends Activity {
 		});
 		
 		alert.show();
-	}
-	
-	/*
-	 * Layout code used in both "create profile" and "edit profile"
-	 */
-	private LinearLayout getProfileLayout(EditText profileNameInput, EditText profileCostInput) {
-		// Set an EditText view to get user input
-		LinearLayout layout = new LinearLayout(this);
-		// Set to vertical layout
-		layout.setOrientation(1);
-		TextView profileName = new TextView(this);
-		TextView profileCost = new TextView(this);
-		profileName.setText(R.string.label_profile_name);
-		profileCost.setText(R.string.label_price_per_kwh);
-		profileNameInput.setHint(R.string.hint_profile_name);
-		profileCostInput.setHint(R.string.hint_price_per_kwh);
-		profileCostInput.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
-		layout.addView(profileName);
-		layout.addView(profileNameInput);
-		layout.addView(profileCost);
-		layout.addView(profileCostInput);
-		return layout;
 	}
 
 	/*

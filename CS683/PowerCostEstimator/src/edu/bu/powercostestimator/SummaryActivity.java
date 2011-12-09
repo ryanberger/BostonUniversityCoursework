@@ -57,8 +57,7 @@ public class SummaryActivity extends Activity {
 		
 		// Set an EditText view to get user input
 		LinearLayout layout = new LinearLayout(this);
-		// Set to vertical layout
-		layout.setOrientation(1);
+		layout.setOrientation(LinearLayout.VERTICAL);
 		
 		TextView deviceName = new TextView(this);
 		TextView devicePowerFull = new TextView(this);

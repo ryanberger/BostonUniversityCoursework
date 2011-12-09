@@ -53,8 +53,7 @@ public class SettingsActivity extends PreferenceActivity {
 		alert.setTitle(R.string.settings_clear_data);
 		
 		LinearLayout layout = new LinearLayout(this);
-		// Set to vertical layout
-		layout.setOrientation(1);
+		layout.setOrientation(LinearLayout.VERTICAL);
 		TextView warning = new TextView(this);
 		warning.setText(R.string.settings_clear_data_warn);
 		layout.addView(warning);
@@ -89,8 +88,7 @@ public class SettingsActivity extends PreferenceActivity {
 		alert.setTitle(R.string.settings_about);
 		
 		LinearLayout layout = new LinearLayout(this);
-		// Set to vertical layout
-		layout.setOrientation(1);
+		layout.setOrientation(LinearLayout.VERTICAL);
 		layout.setPadding(8, 8, 8, 8);
 		TextView about = new TextView(this);
 		about.setText(R.string.settings_about_desc);
