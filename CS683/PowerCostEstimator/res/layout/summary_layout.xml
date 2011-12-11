@@ -8,11 +8,5 @@
 	<ListView android:id="@+id/summary_listview"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:layout_weight="1.0" />
-
-	<Button android:id="@+id/button_show_chart" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:text="@string/show_chart" />
-
-	<Button android:id="@+id/button_export" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:text="@string/export" />
 	
 </LinearLayout>

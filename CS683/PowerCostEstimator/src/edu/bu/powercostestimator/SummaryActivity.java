@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,13 +13,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -52,6 +54,30 @@ public class SummaryActivity extends Activity {
 		_dbAdapter.open(this);
 		
 		updateSummaryList();
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		if (_gcList.size() > 0) {
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.menu.summary_menu, menu);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+			case R.id.menu_show_chart:
+				startActivity(GraphActivityHelper.showGraph(getApplicationContext(), _gcList, _totalCost));
+				return true;
+			case R.id.menu_export:
+				showExportAlert();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 	
 	/*
@@ -200,8 +226,6 @@ public class SummaryActivity extends Activity {
 		_dcList.clear();
 		_gcList.clear();
 		
-		Button showChart = (Button) findViewById(R.id.button_show_chart);
-		Button export = (Button) findViewById(R.id.button_export);
 		final Cursor c = _dbAdapter.getProfileDevices(_profileName);
 		double profileCost = _dbAdapter.getProfileCost(_profileName);
 		double totalNormalUsage = 0.0, totalNormalTime = 0.0, totalStandbyUsage = 0.0,
@@ -210,16 +234,18 @@ public class SummaryActivity extends Activity {
 		GraphContent gc;
 		
 		while (c.moveToNext()) {
-			dc = new DeviceContent(c.getString(1), c.getDouble(2), c.getDouble(3), c.getDouble(4), c.getDouble(5));
-			CalculateHelper calcHelper = new CalculateHelper(profileCost, dc.getNormalUsage(), dc.getNormalTime(),
-					dc.getStandbyUsage(), dc.getStandbyTime());
+			// Initialize objects with device values
+			CalculateHelper calcHelper = new CalculateHelper(profileCost, c.getDouble(2), c.getDouble(3),
+					c.getDouble(4), c.getDouble(5));
+			dc = new DeviceContent(c.getString(1), c.getDouble(2), c.getDouble(3), c.getDouble(4), c.getDouble(5),
+					calcHelper.costPerDay(), calcHelper.costPerMonth(), calcHelper.costPerYear());
 			gc = new GraphContent(dc.getDeviceName(), calcHelper.costPerYear());
 			
 			totalNormalUsage += dc.getNormalUsage();
 			totalNormalTime += dc.getNormalTime();
 			totalStandbyUsage += dc.getStandbyUsage();
 			totalStandbyTime += dc.getStandbyTime();
-			totalCostPerDay +=calcHelper.costPerDay();
+			totalCostPerDay += calcHelper.costPerDay();
 			totalCostPerMonth += calcHelper.costPerMonth();
 			totalCostPerYear += calcHelper.costPerYear();
 			
@@ -236,6 +262,9 @@ public class SummaryActivity extends Activity {
 		// Only show results if devices have been added to profile
 		if (c.getCount() > 0) {
 			// Now show total usage
+			dc = new DeviceContent(getString(R.string.total), totalNormalUsage, totalNormalTime, totalStandbyUsage, totalStandbyTime,
+					totalCostPerDay, totalCostPerMonth, totalCostPerYear);
+			_dcList.add(dc);
 			_lv_arr.add(String.format(getString(R.string.format_device_summary), 
 					getString(R.string.total), totalNormalUsage, totalNormalTime, totalStandbyUsage, totalStandbyTime,
 					CalculateHelper.toString(totalCostPerDay), CalculateHelper.toString(totalCostPerMonth),
@@ -265,24 +294,8 @@ public class SummaryActivity extends Activity {
 					}
 				} 
 			});
-			
-			showChart.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					startActivity(GraphActivityHelper.showGraph(getApplicationContext(), _gcList, _totalCost));
-				}
-			});
-			
-			export.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					showExportAlert();
-				}
-			});
 		} else {
 			_lv_arr.add(getString(R.string.warning_no_devices));
-			showChart.setVisibility(View.GONE);
-			export.setVisibility(View.GONE);
 		}
 		
 		_lv.invalidate();
@@ -331,8 +344,19 @@ public class SummaryActivity extends Activity {
 			File sdCard = Environment.getExternalStorageDirectory();
 			String outputPath = sdCard.getAbsolutePath() + "/" + filename;
 			writer = new CSVWriter(new FileWriter(outputPath), ',');
-			String[] entries = "first#second#third".split("#"); // array of your values
-			writer.writeNext(entries);  
+			
+			// array of headings
+			String[] values = "Device Name#Normal Usage (watts)#Normal Time#Standby Usage (watts)#Standby Time#Daily Cost#Monthly Cost#Yearly Cost".split("#");
+			writer.writeNext(values);
+			
+			// Fill up CSV file with entries from profile
+			for (DeviceContent dc : _dcList) {
+				values = new String[] { dc.getDeviceName(), Double.toString(dc.getNormalUsage()), Double.toString(dc.getNormalTime()),
+						Double.toString(dc.getStandbyUsage()), Double.toString(dc.getStandbyTime()), Double.toString(dc.getDailyCost()),
+						Double.toString(dc.getMonthlyCost()), Double.toString(dc.getYearlyCost()) };
+				writer.writeNext(values);
+			}
+			
 			writer.close();
 			toast(String.format("Successfully wrote file to: %1$s", outputPath));
 		} 
