@@ -346,7 +346,7 @@ public class SummaryActivity extends Activity {
 			writer = new CSVWriter(new FileWriter(outputPath), ',');
 			
 			// array of headings
-			String[] values = "Device Name#Normal Usage (watts)#Normal Time#Standby Usage (watts)#Standby Time#Daily Cost#Monthly Cost#Yearly Cost".split("#");
+			String[] values = getString(R.string.csv_headings).split("#");
 			writer.writeNext(values);
 			
 			// Fill up CSV file with entries from profile
@@ -358,11 +358,11 @@ public class SummaryActivity extends Activity {
 			}
 			
 			writer.close();
-			toast(String.format("Successfully wrote file to: %1$s", outputPath));
+			toast(String.format(getString(R.string.success_export), outputPath));
 		} 
 		catch (IOException e)
 		{
-			toast(String.format("ERROR: %1$s", e));
+			toast(String.format(getString(R.string.error_generic), e));
 		}
 	}
 	
