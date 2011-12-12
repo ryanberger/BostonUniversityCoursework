@@ -102,6 +102,5 @@
 	<string name="error_duplicate_profile_name">ERROR: profile name must be unique!</string>
 	<string name="format_device_summary">%1$s\nNormal: %2$s W/%3$s hours\nStandby: %4$s W/%5$s hours\nDaily: %6$s\nMonthly: %7$s\nYearly: %8$s</string>
 	<string name="csv_headings">Device Name#Normal Usage (watts)#Normal Time#Standby Usage (watts)#Standby Time#Daily Cost#Monthly Cost#Yearly Cost</string>
-	
 
 </resources>

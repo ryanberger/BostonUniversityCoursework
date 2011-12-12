@@ -5,15 +5,16 @@
 	<string name="calculate">Calculer</string>
 	<string name="profiles">Profils</string>
 	<string name="settings">Réglages</string>
+	<string name="help">Aide</string>
 	<string name="listview_add_new_profile">+ Ajouter un Nouvel</string>
 	<string name="label_new_profile">Nouveau Profil</string>
 	<string name="label_edit_profile">Modifier le Profil</string>
 	<string name="label_delete_profile">Supprimer le Profil</string>
 	<string name="label_profile_summary">Résumé du Profil</string>
 	<string name="label_profile_name">Nom du Profil:</string>
-	<string name="hint_profile_name">Nom du Profil</string>
+	<string name="hint_profile_name">Nom du Profil (e.g. Maison)</string>
 	<string name="label_price_per_kwh">Prix du kWh:</string>
-	<string name="hint_price_per_kwh">Prix du kWh</string>
+	<string name="hint_price_per_kwh">Prix du kWh (e.g. 0.05)</string>
 	<string name="label_device">Nom du Périphérique</string>
 	<string name="label_power_full">Consommation d\'Énergie:</string>
 	<string name="hint_power_full">Consommation d\'Énergie (watts)</string>
@@ -33,7 +34,9 @@
 	<string name="daily">Quotidienne: %1$s</string>
 	<string name="monthly">Mensuel: %1$s</string>
 	<string name="yearly">Annuel: %1$s</string>
+	<string name="total">Total</string>
 	<string name="breakdown">Répartition par le coût total</string>
+	<string name="label_export_profile">Profil des Exportations</string>
 
 	<string name="ok">OK</string>
 	<string name="cancel">Annuler</string>
@@ -47,9 +50,11 @@
 	<string name="settings_about_desc">Estimateur des coûts d\'alimentation a été créé par Ryan Berger. Tous droits réservés.</string>
 
 	<string name="success_add_to_profile">Vous avez joint %1$s à %2$s.</string>
+	<string name="success_export">Réussir écrit fichier: %1$s</string>
 	<string name="warning_delete_profile">Etes-vous sûr de vouloir supprimer ce profil?</string>
 	<string name="warning_delete_device">Etes-vous sûr de vouloir supprimer ce dispositif?</string>
 	<string name="warning_no_devices">Vous n\'avez pas tous les périphériques dans ce profil encore. Essayez d\'ajouter dans l\'onglet Calcul.</string>
+	<string name="error_generic">ERREUR: %1$s</string>
 	<string name="error_empty_profile_name_field">ERREUR: Nom champ obligatoire n\'est pas rempli!</string>
 	<string name="error_empty_cost_field">ERREUR: Coût champ obligatoire n\'est pas rempli!</string>
 	<string name="error_no_profiles">ERREUR: ne peut pas calculer jusqu\'à au moins un profil a été ajouté!</string>
@@ -58,7 +63,6 @@
 	<string name="error_over_24_hours">ERREUR: Le temps ne peut pas dépasser 24 heures!</string>
 	<string name="error_empty_device_name_field">ERREUR: le nom du périphérique ne peut pas être vide!</string>
 	<string name="error_duplicate_profile_name">ERREUR: le nom du profil doit être unique!</string>
-	<string name="format_device_summary">%1$s\nNormale: %2$s W/%3$s heures\nVeille: %4$s W/%5$s heures\Quotidienne: %6$s\Mensuel: %7$s\Annuel: %8$s
-	</string>
+	<string name="format_device_summary">%1$s\nNormale: %2$s W/%3$s heures\nVeille: %4$s W/%5$s heures\Quotidienne: %6$s\Mensuel: %7$s\Annuel: %8$s</string>
 
 </resources>
