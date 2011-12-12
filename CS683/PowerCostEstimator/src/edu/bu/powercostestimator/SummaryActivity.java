@@ -369,5 +369,4 @@ public class SummaryActivity extends Activity {
 	private void toast(String message) {
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 	}
-
 }
