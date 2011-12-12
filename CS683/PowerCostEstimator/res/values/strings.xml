@@ -5,15 +5,16 @@
 	<string name="calculate">Calculate</string>
 	<string name="profiles">Profiles</string>
 	<string name="settings">Settings</string>
+	<string name="help">Help</string>
 	<string name="listview_add_new_profile">+ Add New</string>
 	<string name="label_new_profile">New Profile</string>
 	<string name="label_edit_profile">Edit Profile</string>
 	<string name="label_delete_profile">Delete Profile</string>
 	<string name="label_profile_summary">Profile Summary</string>
 	<string name="label_profile_name">Profile Name:</string>
-	<string name="hint_profile_name">Profile Name</string>
+	<string name="hint_profile_name">Profile Name (e.g. Home)</string>
 	<string name="label_price_per_kwh">Price per kWh:</string>
-	<string name="hint_price_per_kwh">Price per kWh</string>
+	<string name="hint_price_per_kwh">Price per kWh (e.g. 0.05)</string>
 	<string name="label_device">Device Name</string>
 	<string name="label_power_full">Power Usage:</string>
 	<string name="hint_power_full">Power Usage (watts)</string>
@@ -51,23 +52,36 @@
 
 	<string-array name="devices_array">
 		<item>Air Conditioner</item>
+		<item>Cable Box</item>
+		<item>Cable Modem</item>
 		<item>Cell Phone</item>
 		<item>Clock</item>
+		<item>Clothes Dryer</item>
+		<item>Coffee Maker</item>
 		<item>Computer Monitor</item>
+		<item>Ceiling Fan</item>
 		<item>Desktop Computer</item>
 		<item>Dishwasher</item>
 		<item>DVD Player</item>
 		<item>DVR</item>
+		<item>Fax Machine</item>
+		<item>Furnace</item>
 		<item>Game Console</item>
 		<item>Humidifier</item>
 		<item>Lamp</item>
 		<item>Laptop</item>
+		<item>Light Bulb</item>
 		<item>Microwave</item>
+		<item>Oven</item>
 		<item>Printer</item>
+		<item>Radio</item>
 		<item>Refrigerator</item>
+		<item>Router</item>
 		<item>Space Heater</item>
 		<item>Television</item>
 		<item>Toaster</item>
+		<item>Washing Machine</item>
+		<item>Window Unit AC</item>
 	</string-array>
 	
 	<string name="decimalInput">1234567890.</string>
