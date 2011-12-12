@@ -59,6 +59,10 @@ public class PowerCostEstimator extends TabActivity {
 				// Start menu Intent
 				startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
 				return true;
+			case R.id.help:
+				// Start help Intent
+				startActivity(new Intent(getApplicationContext(), HelpActivity.class));
+				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
