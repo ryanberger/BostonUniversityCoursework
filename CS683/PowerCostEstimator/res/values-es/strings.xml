@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Poder Estimador</string>
+	<string name="calculate">Calcular</string>
+	<string name="profiles">Perfiles</string>
+	<string name="settings">Configuración</string>
+	<string name="help">Ayuda</string>
+	<string name="listview_add_new_profile">+ Añadir Nuevo</string>
+	<string name="label_new_profile">Nuevo Perfil</string>
+	<string name="label_edit_profile">Editar Perfil</string>
+	<string name="label_delete_profile">Eliminar Perfil</string>
+	<string name="label_profile_summary">Resumen del Perfil</string>
+	<string name="label_profile_name">Perfil Nombre:</string>
+	<string name="hint_profile_name">Perfil Nombre (e.g. Casa)</string>
+	<string name="label_price_per_kwh">El precio por kWh:</string>
+	<string name="hint_price_per_kwh">El precio por kWh (e.g. 0.05)</string>
+	<string name="label_device">Nombre del Dispositivo</string>
+	<string name="label_power_full">Consumo de Energía:</string>
+	<string name="hint_power_full">Consumo de Energía (watts)</string>
+	<string name="label_time_full">Tiempo de Uso:</string>
+	<string name="hint_time_full">Tiempo (horas por día)</string>
+	<string name="label_power_standby">Consumo de Energía en Espera (opcional):</string>
+	<string name="hint_power_standby">Consumo de Energía en Espera (watts)</string>
+	<string name="label_time_standby">Tiempo de Espera (opcional):</string>
+	<string name="hint_time_standby">Tiempo en Espera (horas por día)</string>
+	<string name="label_add_to_profile">Guardar en el Perfil</string>
+	<string name="label_choose_profile">Elegir Perfil</string>
+	<string name="label_name_device">Nombre del Dispositivo</string>
+	<string name="label_edit_device">Editar Dispositivo</string>
+	<string name="label_delete_device">Eliminar Dispositivo</string>
+	<string name="label_summary">%1$s Resumen</string>
+	<string name="daily">Diario: %1$s</string>
+	<string name="monthly">Mensual: %1$s</string>
+	<string name="yearly">Anual: %1$s</string>
+	<string name="total">Total</string>
+	<string name="breakdown">Desglose por el costo total</string>
+	<string name="label_export_profile">perfil de Exportación</string>
+
+	<string name="ok">OK</string>
+	<string name="cancel">Cancelar</string>
+	<string name="done">Hecho</string>
+	<string name="submit">Presentar</string>
+	<string name="show_chart">Mostrar Conexiones</string>
+	<string name="export">Exportación</string>
+
+	<string name="settings_clear_data">Borrar Datos</string>
+	<string name="settings_clear_data_desc">Borra todos los datos del perfil y el dispositivo</string>
+	<string name="settings_clear_data_warn">ADVERTENCIA: Se borrarán todos los perfiles y los datos del dispositivo. Proceder?</string>
+	<string name="settings_about">Sobre</string>
+	<string name="settings_about_desc">Estimador de costos de energía fue creada por Ryan Berger. Todos los derechos reservados.</string>
+	
+	<string name="decimalInput">1234567890.</string>
+
+	<string name="success_add_to_profile">Agregado con éxito %1$s en %2$s.</string>
+	<string name="success_export">Con éxito, escribió archivo: %1$s</string>
+	<string name="warning_delete_profile">¿Está seguro que desea eliminar este perfil?</string>
+	<string name="warning_delete_device">¿Está seguro que desea eliminar este dispositivo?</string>
+	<string name="warning_no_devices">Usted no tiene ningún dispositivo en este perfil. Trate de agregar en la ficha Calcular.</string>
+	<string name="error_generic">ERROR: %1$s</string>
+	<string name="error_empty_profile_name_field">ERROR: Nombre de campo no se requiere llenar!</string>
+	<string name="error_empty_cost_field">ERROR: El costo de campo no se requiere llenar!</string>
+	<string name="error_no_profiles">ERROR: No se puede calcular hasta que al menos un perfil ha sido añadido!</string>
+	<string name="error_empty_power_field">ERROR: El uso de energía del campo no requiere llenado!</string>
+	<string name="error_empty_time_field">ERROR: Tiempo de campo no se requiere llenar!</string>
+	<string name="error_over_24_hours">ERROR: El tiempo no puede exceder de 24 horas!</string>
+	<string name="error_empty_device_name_field">ERROR: nombre del dispositivo no puede estar vacío!</string>
+	<string name="error_duplicate_profile_name">ERROR: nombre del perfil debe ser único!</string>
+	<string name="format_device_summary">%1$s\nNormal: %2$s W/%3$s horas\nen Espera: %4$s W/%5$s horas\nDiario: %6$s\nMensual: %7$s\nAnual: %8$s</string>
+
+</resources>
