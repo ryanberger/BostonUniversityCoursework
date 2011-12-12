@@ -23,6 +23,7 @@ public class CalculateActivity extends Activity {
 	private TextView _labelDaily, _labelMonthly, _labelYearly;
 	private double _powerFull, _timeFull, _powerStandby, _timeStandby;
 
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 

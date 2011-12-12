@@ -52,7 +52,7 @@ public class GraphActivityHelper {
 		CategorySeries series = new CategorySeries(title);
 		NumberFormat percentFormat = NumberFormat.getPercentInstance();
 		percentFormat.setMaximumFractionDigits(1);
-		
+
 		for (GraphContent gc : graphContent) {
 			String percentOfTotal = percentFormat.format(gc.getDeviceCost() / totalCost);
 			series.add(String.format("%1$s - %2$s", gc.getDeviceName(), percentOfTotal), gc.getDeviceCost());
@@ -60,19 +60,19 @@ public class GraphActivityHelper {
 
 		return series;
 	}
-	
+
 	private static int[] getRandomColors(int numberRequested) {
 		ArrayList<Integer> colors = new ArrayList<Integer>();
 		for (int i = 0; i < 360; i += 360 / numberRequested) {
 			Random rnd = new Random(); 
 			colors.add(Color.argb(255, rnd.nextInt(255), rnd.nextInt(255), rnd.nextInt(255)));
 		}
-		
+
 		int[] ret = new int[colors.size()];
-	    for (int i=0; i < ret.length; i++)
-	    {
-	        ret[i] = colors.get(i).intValue();
-	    }
-	    return ret;
+		for (int i=0; i < ret.length; i++)
+		{
+			ret[i] = colors.get(i).intValue();
+		}
+		return ret;
 	}
 }
