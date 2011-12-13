@@ -18,9 +18,9 @@
 		</activity>
 		<activity android:name=".CalculateActivity" />
 		<activity android:name=".ProfilesActivity" />
-		<activity android:name=".SettingsActivity" />
+		<activity android:name=".SettingsActivity" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name=".HelpActivity" />
-		<activity android:name=".SummaryActivity" />
+		<activity android:name=".SummaryActivity" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.achartengine.GraphicalActivity" />
 	</application>
 

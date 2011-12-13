@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Macht Kalkulator</string>
+	<string name="calculate">Berechnen</string>
+	<string name="profiles">Profil</string>
+	<string name="settings">Einstellungen</string>
+	<string name="help">Hilfe</string>
+	<string name="listview_add_new_profile">+ Hinzufügen Neuer</string>
+	<string name="label_new_profile">Neues Profil</string>
+	<string name="label_edit_profile">Profil Bearbeiten</string>
+	<string name="label_delete_profile">Profil löschen</string>
+	<string name="label_profile_summary">Profil Zusammenfassung</string>
+	<string name="label_profile_name">Profilnamen:</string>
+	<string name="hint_profile_name">Profilnamen (e.g. Hause)</string>
+	<string name="label_price_per_kwh">Preis pro kWh:</string>
+	<string name="hint_price_per_kwh">Preis pro kWh (e.g. 0.05)</string>
+	<string name="label_device">Gerätenamen</string>
+	<string name="label_power_full">Stromverbrauch:</string>
+	<string name="hint_power_full">Stromverbrauch (watts)</string>
+	<string name="label_time_full">Aufruf-Zeit:</string>
+	<string name="hint_time_full">Zeit (Stunden pro Tag)</string>
+	<string name="label_power_standby">Standby-Stromverbrauch (fakultativ):</string>
+	<string name="hint_power_standby">Standby-Stromverbrauch (watts)</string>
+	<string name="label_time_standby">Standby-Zeit (fakultativ):</string>
+	<string name="hint_time_standby">Standby-Zeit (Stunden pro Tag)</string>
+	<string name="label_add_to_profile">Sparen um Profil</string>
+	<string name="label_choose_profile">Profil Auswählen</string>
+	<string name="label_name_device">Name Gerät</string>
+	<string name="label_edit_device">Bearbeiten Gerät</string>
+	<string name="label_delete_device">löschen Gerät</string>
+	<string name="label_summary">%1$s Zusammenfassung</string>
+	<string name="daily">Täglich: %1$s</string>
+	<string name="monthly">Monatlich: %1$s</string>
+	<string name="yearly">Jährlich: %1$s</string>
+	<string name="total">Gesamt</string>
+	<string name="breakdown">Aufgeschlüsselt nach Gesamtkosten</string>
+	<string name="label_export_profile">Exportieren Profil</string>
+
+	<string name="ok">OK</string>
+	<string name="cancel">Kündigen</string>
+	<string name="done">Erledigt</string>
+	<string name="submit">Einreichen</string>
+	<string name="show_chart">Zeigen Tabelle</string>
+	<string name="export">Exportieren</string>
+
+	<string name="settings_clear_data">Daten löschen</string>
+	<string name="settings_clear_data_desc">Löscht alle Profil-und Gerätedaten</string>
+	<string name="settings_clear_data_warn">WARNUNG: Dadurch werden alle Profile und Gerätedaten zu löschen. Gehen?</string>
+	<string name="settings_about">Über</string>
+	<string name="settings_about_desc">Macht Kalkulator wurde von Ryan Berger erstellt. Alle Rechte vorbehalten.</string>
+
+	<string name="success_add_to_profile">Erfolgreich %1$s bis %2$s.</string>
+	<string name="success_export">Erfolgreich schrieb Datei an: %1$s</string>
+	<string name="warning_delete_profile">Sind Sie sicher, dass Sie, um dieses Profil zu löschen?</string>
+	<string name="warning_delete_device">Sind Sie sicher, dass Sie dieses Gerät löschen?</string>
+	<string name="warning_no_devices">Sie haben noch keine Geräte in dieses Profil noch. Versuchen Sie, einige unter der Registerkarte Berechnen.</string>
+	<string name="error_generic">FEHLER: %1$s</string>
+	<string name="error_empty_profile_name_field">FEHLER: Pflichtfeld Name nicht ausgefüllt!</string>
+	<string name="error_empty_cost_field">FEHLER: required field Kosten nicht ausgefüllt!</string>
+	<string name="error_no_profiles">FEHLER: cannot bis mindestens ein Profil berechnet wurde hinzugefügt!</string>
+	<string name="error_empty_power_field">FEHLER: required field Stromverbrauch nicht ausgefüllt!</string>
+	<string name="error_empty_time_field">FEHLER: required field Zeit nicht ausgefüllt!</string>
+	<string name="error_over_24_hours">FEHLER: Die Zeit kann nicht mehr als 24 Stunden!</string>
+	<string name="error_empty_device_name_field">FEHLER: Gerätename darf nicht leer sein!</string>
+	<string name="error_duplicate_profile_name">FEHLER: Profil Name muss eindeutig sein!</string>
+	<string name="format_device_summary">%1$s\nNormal: %2$s W/%3$s stunden\nBereitschaft: %4$s W/%5$s stunden\nTäglich: %6$s\nMonatlich: %7$s\nJährlich: %8$s</string>
+
+</resources>
